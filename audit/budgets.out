@@ -1,0 +1,15 @@
+v6_combo_w20: per checkpoint, fresh module; ms per call (model only | worker deepcopy of labeled)
+shape | budget | labels | calls | import ms | first call (refit) ms | median | p99 | max | deepcopy median | checkpoint s (1 worker) | x4 workers est s
+formative 9 pairs / 7 benchmarks | B0 | 0 | 540 | 71 | 3.5 | 0.20 | 3.50 | 22.4 | 0.00 | 0.30 | 0.13
+formative 9 pairs / 7 benchmarks | B1 | 9 | 540 | 39 | 6.1 | 0.63 | 7.39 | 14.8 | 0.15 | 0.88 | 0.25
+formative 9 pairs / 7 benchmarks | B3 | 27 | 540 | 62 | 26.0 | 2.19 | 10.33 | 17.7 | 0.35 | 1.88 | 0.54
+formative 9 pairs / 7 benchmarks | B7 | 63 | 540 | 43 | 32.4 | 4.48 | 17.10 | 36.5 | 0.87 | 3.67 | 0.97
+formative 9 pairs / 7 benchmarks | B15 | 135 | 540 | 55 | 79.9 | 9.62 | 28.73 | 42.4 | 2.76 | 7.74 | 2.04
+formative 9 pairs / 7 benchmarks | B31 | 279 | 540 | 61 | 186.8 | 19.43 | 153.44 | 544.4 | 5.66 | 18.21 | 4.74
+dense 12 pairs on 1 benchmark | B0 | 0 | 480 | 63 | 0.3 | 0.19 | 6.12 | 28.6 | 0.00 | 0.28 | 0.12
+dense 12 pairs on 1 benchmark | B1 | 12 | 480 | 57 | 6.5 | 0.88 | 8.05 | 21.0 | 0.21 | 1.03 | 0.30
+dense 12 pairs on 1 benchmark | B3 | 36 | 480 | 44 | 25.0 | 2.94 | 13.97 | 33.7 | 0.45 | 2.23 | 0.61
+dense 12 pairs on 1 benchmark | B7 | 84 | 480 | 56 | 57.8 | 5.37 | 19.49 | 73.5 | 1.00 | 3.90 | 1.06
+dense 12 pairs on 1 benchmark | B15 | 180 | 480 | 61 | 67.2 | 9.75 | 53.27 | 94.3 | 2.61 | 7.64 | 2.01
+dense 12 pairs on 1 benchmark | B31 | 372 | 480 | 43 | 160.6 | 17.64 | 52.36 | 114.7 | 4.29 | 12.34 | 3.24
+peak RSS of this process: 98 MB (macOS bytes)

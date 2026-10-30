@@ -1,0 +1,2 @@
+kit worker pool, concurrency 1: 540 calls, 279 labels, wall 30.45s, max |pool - in-process| = 0.00e+00
+kit worker pool, concurrency 4: 540 calls, 279 labels, wall 23.64s, max |pool - in-process| = 0.00e+00

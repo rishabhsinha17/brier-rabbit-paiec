@@ -1,0 +1,7 @@
+thread_check.py (2026-10-06, python3.11 system interpreter, numpy 1.26.4 with OpenBLAS 0.3.23 MAX_THREADS=3, background QoS):
+numpy imported BEFORE the shipped model.py, BLAS threads not pinned by the environment: refit + 59 calls 28.44 s
+same with OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 in the environment:                     refit + 59 calls  2.59 s
+(The "OPENBLAS_NUM_THREADS=1" printed by the unpinned run is model.py's own setdefault, applied after OpenBLAS had
+already started its threads.) A platform worker imports model.py before numpy (kit prediction_workers._WORKER_SOURCE
+imports only copy, importlib.util, json, math, os, socket, sys, traceback), so the pinning takes effect there.
+The venv's numpy 2.4.6 run with numpy imported first was not affected (7.5 s for the whole fuzz).

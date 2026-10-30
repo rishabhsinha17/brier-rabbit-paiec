@@ -1,0 +1,556 @@
+{
+ "about": "Exact arguments of every queued replay (from compute_queue/*/*.json; only name, status, args and log are kept). Run from the repository root with the Python of README.md, e.g. PAIEC_WORKERS=2 python <args...>; outputs go to results/<name>.csv.",
+ "jobs": [
+  {
+   "name": "hrB_exact_k1",
+   "status": "cancelled",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "1",
+    "--ref",
+    "base",
+    "--out",
+    "results/hrB_exact_k1.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true}, \"ex_m20\": {\"prior\": \"subjects\", \"class\": \"paiec.ext.hrB_exact:ExactAloneHier\", \"m0\": -2.0, \"damped_newton\": true}, \"ex_m20_si10\": {\"prior\": \"subjects\", \"class\": \"paiec.ext.hrB_exact:ExactAloneHier\", \"m0\": -2.0, \"damped_newton\": true, \"sigma_i\": 1.0}, \"ex_m20_si14\": {\"prior\": \"subjects\", \"class\": \"paiec.ext.hrB_exact:ExactAloneHier\", \"m0\": -2.0, \"damped_newton\": true, \"sigma_i\": 1.4}, \"ex_m15_si10\": {\"prior\": \"subjects\", \"class\": \"paiec.ext.hrB_exact:ExactAloneHier\", \"m0\": -1.5, \"damped_newton\": true, \"sigma_i\": 1.0}, \"mix25_m10\": {\"prior\": \"subjects\", \"m0\": -1.0, \"damped_newton\": true, \"mix_pi\": 0.25, \"mix_m\": -4.0, \"mix_s\": 0.7}, \"ex_mix25_m10\": {\"prior\": \"subjects\", \"class\": \"paiec.ext.hrB_exact:ExactAloneHier\", \"m0\": -1.0, \"damped_newton\": true, \"mix_pi\": 0.25, \"mix_m\": -4.0, \"mix_s\": 0.7}, \"ex_mix25_m10_si10\": {\"prior\": \"subjects\", \"class\": \"paiec.ext.hrB_exact:ExactAloneHier\", \"m0\": -1.0, \"damped_newton\": true, \"mix_pi\": 0.25, \"mix_m\": -4.0, \"mix_s\": 0.7, \"sigma_i\": 1.0}}"
+   ],
+   "log": "results_hrB_exact_k1.log"
+  },
+  {
+   "name": "pdadapt_exactall",
+   "status": "cancelled",
+   "args": [
+    "swarm/round1/postdoc_adaptation_sims/harden_replay.py",
+    "--runs",
+    "20",
+    "--ks",
+    "1,2",
+    "--scens",
+    "none,pair30",
+    "--ref",
+    "base",
+    "--out",
+    "results/pdadapt_exactall.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"exAll_m20\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"class\": \"paiec.ext.pdadapt_exactall:ExactAllHier\"}, \"pow13_m20\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"lik_power\": 1.3, \"class\": \"paiec.ext.pdadapt_power:PowerHier\"}, \"mix25_m10\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.0, \"mix_pi\": 0.25, \"mix_m\": -4.0, \"mix_s\": 0.7}, \"exAll_mix25_m10\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.0, \"mix_pi\": 0.25, \"mix_m\": -4.0, \"mix_s\": 0.7, \"class\": \"paiec.ext.pdadapt_exactall:ExactAllHier\"}}"
+   ],
+   "log": "results_pdadapt_exactall.log"
+  },
+  {
+   "name": "adj_wide",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "1,2",
+    "--ref",
+    "base",
+    "--out",
+    "results/adj_wide.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"n15D\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.5}, \"w20_m20\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"tau_mu\": 2.0}, \"w20_m15\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.5, \"tau_mu\": 2.0}, \"w25_m25\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.5, \"tau_mu\": 2.5}}"
+   ],
+   "log": "results_adj_wide.log"
+  },
+  {
+   "name": "builder_pair_twin_k2",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "2",
+    "--subsample",
+    "pair",
+    "--benches",
+    "real_webagents,researchcodebench,multi_swebench,matharena",
+    "--ref",
+    "base",
+    "--out",
+    "results/builder_pair_twin_k2.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true}, \"si15\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"sigma_i\": 1.5}, \"si20\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"sigma_i\": 2.0}, \"headA_x2.0\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.headA_itempool:ItemPoolModel\", \"sigma_x\": 2.0}, \"cav_x2.0\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.pool_cavity:CavityPoolModel\", \"sigma_x\": 2.0}, \"cav_x3.0\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.pool_cavity:CavityPoolModel\", \"sigma_x\": 3.0}}"
+   ],
+   "log": "results_builder_pair_twin_k2.log"
+  },
+  {
+   "name": "cal_preds",
+   "status": "done",
+   "args": [
+    "swarm/round6/cal_sims/replay_preds.py",
+    "--modes",
+    "bench:18,pair:20",
+    "--ks",
+    "1,2",
+    "--benches",
+    "real_webagents,researchcodebench,multi_swebench,matharena",
+    "--out",
+    "results/cal_preds",
+    "--analyze",
+    "swarm/round6/cal_sims/out_{mode}",
+    "--max-minutes",
+    "38"
+   ],
+   "log": "results_cal_preds.log"
+  },
+  {
+   "name": "combo_dense",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "10",
+    "--ks",
+    "4,8",
+    "--subsample",
+    "bench",
+    "--benches",
+    "real_webagents,researchcodebench",
+    "--ref",
+    "base",
+    "--out",
+    "results/combo_dense.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true}, \"C_cav30\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"pool_item\": true, \"sigma_x\": 3.0}, \"SCP_combo\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}}"
+   ],
+   "log": "results_combo_dense.log"
+  },
+  {
+   "name": "combo_np",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "18",
+    "--ks",
+    "1,2",
+    "--subsample",
+    "bench",
+    "--benches",
+    "real_webagents,researchcodebench,multi_swebench,matharena",
+    "--ref",
+    "base",
+    "--out",
+    "results/combo_np.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true}, \"base_np\": {\"prior\": \"subjects_np\", \"m0\": -2.0, \"damped_newton\": true}, \"S_np\": {\"prior\": \"subjects_np\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4}, \"SCP_combo\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}, \"SCP_np\": {\"prior\": \"subjects_np\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}, \"w20_SCP_np\": {\"prior\": \"subjects_np\", \"m0\": -2.0, \"damped_newton\": true, \"tau_mu\": 2.0, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}}"
+   ],
+   "log": "results_combo_np.log"
+  },
+  {
+   "name": "combo_sy",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "18",
+    "--ks",
+    "1,2",
+    "--subsample",
+    "bench",
+    "--benches",
+    "real_webagents,researchcodebench,multi_swebench,matharena",
+    "--ref",
+    "base",
+    "--out",
+    "results/combo_sy.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true}, \"S_subjcal\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4}, \"S_sy10\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"attr_year_mult\": 1.0}, \"SCP_combo\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}, \"SCP_sy10\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288, \"attr_year_mult\": 1.0}, \"w20_SCP_sy10\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"tau_mu\": 2.0, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288, \"attr_year_mult\": 1.0}}"
+   ],
+   "log": "results_combo_sy.log"
+  },
+  {
+   "name": "combo_v1",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "18",
+    "--ks",
+    "1,2",
+    "--subsample",
+    "bench",
+    "--benches",
+    "real_webagents,researchcodebench,multi_swebench,matharena",
+    "--ref",
+    "base",
+    "--out",
+    "results/combo_v1.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true}, \"S_subjcal\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4}, \"C_cav30\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"pool_item\": true, \"sigma_x\": 3.0}, \"P_simpool\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}, \"SCP_combo\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}, \"w20_base\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"tau_mu\": 2.0}, \"w20_SCP\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"tau_mu\": 2.0, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}, \"l15_base\": {\"prior\": \"subjects\", \"m0\": -1.5, \"damped_newton\": true}, \"l15_SCP\": {\"prior\": \"subjects\", \"m0\": -1.5, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}}"
+   ],
+   "log": "results_combo_v1.log"
+  },
+  {
+   "name": "contrib_ma_clean",
+   "status": "done",
+   "args": [
+    "swarm/round4/contrib_sims/matharena_clean_paired.py",
+    "--clean",
+    "sys,misaligned,aimedup,proof",
+    "--runs",
+    "18",
+    "--ks",
+    "1,2",
+    "--subsample",
+    "bench",
+    "--benches",
+    "matharena",
+    "--ref",
+    "base",
+    "--out",
+    "results/contrib_ma_clean.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true}, \"C_cav30\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"pool_item\": true, \"sigma_x\": 3.0}, \"SCP_combo\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}}"
+   ],
+   "log": "results_contrib_ma_clean.log"
+  },
+  {
+   "name": "evalsci_m0_mix_grid",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "1,2",
+    "--ref",
+    "base",
+    "--out",
+    "results/paired_evalsci_grid.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"n25D\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.5}, \"n30D\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -3.0}, \"mix25_m10\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.0, \"mix_pi\": 0.25, \"mix_m\": -4.0, \"mix_s\": 0.7}, \"mix25_m15\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.5, \"mix_pi\": 0.25, \"mix_m\": -4.0, \"mix_s\": 0.7}, \"mix25_m20\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"mix_pi\": 0.25, \"mix_m\": -4.0, \"mix_s\": 0.7}}"
+   ],
+   "log": "results_evalsci_m0_mix_grid.log"
+  },
+  {
+   "name": "fw_kstress",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "18",
+    "--ks",
+    "1,2,4",
+    "--subsample",
+    "bench",
+    "--benches",
+    "real_webagents,researchcodebench,multi_swebench,matharena",
+    "--ref",
+    "w20_SCP",
+    "--out",
+    "results/fw_kstress.csv",
+    "--extra",
+    "{\"SCP_combo\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}, \"w20_SCP\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288, \"tau_mu\": 2.0}, \"l15_SCP\": {\"prior\": \"subjects\", \"m0\": -1.5, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}, \"w20_s54_SCP\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288, \"tau_mu\": 1.676, \"tau_delta\": 1.48}, \"w20_s85_SCP\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288, \"tau_mu\": 2.112, \"tau_delta\": 0.735}}"
+   ],
+   "log": "results_fw_kstress.log"
+  },
+  {
+   "name": "headA_itempool",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "2",
+    "--benches",
+    "real_webagents,researchcodebench,multi_swebench,matharena",
+    "--ref",
+    "base",
+    "--out",
+    "results/headA_itempool.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true}, \"pool_x1.5\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.headA_itempool:ItemPoolModel\", \"sigma_x\": 1.5}, \"pool_x2.0\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.headA_itempool:ItemPoolModel\", \"sigma_x\": 2.0}, \"pool_x2.5\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.headA_itempool:ItemPoolModel\", \"sigma_x\": 2.5}, \"mix35\": {\"prior\": \"subjects\", \"m0\": -1.0, \"damped_newton\": true, \"mix_pi\": 0.35, \"mix_m\": -4.0, \"mix_s\": 0.7}, \"mix35_pool2.0\": {\"prior\": \"subjects\", \"m0\": -1.0, \"damped_newton\": true, \"mix_pi\": 0.35, \"mix_m\": -4.0, \"mix_s\": 0.7, \"class\": \"paiec.ext.headA_itempool:ItemPoolModel\", \"sigma_x\": 2.0}}"
+   ],
+   "log": "results_headA_itempool.log"
+  },
+  {
+   "name": "hr_mix_guard",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "1,2",
+    "--ref",
+    "base",
+    "--out",
+    "results/hr_mix_guard.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"w20_m20\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"tau_mu\": 2.0}, \"mxs\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -0.5, \"tau_mu\": 1.07, \"tau_delta\": 0.33, \"tau_phi\": 0.5, \"mix_pi\": 0.3, \"mix_m\": -2.9, \"mix_s\": 0.55}, \"mxh\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -0.75, \"tau_mu\": 1.233, \"tau_delta\": 0.48, \"tau_phi\": 0.5, \"mix_pi\": 0.25, \"mix_m\": -2.9, \"mix_s\": 0.55}, \"w20_scp\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"tau_mu\": 2.0, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}, \"mxs_scp\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -0.5, \"tau_mu\": 1.07, \"tau_delta\": 0.33, \"tau_phi\": 0.5, \"mix_pi\": 0.3, \"mix_m\": -2.9, \"mix_s\": 0.55, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}}"
+   ],
+   "log": "results_hr_mix_guard.log"
+  },
+  {
+   "name": "ld_guard_1007",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "1,2",
+    "--ref",
+    "base",
+    "--out",
+    "results/ld_guard_1007.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"m250_mu25_d06\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.5, \"tau_mu\": 2.5, \"tau_delta\": 0.6, \"tau_phi\": 0.5}, \"m225_mu25_d14\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.25, \"tau_mu\": 2.5, \"tau_delta\": 1.4, \"tau_phi\": 0.5}}"
+   ],
+   "log": "results_ld_guard_1007.log"
+  },
+  {
+   "name": "ld_guard_1008",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "1,2",
+    "--ref",
+    "base",
+    "--out",
+    "results/ld_guard_1008.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"m150_mu20_d06\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.5, \"tau_mu\": 2.0, \"tau_delta\": 0.6}, \"m150_mu20_d10\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.5, \"tau_mu\": 2.0, \"tau_delta\": 1.0}}"
+   ],
+   "log": "results_ld_guard_1008.log"
+  },
+  {
+   "name": "ld_guard_1010",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "1,2",
+    "--ref",
+    "base",
+    "--out",
+    "results/ld_guard_1010.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"m150_mu16_d14\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.5, \"tau_mu\": 1.6, \"tau_delta\": 1.4}}"
+   ],
+   "log": "results_ld_guard_1010.log"
+  },
+  {
+   "name": "mxs_dense",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "10",
+    "--ks",
+    "4,8",
+    "--subsample",
+    "bench",
+    "--benches",
+    "real_webagents,researchcodebench",
+    "--ref",
+    "base",
+    "--out",
+    "results/mxs_dense.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"w20_SCP\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"tau_mu\": 2.0, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}, \"mxs\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -0.5, \"tau_mu\": 1.07, \"tau_M\": 0.0, \"lam\": 1.0, \"tau_delta\": 0.33, \"sigma_i\": 0.6, \"sigma_g\": 1.0, \"tau_phi\": 0.5, \"tau_theta\": 0.5, \"nu_mu\": 0, \"mix_pi\": 0.3, \"mix_m\": -2.9, \"mix_s\": 0.55}, \"mxs_SCP\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -0.5, \"tau_mu\": 1.07, \"tau_M\": 0.0, \"lam\": 1.0, \"tau_delta\": 0.33, \"sigma_i\": 0.6, \"sigma_g\": 1.0, \"tau_phi\": 0.5, \"tau_theta\": 0.5, \"nu_mu\": 0, \"mix_pi\": 0.3, \"mix_m\": -2.9, \"mix_s\": 0.55, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}}"
+   ],
+   "log": "results_mxs_dense.log"
+  },
+  {
+   "name": "pd1_priors",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "1,2",
+    "--ref",
+    "base",
+    "--out",
+    "results/pd1_priors.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"a156\": {\"prior\": \"subjects\", \"damped_newton\": true, \"class\": \"paiec.ext.pd1_subjcal:SubjCalHier\", \"m0\": -2.0, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4}, \"mix25_m10\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.0, \"mix_pi\": 0.25, \"mix_m\": -4.0, \"mix_s\": 0.7}, \"mix25_m10_tilt\": {\"prior\": \"subjects\", \"damped_newton\": true, \"class\": \"paiec.ext.pd1_prior:PriorCalHier\", \"m0\": -1.0, \"mix_pi\": 0.25, \"mix_m\": -4.0, \"mix_s\": 0.7, \"mix_b\": -1.4}, \"x08_q25\": {\"prior\": \"subjects\", \"damped_newton\": true, \"class\": \"paiec.ext.pd1_prior:PriorCalHier\", \"q0\": 0.25, \"tau_mu\": 0.96, \"tau_delta\": 0.8, \"tau_phi\": 0.4}, \"d06_q25\": {\"prior\": \"subjects\", \"damped_newton\": true, \"class\": \"paiec.ext.pd1_prior:PriorCalHier\", \"q0\": 0.25, \"tau_mu\": 1.2, \"tau_delta\": 0.6, \"tau_phi\": 0.3}, \"x08_q25_a156\": {\"prior\": \"subjects\", \"damped_newton\": true, \"class\": \"paiec.ext.pd1_prior:PriorCalHier\", \"q0\": 0.25, \"tau_mu\": 0.96, \"tau_delta\": 0.8, \"tau_phi\": 0.4, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4}}"
+   ],
+   "log": "results_pd1_priors.log"
+  },
+  {
+   "name": "pdadapt_sigma_g",
+   "status": "done",
+   "args": [
+    "swarm/round1/postdoc_adaptation_sims/harden_replay.py",
+    "--runs",
+    "20",
+    "--ks",
+    "1,2",
+    "--scens",
+    "none",
+    "--ref",
+    "base",
+    "--out",
+    "results/pdadapt_sigma_g.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"sg14\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"sigma_g\": 1.4}, \"sg20\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"sigma_g\": 2.0}}"
+   ],
+   "log": "results_pdadapt_sigma_g.log"
+  },
+  {
+   "name": "pdadapt_simpool",
+   "status": "done",
+   "args": [
+    "swarm/round1/postdoc_adaptation_sims/l2o_names.py",
+    "--runs",
+    "1",
+    "--modes",
+    "xname,xrandom,hsame,hrandom",
+    "--limit",
+    "30",
+    "--ref",
+    "base",
+    "--out",
+    "results/pdadapt_simpool.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"sp\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"class\": \"paiec.ext.pdadapt_simpool:SimilarityPoolModel\"}, \"sp_small\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"tau_name\": 0.5, \"tau_h\": 0.6, \"class\": \"paiec.ext.pdadapt_simpool:SimilarityPoolModel\"}}"
+   ],
+   "log": "results_pdadapt_simpool.log"
+  },
+  {
+   "name": "pdpool_bench_k2",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "2",
+    "--subsample",
+    "bench",
+    "--benches",
+    "real_webagents,researchcodebench,multi_swebench,matharena",
+    "--ref",
+    "base",
+    "--out",
+    "results/pdpool_bench_k2.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true}, \"si10\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"sigma_i\": 1.0}, \"si15\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"sigma_i\": 1.5}, \"si20\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"sigma_i\": 2.0}, \"headA_x2.0\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.headA_itempool:ItemPoolModel\", \"sigma_x\": 2.0}, \"cav_x1.5\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.pool_cavity:CavityPoolModel\", \"sigma_x\": 1.5}, \"cav_x2.0\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.pool_cavity:CavityPoolModel\", \"sigma_x\": 2.0}, \"cav_x2.5\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.pool_cavity:CavityPoolModel\", \"sigma_x\": 2.5}, \"cav_x3.0\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.pool_cavity:CavityPoolModel\", \"sigma_x\": 3.0}, \"cav_x4.0\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.pool_cavity:CavityPoolModel\", \"sigma_x\": 4.0}, \"map_x2.0\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"class\": \"paiec.ext.pool_cavity:CavityPoolModel\", \"sigma_x\": 2.0, \"pool_mode\": \"map\"}}"
+   ],
+   "log": "results_pdpool_bench_k2.log"
+  },
+  {
+   "name": "r6_oc_pipeline",
+   "status": "done",
+   "args": [
+    "swarm/round6/oc_sims/oc_queue_job.py",
+    "36"
+   ],
+   "log": "results_r6_oc_pipeline.log"
+  },
+  {
+   "name": "r8_dlike_guard",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "1,2",
+    "--ref",
+    "base",
+    "--out",
+    "results/r8_dlike_guard.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"m250_mu25_d14\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.5, \"tau_mu\": 2.5, \"tau_delta\": 1.4, \"tau_phi\": 0.5}, \"m200_mu20_d14\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"tau_mu\": 2.0, \"tau_delta\": 1.4, \"tau_phi\": 0.5}, \"m250_mu25_d24\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.5, \"tau_mu\": 2.5, \"tau_delta\": 2.4, \"tau_phi\": 0.5}}"
+   ],
+   "log": "results_r8_dlike_guard.log"
+  },
+  {
+   "name": "regime_rerun_prereg",
+   "status": "done",
+   "args": [
+    "swarm/round10/regime_rerun/rerun_prereg.py"
+   ],
+   "log": "results_regime_rerun_prereg.log"
+  },
+  {
+   "name": "rt8_unseen",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "18",
+    "--ks",
+    "1,2",
+    "--subsample",
+    "bench",
+    "--benches",
+    "real_webagents,researchcodebench,multi_swebench,matharena",
+    "--ref",
+    "w20scp",
+    "--out",
+    "results/rt8_unseen.csv",
+    "--extra",
+    "{\"w20scp\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288, \"tau_mu\": 2.0, \"class\": \"paiec.ext.combo:ComboModel\"}, \"ui0\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288, \"tau_mu\": 2.0, \"class\": \"paiec.ext.rt8_unseen:UnseenModCombo\", \"ui_mult\": 0.0, \"ug_nmin\": 1}, \"ui05\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288, \"tau_mu\": 2.0, \"class\": \"paiec.ext.rt8_unseen:UnseenModCombo\", \"ui_mult\": 0.5, \"ug_nmin\": 1}, \"ui0_n7\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288, \"tau_mu\": 2.0, \"class\": \"paiec.ext.rt8_unseen:UnseenModCombo\", \"ui_mult\": 0.0, \"ug_nmin\": 7}, \"ui0_ug05_n7\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288, \"tau_mu\": 2.0, \"class\": \"paiec.ext.rt8_unseen:UnseenModCombo\", \"ui_mult\": 0.0, \"ug_mult\": 0.5, \"ug_nmin\": 7}, \"ug0_n15\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288, \"tau_mu\": 2.0, \"class\": \"paiec.ext.rt8_unseen:UnseenModCombo\", \"ug_mult\": 0.0, \"ug_nmin\": 15}, \"refscp\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288, \"class\": \"paiec.ext.combo:ComboModel\"}, \"ref_ui0_n7\": {\"prior\": \"subjects\", \"m0\": -2.0, \"damped_newton\": true, \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288, \"class\": \"paiec.ext.rt8_unseen:UnseenModCombo\", \"ui_mult\": 0.0, \"ug_nmin\": 7}}"
+   ],
+   "log": "results_rt8_unseen.log"
+  },
+  {
+   "name": "scp_add_1008",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "1,2",
+    "--ref",
+    "base",
+    "--out",
+    "results/scp_add_1008.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"w20_m20\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"tau_mu\": 2.0}, \"w20_scp\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"tau_mu\": 2.0, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}, \"m150_mu20_d10\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.5, \"tau_mu\": 2.0, \"tau_delta\": 1.0}, \"m150_mu20_d10_scp\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.5, \"tau_mu\": 2.0, \"tau_delta\": 1.0, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}, \"m150_mu20_d06\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.5, \"tau_mu\": 2.0, \"tau_delta\": 0.6}, \"m150_mu20_d06_scp\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.5, \"tau_mu\": 2.0, \"tau_delta\": 0.6, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}}"
+   ],
+   "log": "results_scp_add_1008.log"
+  },
+  {
+   "name": "scp_add_1015",
+   "status": "done",
+   "args": [
+    "experiments/paired.py",
+    "--runs",
+    "20",
+    "--ks",
+    "1,2",
+    "--ref",
+    "base",
+    "--out",
+    "results/scp_add_1015.csv",
+    "--extra",
+    "{\"base\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0}, \"w20_m20\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"tau_mu\": 2.0}, \"w20_scp\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -2.0, \"tau_mu\": 2.0, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}, \"m150_mu16_d14\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.5, \"tau_mu\": 1.6, \"tau_delta\": 1.4}, \"m150_mu16_d14_scp\": {\"prior\": \"subjects\", \"damped_newton\": true, \"m0\": -1.5, \"tau_mu\": 1.6, \"tau_delta\": 1.4, \"class\": \"paiec.ext.combo:ComboModel\", \"subjcal\": true, \"attr_scale\": 1.56, \"attr_year_max\": 2026.4, \"pool_item\": true, \"sigma_x\": 3.0, \"pool_sim\": true, \"rho_name\": 0.45, \"rho_h\": 0.288}}"
+   ],
+   "log": "results_scp_add_1015.log"
+  },
+  {
+   "name": "shift_temporal_replay",
+   "status": "done",
+   "args": [
+    "swarm/round3/shift_sims/temporal_replay.py",
+    "--Ts",
+    "2025.5,2026.0",
+    "--seeds",
+    "2",
+    "--out",
+    "results/shift_temporal_replay.csv"
+   ],
+   "log": "results_shift_temporal_replay.log"
+  }
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "m0": -0.5,
+ "tau_mu": 1.2,
+ "lam": 1.0,
+ "tau_delta": 1.0,
+ "sigma_i": 0.6,
+ "sigma_g": 1.0,
+ "tau_phi": 0.5,
+ "tau_theta": 0.5
+}

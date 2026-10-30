@@ -1,0 +1,921 @@
+{
+ "chosen": {
+  "m0": -0.5,
+  "tau_mu": 1.2,
+  "lam": 1.0,
+  "tau_delta": 1.0,
+  "sigma_i": 0.6,
+  "sigma_g": 1.0
+ },
+ "fresh_score": 0.20572857881522372,
+ "fresh_per_bench": {
+  "matharena": 0.21791575161742605,
+  "multi_swebench": 0.17693093333534193,
+  "real_webagents": 0.20649451771496163,
+  "researchcodebench": 0.22157311259316523
+ },
+ "fresh_detail": {
+  "matharena": {
+   "1": {
+    "alc": 0.20453407605603685,
+    "se": 0.014445716322534332,
+    "n_pairs": 10,
+    "per_budget": {
+     "0": 0.2544435930674721,
+     "1": 0.22892680689038433,
+     "3": 0.20593201544922865,
+     "7": 0.19461461343018105,
+     "15": 0.18254972938152747,
+     "31": 0.16685083719025362
+    }
+   },
+   "2": {
+    "alc": 0.23129742717881524,
+    "se": 0.009362020433440605,
+    "n_pairs": 20,
+    "per_budget": {
+     "0": 0.2809339031403623,
+     "1": 0.2554863779432924,
+     "3": 0.24188432204372448,
+     "7": 0.21600130354428054,
+     "15": 0.20674849984019147,
+     "31": 0.19179936190481245
+    }
+   }
+  },
+  "multi_swebench": {
+   "1": {
+    "alc": 0.15650987369822839,
+    "se": 0.02217707621281538,
+    "n_pairs": 10,
+    "per_budget": {
+     "0": 0.19643996727136478,
+     "1": 0.16964177233518515,
+     "3": 0.1719930552750197,
+     "7": 0.15145622584687257,
+     "15": 0.13133318253412526,
+     "31": 0.11981029772851359
+    }
+   },
+   "2": {
+    "alc": 0.1973519929724555,
+    "se": 0.015229497987423136,
+    "n_pairs": 20,
+    "per_budget": {
+     "0": 0.2332973310771574,
+     "1": 0.2120083263218576,
+     "3": 0.20043075334549373,
+     "7": 0.18992836622069936,
+     "15": 0.17914802032733884,
+     "31": 0.17719166621661842
+    }
+   }
+  },
+  "real_webagents": {
+   "1": {
+    "alc": 0.20737788621156214,
+    "se": 0.01824210234190204,
+    "n_pairs": 10,
+    "per_budget": {
+     "0": 0.23515216365984348,
+     "1": 0.23252316214784013,
+     "3": 0.2057044796629901,
+     "7": 0.19249513238128096,
+     "15": 0.19405385111891293,
+     "31": 0.18907344783372945
+    }
+   },
+   "2": {
+    "alc": 0.20561114921836113,
+    "se": 0.014526848062812974,
+    "n_pairs": 20,
+    "per_budget": {
+     "0": 0.2336424754148919,
+     "1": 0.22144685640447564,
+     "3": 0.20750551120188598,
+     "7": 0.19572785003564228,
+     "15": 0.1936857086938995,
+     "31": 0.18573716409691243
+    }
+   }
+  },
+  "researchcodebench": {
+   "1": {
+    "alc": 0.23143269000162822,
+    "se": 0.007743377646040428,
+    "n_pairs": 10,
+    "per_budget": {
+     "0": 0.23692789388011262,
+     "1": 0.24255711819575893,
+     "3": 0.23695913291701548,
+     "7": 0.22893931996737482,
+     "15": 0.2236616512263326,
+     "31": 0.2131645615232058
+    }
+   },
+   "2": {
+    "alc": 0.21171353518470223,
+    "se": 0.009556302983737911,
+    "n_pairs": 20,
+    "per_budget": {
+     "0": 0.22587818338484617,
+     "1": 0.2163111321883277,
+     "3": 0.22126720842333653,
+     "7": 0.20746288948532227,
+     "15": 0.2033383168838499,
+     "31": 0.19449807450050324
+    }
+   }
+  }
+ },
+ "history": [
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 0.8
+   },
+   "score": 0.2073420711753391,
+   "per_bench": {
+    "matharena": 0.23088640071344055,
+    "multi_swebench": 0.20005102572148126,
+    "real_webagents": 0.18596818471084633,
+    "researchcodebench": 0.2124626735555882
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.6
+   },
+   "score": 0.20715343464467634,
+   "per_bench": {
+    "matharena": 0.22823379789607706,
+    "multi_swebench": 0.20178703495699743,
+    "real_webagents": 0.183431936948063,
+    "researchcodebench": 0.2151609687775678
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 2.0
+   },
+   "score": 0.20783424586124621,
+   "per_bench": {
+    "matharena": 0.2280452403462903,
+    "multi_swebench": 0.20320940880568855,
+    "real_webagents": 0.18314049225481716,
+    "researchcodebench": 0.21694184203818873
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 2.6
+   },
+   "score": 0.20903958364410719,
+   "per_bench": {
+    "matharena": 0.22828205084269604,
+    "multi_swebench": 0.20524708718137938,
+    "real_webagents": 0.18321610612029046,
+    "researchcodebench": 0.21941309043206286
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 0.0
+   },
+   "score": 0.20816459557999595,
+   "per_bench": {
+    "matharena": 0.23078761938112874,
+    "multi_swebench": 0.20133722027769588,
+    "real_webagents": 0.18630213638956244,
+    "researchcodebench": 0.2142314062715966
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 0.3
+   },
+   "score": 0.2073810375517587,
+   "per_bench": {
+    "matharena": 0.2298535045496578,
+    "multi_swebench": 0.20079363451487334,
+    "real_webagents": 0.18513089184282433,
+    "researchcodebench": 0.21374611929967935
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 0.6
+   },
+   "score": 0.20686273195289814,
+   "per_bench": {
+    "matharena": 0.22905029299701687,
+    "multi_swebench": 0.2005917457994345,
+    "real_webagents": 0.18427521303742064,
+    "researchcodebench": 0.21353367597772058
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0
+   },
+   "score": 0.20655418157229283,
+   "per_bench": {
+    "matharena": 0.2281869286991794,
+    "multi_swebench": 0.20082297958332762,
+    "real_webagents": 0.18359306910576345,
+    "researchcodebench": 0.2136137489009009
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 0.4
+   },
+   "score": 0.2070321159053618,
+   "per_bench": {
+    "matharena": 0.2286266927047585,
+    "multi_swebench": 0.20101520285108565,
+    "real_webagents": 0.18518685571836793,
+    "researchcodebench": 0.21329971234723505
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 0.7
+   },
+   "score": 0.20655418157229283,
+   "per_bench": {
+    "matharena": 0.2281869286991794,
+    "multi_swebench": 0.20082297958332762,
+    "real_webagents": 0.18359306910576345,
+    "researchcodebench": 0.2136137489009009
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0
+   },
+   "score": 0.20632497902211833,
+   "per_bench": {
+    "matharena": 0.22784147043360528,
+    "multi_swebench": 0.2009257095378276,
+    "real_webagents": 0.18221815196969016,
+    "researchcodebench": 0.21431458414735022
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.4
+   },
+   "score": 0.20647135305239056,
+   "per_bench": {
+    "matharena": 0.22767634111577378,
+    "multi_swebench": 0.20155837913572694,
+    "real_webagents": 0.18095591024910018,
+    "researchcodebench": 0.21569478170896145
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6
+   },
+   "score": 0.2061117685156113,
+   "per_bench": {
+    "matharena": 0.2288334325686388,
+    "multi_swebench": 0.20117916162030539,
+    "real_webagents": 0.17956561018512796,
+    "researchcodebench": 0.2148688696883731
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 1.2
+   },
+   "score": 0.20632497902211833,
+   "per_bench": {
+    "matharena": 0.22784147043360528,
+    "multi_swebench": 0.2009257095378276,
+    "real_webagents": 0.18221815196969016,
+    "researchcodebench": 0.21431458414735022
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 1.8
+   },
+   "score": 0.20786477057324876,
+   "per_bench": {
+    "matharena": 0.2279449220095076,
+    "multi_swebench": 0.20215524552872222,
+    "real_webagents": 0.18654482672497374,
+    "researchcodebench": 0.21481408802979146
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 2.4
+   },
+   "score": 0.210459076186855,
+   "per_bench": {
+    "matharena": 0.22890362849508522,
+    "multi_swebench": 0.20473792797184726,
+    "real_webagents": 0.1918639140976412,
+    "researchcodebench": 0.21633083418284632
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 0.0001
+   },
+   "score": 0.20728174708486197,
+   "per_bench": {
+    "matharena": 0.2325347046822113,
+    "multi_swebench": 0.20038993607332475,
+    "real_webagents": 0.1797799077397908,
+    "researchcodebench": 0.21642243984412096
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 0.3
+   },
+   "score": 0.20672864552992798,
+   "per_bench": {
+    "matharena": 0.23085674250104782,
+    "multi_swebench": 0.2006764488264798,
+    "real_webagents": 0.17962220194458903,
+    "researchcodebench": 0.21575918884759526
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 0.6
+   },
+   "score": 0.20586226943392777,
+   "per_bench": {
+    "matharena": 0.22787618970066603,
+    "multi_swebench": 0.2015188358758898,
+    "real_webagents": 0.17963864098324495,
+    "researchcodebench": 0.2144154111759103
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0
+   },
+   "score": 0.20569662788014703,
+   "per_bench": {
+    "matharena": 0.2253382217196241,
+    "multi_swebench": 0.20338001888560298,
+    "real_webagents": 0.18088109177924583,
+    "researchcodebench": 0.21318717913611535
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0,
+    "tau_phi": 0.0001
+   },
+   "score": 0.20568773039737448,
+   "per_bench": {
+    "matharena": 0.2253999085603492,
+    "multi_swebench": 0.20319440085709742,
+    "real_webagents": 0.18137945317213422,
+    "researchcodebench": 0.21277715899991706
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0,
+    "tau_phi": 0.3
+   },
+   "score": 0.20568418268718147,
+   "per_bench": {
+    "matharena": 0.22537250713301973,
+    "multi_swebench": 0.2032580602878825,
+    "real_webagents": 0.1811823590675274,
+    "researchcodebench": 0.21292380426029633
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0,
+    "tau_phi": 0.6
+   },
+   "score": 0.20571627015837501,
+   "per_bench": {
+    "matharena": 0.2253236600205057,
+    "multi_swebench": 0.20346888804500343,
+    "real_webagents": 0.18070385080506735,
+    "researchcodebench": 0.21336868176292362
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0,
+    "tau_theta": 0.3
+   },
+   "score": 0.2056484642212317,
+   "per_bench": {
+    "matharena": 0.22545478587106987,
+    "multi_swebench": 0.20341862888810086,
+    "real_webagents": 0.18064656930477907,
+    "researchcodebench": 0.213073872820977
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0,
+    "tau_theta": 0.6
+   },
+   "score": 0.2057325979973304,
+   "per_bench": {
+    "matharena": 0.22526587697459607,
+    "multi_swebench": 0.20335688417082126,
+    "real_webagents": 0.18104123955943635,
+    "researchcodebench": 0.21326639128446795
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0,
+    "tau_theta": 1.0
+   },
+   "score": 0.2059768349767536,
+   "per_bench": {
+    "matharena": 0.2249474053881683,
+    "multi_swebench": 0.2032670385211022,
+    "real_webagents": 0.1819525866857936,
+    "researchcodebench": 0.21374030931195032
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 0.8,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0
+   },
+   "score": 0.20563372715483236,
+   "per_bench": {
+    "matharena": 0.22613003914176516,
+    "multi_swebench": 0.20264292181247454,
+    "real_webagents": 0.18169220609522,
+    "researchcodebench": 0.21206974156986985
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.6,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0
+   },
+   "score": 0.20620781978505875,
+   "per_bench": {
+    "matharena": 0.2251013503516735,
+    "multi_swebench": 0.20448169146395576,
+    "real_webagents": 0.18051084157875336,
+    "researchcodebench": 0.21473739574585243
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 2.0,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0
+   },
+   "score": 0.20695064159184368,
+   "per_bench": {
+    "matharena": 0.22522095444176032,
+    "multi_swebench": 0.20570437548247494,
+    "real_webagents": 0.18046331834820714,
+    "researchcodebench": 0.21641391809493232
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 2.6,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0
+   },
+   "score": 0.20813592795289762,
+   "per_bench": {
+    "matharena": 0.22567138172966777,
+    "multi_swebench": 0.2074188182108291,
+    "real_webagents": 0.1807043314992256,
+    "researchcodebench": 0.218749180371868
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 0.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0
+   },
+   "score": 0.2071534737515046,
+   "per_bench": {
+    "matharena": 0.22741149985020265,
+    "multi_swebench": 0.20421983939440755,
+    "real_webagents": 0.18291993152207067,
+    "researchcodebench": 0.2140626242393377
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 0.3,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0
+   },
+   "score": 0.20650452060792424,
+   "per_bench": {
+    "matharena": 0.22667823285682212,
+    "multi_swebench": 0.20375467592310775,
+    "real_webagents": 0.1820154666834814,
+    "researchcodebench": 0.21356970696828553
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 0.6,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0
+   },
+   "score": 0.20604117186856363,
+   "per_bench": {
+    "matharena": 0.22603954380390454,
+    "multi_swebench": 0.20347268538477253,
+    "real_webagents": 0.18136841817202737,
+    "researchcodebench": 0.21328404011355
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 0.4,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0
+   },
+   "score": 0.20608251021896273,
+   "per_bench": {
+    "matharena": 0.22581717633155524,
+    "multi_swebench": 0.20294485283295138,
+    "real_webagents": 0.1836030232916196,
+    "researchcodebench": 0.21196498841972478
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 0.7,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0
+   },
+   "score": 0.2057589536720804,
+   "per_bench": {
+    "matharena": 0.22552199815967328,
+    "multi_swebench": 0.20303936590834526,
+    "real_webagents": 0.18210368606568722,
+    "researchcodebench": 0.21237076455461595
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.4,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0
+   },
+   "score": 0.2060351097793257,
+   "per_bench": {
+    "matharena": 0.22536716148698827,
+    "multi_swebench": 0.20421538032669495,
+    "real_webagents": 0.17983760520923087,
+    "researchcodebench": 0.21472029209438864
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 1.2,
+    "sigma_g": 1.0
+   },
+   "score": 0.20600405870477298,
+   "per_bench": {
+    "matharena": 0.2248786171607413,
+    "multi_swebench": 0.20274830481163653,
+    "real_webagents": 0.18328424485396522,
+    "researchcodebench": 0.21310506799274886
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 1.8,
+    "sigma_g": 1.0
+   },
+   "score": 0.2076016094536462,
+   "per_bench": {
+    "matharena": 0.22554695975744432,
+    "multi_swebench": 0.20350589085655624,
+    "real_webagents": 0.18735005377300784,
+    "researchcodebench": 0.21400353342757633
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 2.4,
+    "sigma_g": 1.0
+   },
+   "score": 0.21022312432322907,
+   "per_bench": {
+    "matharena": 0.22701898073806026,
+    "multi_swebench": 0.20563801503048096,
+    "real_webagents": 0.19244274174627515,
+    "researchcodebench": 0.2157927597780999
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 0.0001
+   },
+   "score": 0.20728174708486197,
+   "per_bench": {
+    "matharena": 0.2325347046822113,
+    "multi_swebench": 0.20038993607332475,
+    "real_webagents": 0.1797799077397908,
+    "researchcodebench": 0.21642243984412096
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 0.3
+   },
+   "score": 0.20672864552992798,
+   "per_bench": {
+    "matharena": 0.23085674250104782,
+    "multi_swebench": 0.2006764488264798,
+    "real_webagents": 0.17962220194458903,
+    "researchcodebench": 0.21575918884759526
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 0.6
+   },
+   "score": 0.20586226943392777,
+   "per_bench": {
+    "matharena": 0.22787618970066603,
+    "multi_swebench": 0.2015188358758898,
+    "real_webagents": 0.17963864098324495,
+    "researchcodebench": 0.2144154111759103
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0,
+    "tau_phi": 0.0001
+   },
+   "score": 0.20568773039737448,
+   "per_bench": {
+    "matharena": 0.2253999085603492,
+    "multi_swebench": 0.20319440085709742,
+    "real_webagents": 0.18137945317213422,
+    "researchcodebench": 0.21277715899991706
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0,
+    "tau_phi": 0.3
+   },
+   "score": 0.20568418268718147,
+   "per_bench": {
+    "matharena": 0.22537250713301973,
+    "multi_swebench": 0.2032580602878825,
+    "real_webagents": 0.1811823590675274,
+    "researchcodebench": 0.21292380426029633
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0,
+    "tau_phi": 0.6
+   },
+   "score": 0.20571627015837501,
+   "per_bench": {
+    "matharena": 0.2253236600205057,
+    "multi_swebench": 0.20346888804500343,
+    "real_webagents": 0.18070385080506735,
+    "researchcodebench": 0.21336868176292362
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0,
+    "tau_theta": 0.3
+   },
+   "score": 0.2056484642212317,
+   "per_bench": {
+    "matharena": 0.22545478587106987,
+    "multi_swebench": 0.20341862888810086,
+    "real_webagents": 0.18064656930477907,
+    "researchcodebench": 0.213073872820977
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0,
+    "tau_theta": 0.6
+   },
+   "score": 0.2057325979973304,
+   "per_bench": {
+    "matharena": 0.22526587697459607,
+    "multi_swebench": 0.20335688417082126,
+    "real_webagents": 0.18104123955943635,
+    "researchcodebench": 0.21326639128446795
+   }
+  },
+  {
+   "params": {
+    "m0": -0.5,
+    "tau_mu": 1.2,
+    "lam": 1.0,
+    "tau_delta": 1.0,
+    "sigma_i": 0.6,
+    "sigma_g": 1.0,
+    "tau_theta": 1.0
+   },
+   "score": 0.2059768349767536,
+   "per_bench": {
+    "matharena": 0.2249474053881683,
+    "multi_swebench": 0.2032670385211022,
+    "real_webagents": 0.1819525866857936,
+    "researchcodebench": 0.21374030931195032
+   }
+  }
+ ]
+}

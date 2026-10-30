@@ -1,0 +1,147 @@
+"""Rebuild submissions from source and data, and check them byte for byte against the shipped ones.
+
+usage (from the repository root, with the data at ../data/measurement-db):
+  python scripts/rebuild_check.py                          # the final candidates (v6_combo_ref/_w20/_l15) and the
+                                                           # selected insurance build v6_combo_w20_c1
+  python scripts/rebuild_check.py v5_w20_m0n20 v6_m150_mu20_d10 ...
+  python scripts/rebuild_check.py --all                    # every submission_src/<name> built by make_submission.py
+  options: --workdir DIR (default build_check/), --kit-checks (also run the starting kit's zip check and smoke tests,
+           which needs the official kit one directory up)
+
+For each NAME it
+  1. runs tools/make_submission.py NAME --params <submission_src/NAME/params.json> --prior <as shipped> --outdir
+     WORKDIR/NAME, which refits the subject prior from the public data and regenerates model.py (an insurance build
+     ships its parent's model.py unchanged, so it is regenerated under the parent name its docstring gives);
+  2. compares model.py, params.json and subject_prior.json with submission_src/NAME/ (sha256 per file) and copies any
+     other shipped file (the insurance builds' prediction_config.json, written by hand) into WORKDIR/NAME;
+  3. zips WORKDIR/NAME with the exact recipe of tools/build_submission.py (sorted files, fixed 2026-01-01 timestamps,
+     deflate) and compares the zip's sha256 with submissions/builds.csv and submissions/NAME.zip;
+  4. compares every zip member's sha256 with the shipped zip (this holds even where a different zlib changes the
+     compressed bytes; the zip sha256 itself is reproducible with CPython's zipfile on macOS/Linux and zlib 1.2.12).
+It never writes outside WORKDIR and never touches submissions/ or builds.csv. Exit code 1 on any mismatch.
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+import hashlib
+import json
+import re
+import shutil
+import subprocess
+import sys
+import time
+import zipfile
+from pathlib import Path
+
+
+def find_repo() -> Path:
+    for d in Path(__file__).resolve().parents:
+        if (d / "tools" / "make_submission.py").is_file() and (d / "paiec").is_dir():
+            return d
+    sys.exit("run from inside the repository (tools/make_submission.py not found above this script)")
+
+
+REPO = find_repo()
+FINAL_CANDIDATES = ("v6_combo_ref", "v6_combo_w20", "v6_combo_l15", "v6_combo_w20_c1")
+FILES = ("model.py", "params.json", "subject_prior.json")
+
+
+def sha(b: bytes) -> str:
+    return hashlib.sha256(b).hexdigest()
+
+
+def zip_like_build_submission(src: Path, zpath: Path) -> None:
+    """Byte-identical to tools/build_submission.py's zip step."""
+    files = sorted(p for p in src.rglob("*") if p.is_file() and "__pycache__" not in p.parts and p.name != ".DS_Store")
+    with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as zf:
+        for p in files:
+            info = zipfile.ZipInfo(str(p.relative_to(src)), date_time=(2026, 1, 1, 0, 0, 0))
+            info.compress_type = zipfile.ZIP_DEFLATED
+            zf.writestr(info, p.read_bytes())
+
+
+def builds_sha(zip_name: str) -> str | None:
+    path = REPO / "submissions" / "builds.csv"
+    if not path.exists():
+        return None
+    rows = [r for r in csv.DictReader(path.open()) if r["zip"] == zip_name]
+    return rows[-1]["sha256"] if rows else None
+
+
+def check(name: str, work: Path, kit_checks: bool) -> bool:
+    src = REPO / "submission_src" / name
+    model = (src / "model.py").read_text()
+    if "tools/make_submission.py" not in model[:600]:
+        print(f"[skip] {name}: not built by tools/make_submission.py (older builder)")
+        return True
+    m = re.search(r"Brier Rabbit (\S+):", model[:600])
+    gen = m.group(1) if m else name  # an insurance build keeps its parent's generated model.py
+    if gen != name:
+        print(f"  {name}: model.py generated as {gen} (parent build)")
+    prior = json.loads((src / "subject_prior.json").read_text())
+    prior_kind = "subjects" if isinstance(prior, dict) and "names" in prior and "attr" in prior else "names"
+    out = work / name
+    t0 = time.time()
+    cmd = [sys.executable, str(REPO / "tools" / "make_submission.py"), gen, "--params",
+           (src / "params.json").read_text(), "--prior", prior_kind, "--outdir", str(out)]
+    r = subprocess.run(cmd, capture_output=True, text=True, cwd=REPO)
+    if r.returncode:
+        print(f"[FAIL] {name}: make_submission failed\n{r.stderr[-2000:]}")
+        return False
+    ok = True
+    for f in FILES:
+        a, b = (out / f).read_bytes(), (src / f).read_bytes()
+        same = a == b
+        ok &= same
+        print(f"  {'same' if same else 'DIFF'}  {f:20s} {sha(a)[:16]}  (shipped source {sha(b)[:16]})")
+    for extra in sorted(p for p in src.iterdir() if p.is_file() and p.name not in FILES and p.name != ".DS_Store"):
+        shutil.copy2(extra, out / extra.name)  # not generated by make_submission.py
+        print(f"  copy  {extra.name:20s} {sha(extra.read_bytes())[:16]}  (hand-written, copied from the shipped source)")
+    zpath = work / f"{name}.zip"
+    zip_like_build_submission(out, zpath)
+    z_new = sha(zpath.read_bytes())
+    z_log = builds_sha(f"{name}.zip")
+    shipped = REPO / "submissions" / f"{name}.zip"
+    z_ship = sha(shipped.read_bytes()) if shipped.exists() else None
+    print(f"  zip  rebuilt {z_new[:16]}  builds.csv {str(z_log)[:16]}  shipped {str(z_ship)[:16]}")
+    zip_ok = z_new == z_log == z_ship
+    members_ok = True
+    if shipped.exists():
+        with zipfile.ZipFile(shipped) as zs, zipfile.ZipFile(zpath) as zn:
+            members_ok = sorted(zs.namelist()) == sorted(zn.namelist()) and all(
+                sha(zs.read(m)) == sha(zn.read(m)) for m in zs.namelist())
+    print(f"  members {'identical' if members_ok else 'DIFFER'}; zip bytes {'identical' if zip_ok else 'DIFFER'}")
+    ok &= members_ok and zip_ok
+    if kit_checks:
+        kit = REPO.parent
+        for c in ([kit / "tools" / "check_submission_zip.py", zpath], [kit / "tools" / "run_smoke_test.py", out],
+                  [kit / "tools" / "run_smoke_test.py", out, "--concurrency", "4"]):
+            rr = subprocess.run([sys.executable, *map(str, c)], capture_output=True, text=True, cwd=kit)
+            tail = (rr.stdout + rr.stderr).strip().splitlines()[-1:] or [""]
+            print(f"  [{'ok' if rr.returncode == 0 else 'FAIL'}] {' '.join(Path(str(x)).name for x in c)}: {tail[0]}")
+            ok &= rr.returncode == 0
+    print(f"[{'ok' if ok else 'FAIL'}] {name} ({prior_kind} prior, {time.time() - t0:.1f}s)")
+    return ok
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("names", nargs="*")
+    ap.add_argument("--all", action="store_true")
+    ap.add_argument("--workdir", type=Path, default=REPO / "build_check")
+    ap.add_argument("--kit-checks", action="store_true")
+    args = ap.parse_args()
+    names = args.names or (sorted(p.name for p in (REPO / "submission_src").iterdir() if (p / "params.json").exists())
+                           if args.all else list(FINAL_CANDIDATES))
+    work = args.workdir.resolve()
+    work.mkdir(parents=True, exist_ok=True)
+    print(f"python {sys.version.split()[0]}, zlib {__import__('zlib').ZLIB_RUNTIME_VERSION}, repo {REPO}")
+    results = {n: check(n, work, args.kit_checks) for n in names}
+    bad = [n for n, ok in results.items() if not ok]
+    print(f"\n{len(results) - len(bad)}/{len(results)} reproduced" + (f"; FAILED: {', '.join(bad)}" if bad else ""))
+    return 1 if bad else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

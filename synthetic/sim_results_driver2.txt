@@ -1,0 +1,8 @@
+C9 two item clusters (shift +-1.5) with unmodelled per-cluster subject offsets sd .8, rho=0.6
+   random      ALC=0.1739  B@0,1,3,7,15,31= 0.1846 0.1814 0.1770 0.1713 0.1662 0.1625
+   uncert      ALC=0.1729  dALC vs random=-0.00104 (se 0.00018)  dB@1,3,7,15,31= -0.0006 -0.0016 -0.0014 -0.0011 -0.0009
+   uncert_earlyALC=0.1730  dALC vs random=-0.00092 (se 0.00017)  dB@1,3,7,15,31= -0.0006 -0.0016 -0.0014 -0.0007 -0.0003
+C10 same but shift +-2.5, cl_sd 1.2
+   random      ALC=0.1405  B@0,1,3,7,15,31= 0.1503 0.1476 0.1434 0.1384 0.1333 0.1294
+   uncert      ALC=0.1388  dALC vs random=-0.00173 (se 0.00017)  dB@1,3,7,15,31= -0.0012 -0.0023 -0.0025 -0.0019 -0.0014
+   uncert_earlyALC=0.1390  dALC vs random=-0.00147 (se 0.00017)  dB@1,3,7,15,31= -0.0012 -0.0023 -0.0025 -0.0011 -0.0004

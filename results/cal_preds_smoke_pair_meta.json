@@ -1,0 +1,43 @@
+{
+ "created_utc": "2026-10-06T14:21:21Z",
+ "mode": "pair",
+ "runs": 1,
+ "ks": "1",
+ "benches": "real_webagents",
+ "models": [
+  "base",
+  "smoothed_k2",
+  "empirical_mean"
+ ],
+ "spec": {
+  "base": {
+   "prior": "subjects",
+   "m0": -2.0,
+   "damped_newton": true
+  }
+ },
+ "rows": 1332,
+ "pair_scores": 3,
+ "rows_per_model": {
+  "base": 444,
+  "empirical_mean": 444,
+  "smoothed_k2": 444
+ },
+ "compute_seconds_per_model": {
+  "base": 0.2,
+  "smoothed_k2": 0.1,
+  "empirical_mean": 0.1
+ },
+ "wall_seconds": 286.3,
+ "preds_file": "results/cal_preds_smoke_pair.parquet",
+ "preds_sha256": "24f3a6e25ff12529926397d2c8078766125969d28212822276be034441b78ec0",
+ "checks": [
+  "check adj_wide.csv: base: 1/1 pair-scores matched, bit-identical 1/1, max|diff| 0  EXACT",
+  "check adj_wide.csv: smoothed_k2: 1/1 pair-scores matched, bit-identical 1/1, max|diff| 0  EXACT",
+  "check adj_wide.csv: empirical_mean: 1/1 pair-scores matched, bit-identical 1/1, max|diff| 0  EXACT"
+ ],
+ "python": "3.11.2",
+ "numpy": "2.4.6",
+ "pandas": "3.0.6",
+ "command": "swarm/round6/cal_sims/replay_preds.py --modes pair:1 --ks 1 --benches real_webagents --models base,smoothed_k2,empirical_mean --out results/cal_preds_smoke"
+}

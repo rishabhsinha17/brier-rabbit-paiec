@@ -1,0 +1,16 @@
+{
+ "m0": -1.0,
+ "mix_pi": 0.35,
+ "tau_mu": 1.2,
+ "tau_M": 0.0,
+ "lam": 1.0,
+ "tau_delta": 1.0,
+ "sigma_i": 0.6,
+ "sigma_g": 1.0,
+ "tau_phi": 0.5,
+ "tau_theta": 0.5,
+ "nu_mu": 0,
+ "damped_newton": true,
+ "mix_m": -4.0,
+ "mix_s": 0.7
+}

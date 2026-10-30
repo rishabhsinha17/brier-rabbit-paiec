@@ -1,0 +1,18 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+# scratch output of scripts/rebuild_check.py
+build_check/
+# scratch output of report/build_pdf.sh
+report/build/
+# scratch output of audit/*.py (extracted zips)
+audit/shipped/
+# data is fetched outside the repository (../data/measurement-db) and is never committed
+*.parquet
+data/
+# formative feedback and upload records stay private (see README)
+submissions/feedback/
+submissions/ledger.csv
+# marker written by the internal staging script
+.brier_rabbit_staging

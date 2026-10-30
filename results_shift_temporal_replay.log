@@ -1,0 +1,9 @@
+440 rows in 167s -> results/shift_temporal_replay.csv
+variant minus REF, x1e-3 (mean over new-pair x seed runs; SE clustered by pair)
+T=2025.5 A156        n=68 | alc -3.98 ± 0.90 | b0 -16.15 | b1 -7.58 | b3 -3.14 | b7 -0.90 | b15 -0.19 | b31 -0.02 | per bench {'matharena': -4.86, 'multi_swebench': 0.61, 'real_webagents': -6.27}
+T=2025.5 A156+NP     n=68 | alc -6.03 ± 1.01 | b0 -25.97 | b1 -11.99 | b3 -4.11 | b7 -1.30 | b15 +0.08 | b31 +0.29 | per bench {'matharena': -7.85, 'multi_swebench': -0.87, 'real_webagents': 2.16}
+T=2025.5 A156+SY1.0  n=68 | alc +2.66 ± 0.66 | b0 +10.34 | b1 +5.35 | b3 +2.02 | b7 +0.79 | b15 +0.01 | b31 -0.07 | per bench {'matharena': 2.94, 'multi_swebench': 1.02, 'real_webagents': 3.93}
+T=2026.0 A156        n=42 | alc -3.82 ± 1.06 | b0 -17.50 | b1 -7.07 | b3 -2.49 | b7 -0.61 | b15 -0.20 | b31 +0.02 | per bench {'matharena': -4.62, 'multi_swebench': 0.92}
+T=2026.0 A156+NP     n=42 | alc -6.10 ± 1.21 | b0 -29.31 | b1 -11.62 | b3 -3.64 | b7 -1.18 | b15 +0.35 | b31 +0.48 | per bench {'matharena': -7.17, 'multi_swebench': 0.32}
+T=2026.0 A156+SY1.0  n=42 | alc +4.45 ± 0.90 | b0 +19.40 | b1 +8.61 | b3 +2.99 | b7 +1.07 | b15 -0.04 | b31 -0.18 | per bench {'matharena': 5.03, 'multi_swebench': 0.97}
+pre-registered (exact screen, fixed world): T=2025.5 A156 -4.19, A156+NP -5.95, A156+SY1.0 -1.00; T=2026.0 A156 -4.55, A156+NP -7.33, A156+SY1.0 -0.42 (x1e-3)

@@ -1,0 +1,84 @@
+
+== combo_v1: P (P_simpool) - base, pair-draws that change (fact-check item 1)
+  |dALC| > 1e-6: 6 of 216 pair-draws; benches {'multi_swebench': 6}, k {2: 6}, max |dALC| 1.321e-03
+  dALC != 0 (any size): 20; any column != 0: 79; max |d| over all columns among the rest: 2.78e-16
+  k=1 pair-draws with any nonzero difference: 26 of 72; max |d| 2.78e-16
+  C - base: max |d| at k=1 over all columns 0.00e+00; max |dB0| over all k 0.00e+00
+
+== combo_v1: S and S+C+P - base on ResearchCodeBench by k (B0 and ALC)
+  S_subjcal RCB k=1 [18 draws, 18 pair-draws]: ALC -0.12(0.31; pair 0.31; z -0.4) B0 +0.82(0.72; pair 0.72; z +1.1) B1 +0.45(0.64; pair 0.64; z +0.7) B3 -0.64(0.59; pair 0.59; z -1.1) B7 -0.46(0.33; pair 0.33; z -1.4) B15 -0.26(0.22; pair 0.22; z -1.2) B31 -0.23(0.11; pair 0.11; z -2.1)
+  S_subjcal RCB k=2 [18 draws, 36 pair-draws]: ALC +0.23(0.30; pair 0.28; z +0.8) B0 +1.43(0.52; pair 0.56; z +2.8) B1 +0.54(0.50; pair 0.53; z +1.1) B3 -0.13(0.51; pair 0.47; z -0.3) B7 -0.07(0.36; pair 0.36; z -0.2) B15 +0.07(0.25; pair 0.23; z +0.3) B31 +0.09(0.13; pair 0.11; z +0.7)
+  SCP_combo RCB k=1 [18 draws, 18 pair-draws]: ALC -0.12(0.31; pair 0.31; z -0.4) B0 +0.82(0.72; pair 0.72; z +1.1) B1 +0.45(0.64; pair 0.64; z +0.7) B3 -0.64(0.59; pair 0.59; z -1.1) B7 -0.46(0.33; pair 0.33; z -1.4) B15 -0.26(0.22; pair 0.22; z -1.2) B31 -0.23(0.11; pair 0.11; z -2.1)
+  SCP_combo RCB k=2 [18 draws, 36 pair-draws]: ALC -0.79(0.46; pair 0.39; z -1.7) B0 +1.43(0.52; pair 0.56; z +2.8) B1 +0.22(0.46; pair 0.49; z +0.5) B3 -0.63(0.56; pair 0.51; z -1.1) B7 -0.99(0.51; pair 0.49; z -1.9) B15 -1.68(0.71; pair 0.57; z -2.4) B31 -3.17(0.99; pair 0.89; z -3.2)
+
+== combo_dense (bench-keyed, REAL and RCB, k 4 and 8, 10 draws per cell) vs base
+  SCP_combo REAL k=4 [10 draws, 40 pair-draws]: ALC -1.01(0.51; pair 0.50; z -2.0) B0 -0.87(0.70; pair 0.67; z -1.2) B1 -0.81(0.64; pair 0.52; z -1.3) B3 -0.62(0.56; pair 0.53; z -1.1) B7 -1.13(0.58; pair 0.59; z -2.0) B15 -1.32(0.86; pair 0.86; z -1.5) B31 -1.47(1.38; pair 1.27; z -1.1)
+  SCP_combo REAL k=8 [10 draws, 80 pair-draws]: ALC -3.28(0.83; pair 0.61; z -4.0) B0 -1.38(0.63; pair 0.55; z -2.2) B1 -1.08(0.62; pair 0.61; z -1.7) B3 -1.97(0.77; pair 0.58; z -2.6) B7 -2.71(0.82; pair 0.67; z -3.3) B15 -5.42(1.53; pair 1.08; z -3.5) B31 -9.02(2.11; pair 1.38; z -4.3)
+  SCP_combo RCB k=4 [10 draws, 40 pair-draws]: ALC -2.56(0.63; pair 0.64; z -4.1) B0 +2.81(0.81; pair 0.72; z +3.5) B1 +0.07(0.66; pair 0.62; z +0.1) B3 -1.49(0.80; pair 0.71; z -1.9) B7 -3.34(0.64; pair 0.79; z -5.3) B15 -5.21(1.24; pair 1.26; z -4.2) B31 -8.46(1.75; pair 1.68; z -4.8)
+  SCP_combo RCB k=8 [10 draws, 80 pair-draws]: ALC -5.92(0.61; pair 0.62; z -9.8) B0 +1.10(0.33; pair 0.37; z +3.3) B1 -1.68(0.59; pair 0.47; z -2.8) B3 -3.69(0.43; pair 0.53; z -8.6) B7 -5.67(0.79; pair 0.84; z -7.2) B15 -10.15(1.10; pair 1.20; z -9.2) B31 -17.85(2.12; pair 1.84; z -8.4)
+  SCP_combo: worst B1-B31 cell +0.07 (z +0.11; RCB k=4 B1)
+  C_cav30 REAL k=4 [10 draws, 40 pair-draws]: ALC -0.63(0.43; pair 0.45; z -1.5) B0 +0.00(0.00; pair 0.00; z +nan) B1 -0.25(0.26; pair 0.23; z -1.0) B3 -0.34(0.46; pair 0.44; z -0.7) B7 -0.77(0.55; pair 0.56; z -1.4) B15 -1.11(0.88; pair 0.85; z -1.3) B31 -1.39(1.40; pair 1.27; z -1.0)
+  C_cav30 REAL k=8 [10 draws, 80 pair-draws]: ALC -2.63(0.81; pair 0.50; z -3.3) B0 +0.00(0.00; pair 0.00; z +nan) B1 -0.20(0.26; pair 0.19; z -0.8) B3 -1.31(0.73; pair 0.42; z -1.8) B7 -2.10(0.81; pair 0.63; z -2.6) B15 -5.12(1.58; pair 1.07; z -3.2) B31 -8.88(2.13; pair 1.39; z -4.2)
+  C_cav30 RCB k=4 [10 draws, 40 pair-draws]: ALC -2.64(0.48; pair 0.58; z -5.4) B0 +0.00(0.00; pair 0.00; z +nan) B1 -0.08(0.22; pair 0.24; z -0.4) B3 -0.91(0.47; pair 0.42; z -1.9) B7 -2.88(0.43; pair 0.68; z -6.6) B15 -5.08(1.18; pair 1.26; z -4.3) B31 -8.45(1.72; pair 1.69; z -4.9)
+  C_cav30 RCB k=8 [10 draws, 80 pair-draws]: ALC -5.44(0.54; pair 0.63; z -10.1) B0 +0.00(0.00; pair 0.00; z +nan) B1 -0.89(0.19; pair 0.25; z -4.8) B3 -2.61(0.42; pair 0.50; z -6.2) B7 -5.13(0.80; pair 0.85; z -6.4) B15 -9.76(1.00; pair 1.24; z -9.8) B31 -17.65(2.10; pair 1.85; z -8.4)
+  C_cav30: worst B1-B31 cell -0.08 (z -0.36; RCB k=4 B1)
+  absolute macro base: 0.2004
+  absolute macro SCP_combo: 0.1972
+  absolute macro C_cav30: 0.1976
+  job rule: SCP and C not worse than base at any budget by more than 2 SE, and B1 not worse than +0.5e-3
+
+== contrib_ma_clean (MathArena cleaned: system prompts, misaligned, duplicated AIME, rubric rows) vs base
+  SCP_combo MA k=1 [18 draws, 18 pair-draws]: ALC -3.09(1.17; pair 1.17; z -2.6) B0 -10.00(3.92; pair 3.92; z -2.6) B1 -5.84(2.29; pair 2.29; z -2.5) B3 -3.32(1.12; pair 1.12; z -3.0) B7 -1.10(0.44; pair 0.44; z -2.5) B15 -0.18(0.21; pair 0.21; z -0.8) B31 -0.03(0.14; pair 0.14; z -0.2)
+  SCP_combo MA k=2 [18 draws, 36 pair-draws]: ALC -3.50(0.75; pair 1.01; z -4.7) B0 -11.96(2.66; pair 3.27; z -4.5) B1 -6.39(1.71; pair 2.34; z -3.7) B3 -1.88(0.62; pair 0.86; z -3.1) B7 -0.98(0.40; pair 0.54; z -2.5) B15 -1.30(0.64; pair 0.76; z -2.0) B31 -1.93(1.08; pair 0.86; z -1.8)
+SCP_combo - base, k-averaged                 ALC -3.295 ± 0.694 (z -4.75) | MA -3.29(0.69) | B0 -10.98(2.37) B1 -6.11(1.43) B3 -2.60(0.64) B7 -1.04(0.30) B15 -0.74(0.34) B31 -0.98(0.54) | draws 36 pair-draws 54
+  C_cav30 MA k=1 [18 draws, 18 pair-draws]: ALC +0.00(0.00; pair 0.00; z +nan) B0 +0.00(0.00; pair 0.00; z +nan) B1 +0.00(0.00; pair 0.00; z +nan) B3 +0.00(0.00; pair 0.00; z +nan) B7 +0.00(0.00; pair 0.00; z +nan) B15 +0.00(0.00; pair 0.00; z +nan) B31 +0.00(0.00; pair 0.00; z +nan)
+  C_cav30 MA k=2 [18 draws, 36 pair-draws]: ALC -0.74(0.34; pair 0.29; z -2.2) B0 +0.00(0.00; pair 0.00; z +nan) B1 -0.55(0.56; pair 0.56; z -1.0) B3 -0.28(0.19; pair 0.16; z -1.5) B7 -0.60(0.32; pair 0.48; z -1.8) B15 -1.32(0.63; pair 0.77; z -2.1) B31 -1.87(1.10; pair 0.87; z -1.7)
+C_cav30 - base, k-averaged                   ALC -0.369 ± 0.170 (z -2.17) | MA -0.37(0.17) | B0 +0.00(0.00) B1 -0.28(0.28) B3 -0.14(0.09) B7 -0.30(0.16) B15 -0.66(0.32) B31 -0.94(0.55) | draws 36 pair-draws 54
+SCP_combo - base, uncleaned MathArena (combo_v1) ALC -2.547 ± 0.744 (z -3.42) | MA -2.55(0.74) | B0 -8.15(2.66) B1 -4.16(1.46) B3 -2.04(0.66) B7 -1.20(0.36) B15 -0.76(0.28) B31 -1.00(0.39) | draws 36 pair-draws 54
+  SCP_combo (uncleaned) MA k=1 [18 draws, 18 pair-draws]: ALC -2.72(1.21; pair 1.21; z -2.2) B0 -9.31(4.01; pair 4.01; z -2.3) B1 -4.85(2.35; pair 2.35; z -2.1) B3 -2.57(1.13; pair 1.13; z -2.3) B7 -1.24(0.53; pair 0.53; z -2.4) B15 -0.24(0.16; pair 0.16; z -1.5) B31 -0.05(0.12; pair 0.12; z -0.5)
+  SCP_combo (uncleaned) MA k=2 [18 draws, 36 pair-draws]: ALC -2.38(0.87; pair 0.88; z -2.7) B0 -6.99(3.50; pair 3.06; z -2.0) B1 -3.47(1.74; pair 1.77; z -2.0) B3 -1.51(0.69; pair 0.76; z -2.2) B7 -1.16(0.48; pair 0.48; z -2.4) B15 -1.27(0.54; pair 0.46; z -2.4) B31 -1.94(0.77; pair 0.68; z -2.5)
+C_cav30 - base, uncleaned MathArena (combo_v1) ALC -0.354 ± 0.143 (z -2.48) | MA -0.35(0.14) | B0 +0.00(0.00) B1 -0.08(0.04) B3 -0.26(0.13) B7 -0.45(0.20) B15 -0.53(0.27) B31 -0.91(0.40) | draws 36 pair-draws 54
+  C_cav30 (uncleaned) MA k=1 [18 draws, 18 pair-draws]: ALC +0.00(0.00; pair 0.00; z +nan) B0 +0.00(0.00; pair 0.00; z +nan) B1 +0.00(0.00; pair 0.00; z +nan) B3 +0.00(0.00; pair 0.00; z +nan) B7 +0.00(0.00; pair 0.00; z +nan) B15 +0.00(0.00; pair 0.00; z +nan) B31 +0.00(0.00; pair 0.00; z +nan)
+  C_cav30 (uncleaned) MA k=2 [18 draws, 36 pair-draws]: ALC -0.71(0.29; pair 0.22; z -2.5) B0 +0.00(0.00; pair 0.00; z +nan) B1 -0.15(0.08; pair 0.08; z -2.0) B3 -0.53(0.26; pair 0.21; z -2.0) B7 -0.90(0.41; pair 0.31; z -2.2) B15 -1.06(0.53; pair 0.42; z -2.0) B31 -1.83(0.81; pair 0.71; z -2.3)
+  cleaned MathArena base: pooled B0 Brier 0.3894, ALC macro 0.2445; uncleaned base B0 0.3543
+
+== fw_kstress: reproduction of combo_v1 rows at k 1,2
+  SCP_combo: 216 of 216 joined, max |diff| 0.00e+00
+  w20_SCP: 216 of 216 joined, max |diff| 0.00e+00
+  l15_SCP: 216 of 216 joined, max |diff| 0.00e+00
+
+== fw_kstress: W20+SCP - REF+SCP and L15+SCP - W20+SCP by pairs per benchmark (k)
+w20_SCP - SCP_combo k=1                      ALC -3.314 ± 1.126 (z -2.94) | MA -14.00(3.63) MSWE +0.41(0.93) REAL -0.54(2.24) RCB +0.88(1.11) | B0 -8.29(1.48) B1 -8.41(2.71) B3 -3.24(1.68) B7 -0.75(0.89) B15 -0.04(0.43) B31 +0.02(0.21) | draws 72 pair-draws 72
+w20_SCP - SCP_combo k=2                      ALC -1.083 ± 0.690 (z -1.57) | MA -6.63(1.68) MSWE +2.99(0.86) REAL -0.89(1.22) RCB +0.20(1.60) | B0 -7.32(1.06) B1 -1.51(2.15) B3 -0.88(1.00) B7 +0.53(0.62) B15 +0.07(0.29) B31 +0.07(0.13) | draws 72 pair-draws 144
+w20_SCP - SCP_combo k=4                      ALC -0.761 ± 0.453 (z -1.68) | MA -4.88(1.34) MSWE +1.92(0.69) REAL +0.87(0.72) RCB -0.95(0.69) | B0 -8.09(0.69) B1 -1.18(1.33) B3 +1.18(0.74) B7 +0.21(0.32) B15 +0.01(0.11) B31 +0.04(0.04) | draws 72 pair-draws 288
+w20_SCP - SCP_combo k-avg(1,2)               ALC -2.199 ± 0.660 (z -3.33) | MA -10.31(2.00) MSWE +1.70(0.64) REAL -0.72(1.28) RCB +0.54(0.98) | B0 -7.81(0.91) B1 -4.96(1.73) B3 -2.06(0.98) B7 -0.11(0.54) B15 +0.02(0.26) B31 +0.04(0.12) | draws 144 pair-draws 216
+l15_SCP - w20_SCP k=1                        ALC -0.483 ± 0.572 (z -0.84) | MA +1.77(1.67) MSWE -0.03(0.79) REAL -1.13(1.19) RCB -2.54(0.66) | B0 -7.94(1.37) B1 +0.60(1.64) B3 +0.68(1.04) B7 +0.06(0.62) B15 +0.13(0.25) B31 +0.13(0.12) | draws 72 pair-draws 72
+l15_SCP - w20_SCP k=2                        ALC -1.235 ± 0.386 (z -3.20) | MA -1.60(0.78) MSWE -0.64(0.67) REAL -0.65(0.81) RCB -2.05(0.83) | B0 -6.23(1.11) B1 -2.70(1.48) B3 +0.03(0.60) B7 -0.37(0.40) B15 -0.02(0.18) B31 +0.01(0.08) | draws 72 pair-draws 144
+l15_SCP - w20_SCP k=4                        ALC -1.358 ± 0.253 (z -5.37) | MA -1.40(0.68) MSWE -1.18(0.43) REAL -1.08(0.42) RCB -1.76(0.44) | B0 -7.09(0.79) B1 -1.98(0.92) B3 -1.13(0.48) B7 -0.18(0.19) B15 +0.04(0.07) B31 +0.00(0.03) | draws 72 pair-draws 288
+l15_SCP - w20_SCP k-avg(1,2)                 ALC -0.859 ± 0.345 (z -2.49) | MA +0.09(0.92) MSWE -0.33(0.52) REAL -0.89(0.72) RCB -2.30(0.53) | B0 -7.08(0.88) B1 -1.05(1.11) B3 +0.36(0.60) B7 -0.15(0.37) B15 +0.06(0.15) B31 +0.07(0.07) | draws 144 pair-draws 216
+l15_SCP - SCP_combo k=1                      ALC -3.797 ± 0.922 (z -4.12) | MA -12.23(2.41) MSWE +0.37(1.33) REAL -1.67(2.12) RCB -1.66(1.25) | B0 -16.23(2.70) B1 -7.80(1.85) B3 -2.55(1.01) B7 -0.69(0.56) B15 +0.10(0.23) B31 +0.16(0.11) | draws 72 pair-draws 72
+l15_SCP - SCP_combo k=2                      ALC -2.318 ± 0.572 (z -4.05) | MA -8.23(1.34) MSWE +2.36(0.76) REAL -1.54(1.36) RCB -1.85(1.01) | B0 -13.54(2.05) B1 -4.21(1.27) B3 -0.86(0.59) B7 +0.16(0.30) B15 +0.06(0.13) B31 +0.08(0.06) | draws 72 pair-draws 144
+l15_SCP - SCP_combo k=4                      ALC -2.119 ± 0.340 (z -6.23) | MA -6.29(0.84) MSWE +0.73(0.72) REAL -0.21(0.63) RCB -2.71(0.48) | B0 -15.18(1.43) B1 -3.16(0.78) B3 +0.05(0.36) B7 +0.03(0.15) B15 +0.04(0.05) B31 +0.04(0.02) | draws 72 pair-draws 288
+l15_SCP - SCP_combo k-avg(1,2)               ALC -3.058 ± 0.543 (z -5.63) | MA -10.23(1.38) MSWE +1.37(0.76) REAL -1.61(1.26) RCB -1.76(0.80) | B0 -14.89(1.69) B1 -6.01(1.12) B3 -1.70(0.58) B7 -0.27(0.32) B15 +0.08(0.13) B31 +0.12(0.06) | draws 144 pair-draws 216
+
+== fw_kstress: variance splits at W20 (pre-registered R1, swarm/round4/frontier_watch.md section 5)
+  w20_s54_SCP: invariance max |d| at k=1 1.41e-05, at B0 (all k) 8.73e-06
+w20_s54_SCP - w20_SCP k=2                    ALC +0.011 ± 0.304 (z +0.04) | MA +0.97(0.67) MSWE +0.10(0.53) REAL -0.87(0.74) RCB -0.16(0.45) | B0 +0.00(0.00) B1 -0.09(0.77) B3 +0.46(0.59) B7 -0.23(0.32) B15 -0.04(0.18) B31 -0.09(0.11) | draws 72 pair-draws 144
+w20_s54_SCP - w20_SCP k=4                    ALC -0.025 ± 0.302 (z -0.08) | MA +0.93(0.63) MSWE +0.25(0.48) REAL -2.09(0.70) RCB +0.80(0.59) | B0 +0.00(0.00) B1 -0.44(0.74) B3 +0.00(0.58) B7 +0.19(0.34) B15 +0.12(0.22) B31 -0.01(0.10) | draws 72 pair-draws 288
+  R1 w20_s54_SCP: (b) k=2 +0.01 z +0.04 -> FAIL; (c) k=4 -0.02 -> pass; (d) benchmarks above +0.3: ['MA k=2 +0.97', 'MA k=4 +0.93', 'RCB k=4 +0.80'] -> FAIL
+  w20_s85_SCP: invariance max |d| at k=1 1.74e-05, at B0 (all k) 1.08e-05
+w20_s85_SCP - w20_SCP k=2                    ALC +0.267 ± 0.198 (z +1.35) | MA -0.04(0.45) MSWE +0.05(0.30) REAL +0.91(0.50) RCB +0.15(0.28) | B0 -0.00(0.00) B1 +0.37(0.35) B3 +0.23(0.37) B7 +0.45(0.25) B15 +0.20(0.17) B31 +0.18(0.10) | draws 72 pair-draws 144
+w20_s85_SCP - w20_SCP k=4                    ALC +0.498 ± 0.198 (z +2.52) | MA +0.04(0.37) MSWE +0.06(0.26) REAL +2.00(0.53) RCB -0.11(0.38) | B0 -0.00(0.00) B1 +0.82(0.34) B3 +0.81(0.36) B7 +0.51(0.26) B15 +0.26(0.19) B31 +0.17(0.10) | draws 72 pair-draws 288
+  R1 w20_s85_SCP: (b) k=2 +0.27 z +1.35 -> FAIL; (c) k=4 +0.50 -> FAIL; (d) benchmarks above +0.3: ['REAL k=2 +0.91', 'REAL k=4 +2.00'] -> FAIL
+  R2: W20+SCP - REF+SCP at k=4 -0.76 (z -1.68); fires if > +0.5 with z >= 1.5 -> does not fire
+  absolute macro SCP_combo: k1 0.1888 k2 0.1933 k4 0.1970
+  absolute macro w20_SCP: k1 0.1855 k2 0.1922 k4 0.1962
+  absolute macro l15_SCP: k1 0.1850 k2 0.1910 k4 0.1949
+
+== ld_guard_1007 (pair-keyed, ks 1,2, 20 runs; adj_wide draws) vs base
+  base reproduces adj_wide: 240 of 240 joined, max |diff| 0.00e+00
+m225_mu25_d14 - base                         ALC -0.443 ± 0.909 (z -0.49) | MA -10.82(2.31) MSWE +5.01(1.53) REAL -0.58(1.62) RCB +4.62(1.71) | B0 -7.39(1.03) B1 -1.08(2.50) B3 +0.52(1.50) B7 +1.22(0.79) B15 +0.62(0.37) B31 +0.39(0.19) | draws 160 pair-draws 240
+  absolute macro m225_mu25_d14 0.1917 (base 0.1921)
+m250_mu25_d06 - base                         ALC +0.386 ± 0.670 (z +0.58) | MA -5.74(1.69) MSWE +2.89(1.15) REAL +1.12(1.28) RCB +3.27(1.17) | B0 +0.91(0.35) B1 -0.96(1.89) B3 +0.33(1.19) B7 +1.15(0.66) B15 +0.74(0.33) B31 +0.43(0.17) | draws 160 pair-draws 240
+  absolute macro m250_mu25_d06 0.1925 (base 0.1921)
+w20_m15 - base (adj_wide; W20 at m0 -1.5)    ALC -1.984 ± 0.974 (z -2.04) | MA -14.46(2.50) MSWE +5.17(1.49) REAL -1.38(1.98) RCB +2.73(1.68) | B0 -16.26(2.37) B1 -3.77(2.30) B3 -0.09(1.36) B7 +1.15(0.71) B15 +0.70(0.33) B31 +0.44(0.16) | draws 160 pair-draws 240

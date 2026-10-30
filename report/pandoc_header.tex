@@ -1,0 +1,20 @@
+% Round-10 PDF build: official NeurIPS 2026 style, non-anonymous (final) option.
+% Loaded after pandoc's default preamble; neurips_2026.sty sits next to the report (report/neurips_2026.sty).
+% [final] alone fails: its notice string expands \@trackname, which only a track option defines. The OpenReview venue
+% is NeurIPS.cc/2026/Workshop/PAIEC, so the single-blind workshop option with the competition as the workshop title
+% matches the venue; [final,main] would print the main-conference notice instead.
+\usepackage[final,sglblindworkshop]{neurips_2026}
+\workshoptitle{Predictive AI Evaluation Competition (PAIEC)}
+% tables: same settings as the round-5 preview (footnotesize, narrow column padding)
+\usepackage{etoolbox}
+\AtBeginEnvironment{longtable}{\footnotesize\setlength{\tabcolsep}{3pt}}
+\usepackage{float}
+\setlength{\LTpre}{4pt}\setlength{\LTpost}{4pt}
+% figure captions already carry their own "Figure N." label in the text
+\usepackage[labelformat=empty]{caption}
+% v4_1: let long URLs in the references break after any letter or digit (xurl.sty is not installed here; this is the
+% url-package equivalent). hyperref, loaded later by pandoc's template, keeps these break rules.
+\usepackage{url}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z\do\0\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9}
+\makeatother

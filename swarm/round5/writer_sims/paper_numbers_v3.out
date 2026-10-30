@@ -1,0 +1,154 @@
+
+== combo_v1 (bench-keyed, ks 1,2, 18 runs): absolute macros
+  const_0.5        0.2500   k1 0.2500   k2 0.2500
+  empirical_mean   0.2250   k1 0.2152   k2 0.2347
+  smoothed_k2      0.2016   k1 0.1966   k2 0.2067
+  v1_default       0.1947   k1 0.1920   k2 0.1974
+  v1_tuned         0.1925   k1 0.1893   k2 0.1957
+  v1_subjects      0.1891   k1 0.1853   k2 0.1929
+  base             0.1923   k1 0.1899   k2 0.1946
+  S_subjcal        0.1914   k1 0.1888   k2 0.1940
+  C_cav30          0.1919   k1 0.1899   k2 0.1939
+  P_simpool        0.1923   k1 0.1899   k2 0.1946
+  SCP_combo        0.1910   k1 0.1888   k2 0.1933
+  w20_base         0.1899   k1 0.1864   k2 0.1935
+  w20_SCP          0.1888   k1 0.1855   k2 0.1922
+  l15_base         0.1893   k1 0.1862   k2 0.1923
+  l15_SCP          0.1880   k1 0.1850   k2 0.1910
+
+== combo_v1 components vs base (REF)
+S_subjcal - base                               ALC -0.883 ± 0.210 | MA -2.19 MSWE -0.25 REAL -1.14 RCB +0.06 | B0 -2.61(0.70) B1 -1.55(0.41) B3 -0.90(0.22) B7 -0.46(0.11) B15 -0.16(0.06) B31 -0.06(0.03) | draws 144 pair-draws 216
+C_cav30 - base                                 ALC -0.351 ± 0.096 | MA -0.35 MSWE -0.29 REAL -0.25 RCB -0.51 | B0 +0.00(0.00) B1 -0.06(0.03) B3 -0.20(0.06) B7 -0.33(0.10) B15 -0.60(0.19) B31 -1.14(0.30) | draws 144 pair-draws 216
+P_simpool - base                               ALC -0.001 ± 0.007 | MA +0.00 MSWE -0.01 REAL +0.00 RCB -0.00 | B0 +0.00(0.00) B1 +0.03(0.03) B3 -0.02(0.01) B7 -0.01(0.01) B15 -0.01(0.01) B31 -0.00(0.00) | draws 144 pair-draws 216
+SCP_combo - base                               ALC -1.240 ± 0.224 | MA -2.55 MSWE -0.54 REAL -1.41 RCB -0.46 | B0 -2.61(0.70) B1 -1.58(0.41) B3 -1.12(0.22) B7 -0.80(0.15) B15 -0.78(0.20) B31 -1.21(0.30) | draws 144 pair-draws 216
+S_subjcal - base k=[1]                         ALC -1.129 ± 0.336 | MA -2.72 MSWE -0.55 REAL -1.13 RCB -0.12 | B0 -3.08(1.07) B1 -1.92(0.65) B3 -1.24(0.36) B7 -0.69(0.18) B15 -0.21(0.08) B31 -0.11(0.05) | draws 72 pair-draws 72
+S_subjcal - base k=[2]                         ALC -0.636 ± 0.253 | MA -1.67 MSWE +0.05 REAL -1.16 RCB +0.23 | B0 -2.14(0.91) B1 -1.19(0.49) B3 -0.57(0.24) B7 -0.23(0.14) B15 -0.12(0.08) B31 -0.02(0.04) | draws 72 pair-draws 144
+C_cav30 - base k=[1]                           ALC +0.000 ± 0.000 | MA +0.00 MSWE +0.00 REAL +0.00 RCB +0.00 | B0 +0.00(0.00) B1 +0.00(0.00) B3 +0.00(0.00) B7 +0.00(0.00) B15 +0.00(0.00) B31 +0.00(0.00) | draws 72 pair-draws 72
+C_cav30 - base k=[2]                           ALC -0.703 ± 0.191 | MA -0.71 MSWE -0.59 REAL -0.51 RCB -1.01 | B0 +0.00(0.00) B1 -0.12(0.06) B3 -0.40(0.12) B7 -0.65(0.20) B15 -1.20(0.37) B31 -2.28(0.59) | draws 72 pair-draws 144
+SCP_combo - base k=[1]                         ALC -1.129 ± 0.336 | MA -2.72 MSWE -0.55 REAL -1.13 RCB -0.12 | B0 -3.08(1.07) B1 -1.92(0.65) B3 -1.24(0.36) B7 -0.69(0.18) B15 -0.21(0.08) B31 -0.11(0.05) | draws 72 pair-draws 72
+SCP_combo - base k=[2]                         ALC -1.350 ± 0.295 | MA -2.38 MSWE -0.54 REAL -1.69 RCB -0.79 | B0 -2.14(0.91) B1 -1.25(0.49) B3 -1.01(0.26) B7 -0.91(0.24) B15 -1.35(0.39) B31 -2.31(0.59) | draws 72 pair-draws 144
+
+== combo_v1 transfer to other level blocks
+w20_SCP - w20_base                             ALC -1.069 ± 0.169 | MA -1.74 MSWE -0.57 REAL -1.28 RCB -0.69 | B0 -2.51(0.60) B1 -1.24(0.28) B3 -0.89(0.16) B7 -0.65(0.13) B15 -0.72(0.20) B31 -1.19(0.30) | draws 144 pair-draws 216
+l15_SCP - l15_base                             ALC -1.310 ± 0.215 | MA -2.27 MSWE -0.66 REAL -1.52 RCB -0.79 | B0 -2.88(0.69) B1 -1.69(0.38) B3 -1.20(0.22) B7 -0.83(0.15) B15 -0.79(0.20) B31 -1.21(0.30) | draws 144 pair-draws 216
+
+== combo_v1 level blocks (no composite / with composite)
+w20_base - base                                ALC -2.369 ± 0.675 | MA -11.12 MSWE +1.72 REAL -0.85 RCB +0.77 | B0 -7.91(0.94) B1 -5.30(1.77) B3 -2.30(0.99) B7 -0.26(0.54) B15 -0.04(0.26) B31 +0.02(0.12) | draws 144 pair-draws 216
+w20_base - base k=[1]                          ALC -3.564 ± 1.139 | MA -15.06 MSWE +0.46 REAL -0.80 RCB +1.14 | B0 -8.36(1.52) B1 -8.88(2.75) B3 -3.59(1.69) B7 -1.02(0.89) B15 -0.13(0.43) B31 -0.03(0.21) | draws 72 pair-draws 72
+w20_base - base k=[2]                          ALC -1.175 ± 0.725 | MA -7.18 MSWE +2.98 REAL -0.90 RCB +0.39 | B0 -7.45(1.12) B1 -1.73(2.23) B3 -1.01(1.03) B7 +0.50(0.62) B15 +0.05(0.29) B31 +0.06(0.13) | draws 72 pair-draws 144
+l15_base - base                                ALC -2.987 ± 0.556 | MA -10.51 MSWE +1.49 REAL -1.49 RCB -1.43 | B0 -14.61(1.73) B1 -5.91(1.15) B3 -1.63(0.60) B7 -0.24(0.32) B15 +0.08(0.14) B31 +0.12(0.06) | draws 144 pair-draws 216
+l15_base - base k=[1]                          ALC -3.677 ± 0.943 | MA -12.61 MSWE +0.69 REAL -1.54 RCB -1.25 | B0 -15.79(2.76) B1 -7.62(1.89) B3 -2.42(1.03) B7 -0.64(0.56) B15 +0.11(0.24) B31 +0.16(0.11) | draws 72 pair-draws 72
+l15_base - base k=[2]                          ALC -2.296 ± 0.587 | MA -8.41 MSWE +2.29 REAL -1.45 RCB -1.61 | B0 -13.44(2.09) B1 -4.19(1.30) B3 -0.83(0.60) B7 +0.17(0.30) B15 +0.06(0.13) B31 +0.08(0.06) | draws 72 pair-draws 144
+w20_SCP - SCP_combo                            ALC -2.199 ± 0.660 | MA -10.31 MSWE +1.70 REAL -0.72 RCB +0.54 | B0 -7.81(0.91) B1 -4.96(1.73) B3 -2.06(0.98) B7 -0.11(0.54) B15 +0.02(0.26) B31 +0.04(0.12) | draws 144 pair-draws 216
+w20_SCP - SCP_combo k=[1]                      ALC -3.314 ± 1.126 | MA -14.00 MSWE +0.41 REAL -0.54 RCB +0.88 | B0 -8.29(1.48) B1 -8.41(2.71) B3 -3.24(1.68) B7 -0.75(0.89) B15 -0.04(0.43) B31 +0.02(0.21) | draws 72 pair-draws 72
+w20_SCP - SCP_combo k=[2]                      ALC -1.083 ± 0.690 | MA -6.63 MSWE +2.99 REAL -0.89 RCB +0.20 | B0 -7.32(1.06) B1 -1.51(2.15) B3 -0.88(1.00) B7 +0.53(0.62) B15 +0.07(0.29) B31 +0.07(0.13) | draws 72 pair-draws 144
+l15_SCP - SCP_combo                            ALC -3.058 ± 0.543 | MA -10.23 MSWE +1.37 REAL -1.61 RCB -1.76 | B0 -14.89(1.69) B1 -6.01(1.12) B3 -1.70(0.58) B7 -0.27(0.32) B15 +0.08(0.13) B31 +0.12(0.06) | draws 144 pair-draws 216
+l15_SCP - SCP_combo k=[1]                      ALC -3.797 ± 0.922 | MA -12.23 MSWE +0.37 REAL -1.67 RCB -1.66 | B0 -16.23(2.70) B1 -7.80(1.85) B3 -2.55(1.01) B7 -0.69(0.56) B15 +0.10(0.23) B31 +0.16(0.11) | draws 72 pair-draws 72
+l15_SCP - SCP_combo k=[2]                      ALC -2.318 ± 0.572 | MA -8.23 MSWE +2.36 REAL -1.54 RCB -1.85 | B0 -13.54(2.05) B1 -4.21(1.27) B3 -0.86(0.59) B7 +0.16(0.30) B15 +0.06(0.13) B31 +0.08(0.06) | draws 72 pair-draws 144
+w20_SCP - base                                 ALC -3.438 ± 0.718 | MA -12.86 MSWE +1.15 REAL -2.13 RCB +0.08 | B0 -10.42(1.16) B1 -6.54(1.81) B3 -3.18(0.98) B7 -0.91(0.55) B15 -0.76(0.31) B31 -1.17(0.32) | draws 144 pair-draws 216
+w20_SCP - base k=[1]                           ALC -4.443 ± 1.174 | MA -16.72 MSWE -0.14 REAL -1.67 RCB +0.75 | B0 -11.37(1.75) B1 -10.32(2.79) B3 -4.48(1.67) B7 -1.44(0.89) B15 -0.24(0.42) B31 -0.09(0.22) | draws 72 pair-draws 72
+w20_SCP - base k=[2]                           ALC -2.433 ± 0.829 | MA -9.01 MSWE +2.45 REAL -2.58 RCB -0.59 | B0 -9.46(1.51) B1 -2.76(2.30) B3 -1.89(1.03) B7 -0.38(0.64) B15 -1.28(0.46) B31 -2.25(0.59) | draws 72 pair-draws 144
+l15_SCP - base                                 ALC -4.297 ± 0.629 | MA -12.78 MSWE +0.82 REAL -3.02 RCB -2.22 | B0 -17.50(1.98) B1 -7.59(1.25) B3 -2.83(0.63) B7 -1.06(0.36) B15 -0.70(0.24) B31 -1.09(0.31) | draws 144 pair-draws 216
+l15_SCP - base k=[1]                           ALC -4.926 ± 1.026 | MA -14.94 MSWE -0.18 REAL -2.80 RCB -1.79 | B0 -19.31(3.02) B1 -9.72(2.04) B3 -3.79(1.10) B7 -1.38(0.62) B15 -0.11(0.23) B31 +0.04(0.12) | draws 72 pair-draws 72
+l15_SCP - base k=[2]                           ALC -3.668 ± 0.730 | MA -10.61 MSWE +1.82 REAL -3.23 RCB -2.65 | B0 -15.69(2.57) B1 -5.47(1.46) B3 -1.86(0.63) B7 -0.75(0.36) B15 -1.29(0.41) B31 -2.23(0.60) | draws 72 pair-draws 144
+
+== combo_v1 additivity: SCP - S - C - P + 2 base
+additivity residual                            ALC -0.004 ± 0.002 | MA +0.00 MSWE +0.00 REAL -0.01 RCB -0.01 | B0 +0.00(0.00) B1 -0.00(0.00) B3 -0.00(0.00) B7 -0.01(0.00) B15 -0.01(0.00) B31 -0.01(0.00) | draws 144 pair-draws 216
+
+== combo_v1 ladder on identical bench-keyed draws
+smoothed_k2 - const_0.5                        ALC -48.350 ± 5.153 | MA -15.87 MSWE -66.46 REAL -72.06 RCB -39.01 | B0 +16.11(4.16) B1 -25.32(5.77) B3 -51.30(6.04) B7 -63.93(6.37) B15 -71.60(6.09) B31 -75.32(5.97) | draws 144 pair-draws 216
+v1_default - smoothed_k2                       ALC -6.925 ± 1.130 | MA -19.45 MSWE -7.56 REAL +3.70 RCB -4.39 | B0 -34.17(3.27) B1 -11.61(2.34) B3 -2.22(1.90) B7 +0.19(1.36) B15 -1.76(0.95) B31 -4.28(0.97) | draws 144 pair-draws 216
+v1_tuned - v1_default                          ALC -2.245 ± 0.495 | MA -3.74 MSWE -0.33 REAL -3.35 RCB -1.56 | B0 -0.87(0.61) B1 -0.94(0.96) B3 -2.47(0.63) B7 -2.87(0.61) B15 -2.97(0.65) B31 -3.08(0.70) | draws 144 pair-draws 216
+v1_subjects - v1_tuned                         ALC -3.385 ± 0.505 | MA -3.43 MSWE -2.20 REAL -3.76 RCB -4.14 | B0 -11.55(1.66) B1 -5.97(0.93) B3 -3.14(0.55) B7 -1.41(0.27) B15 -0.52(0.13) B31 -0.22(0.07) | draws 144 pair-draws 216
+base - v1_subjects                             ALC +3.182 ± 1.738 | MA +25.68 MSWE -9.91 REAL -1.94 RCB -1.10 | B0 +22.88(5.71) B1 +6.32(3.59) B3 +0.07(1.81) B7 -0.92(0.97) B15 -0.74(0.40) B31 -0.50(0.19) | draws 144 pair-draws 216
+base - smoothed_k2                             ALC -9.373 ± 1.642 | MA -0.95 MSWE -20.01 REAL -5.35 RCB -11.19 | B0 -23.70(6.36) B1 -12.21(3.63) B3 -7.76(2.10) B7 -5.02(1.27) B15 -5.99(1.17) B31 -8.09(1.34) | draws 144 pair-draws 216
+SCP_combo - smoothed_k2                        ALC -10.612 ± 1.675 | MA -3.49 MSWE -20.55 REAL -6.76 RCB -11.64 | B0 -26.31(6.47) B1 -13.79(3.70) B3 -8.89(2.17) B7 -5.81(1.31) B15 -6.77(1.22) B31 -9.30(1.42) | draws 144 pair-draws 216
+w20_SCP - smoothed_k2                          ALC -12.811 ± 1.360 | MA -13.81 MSWE -18.85 REAL -7.48 RCB -11.11 | B0 -34.12(5.73) B1 -18.75(2.96) B3 -10.95(1.58) B7 -5.93(1.05) B15 -6.75(1.17) B31 -9.25(1.40) | draws 144 pair-draws 216
+l15_SCP - smoothed_k2                          ALC -13.670 ± 1.376 | MA -13.72 MSWE -19.18 REAL -8.37 RCB -13.40 | B0 -41.20(5.48) B1 -19.80(3.01) B3 -10.59(1.85) B7 -6.08(1.23) B15 -6.69(1.21) B31 -9.18(1.42) | draws 144 pair-draws 216
+  P changed 20 of 216 pair-draws (benches: {'multi_swebench': 9, 'matharena': 6, 'researchcodebench': 3, 'real_webagents': 2})
+
+== combo_sy (combo_v1 draws): reproduction check vs combo_v1
+  base: 216 joined rows, max |diff| 0.00e+00
+  S_subjcal: 216 joined rows, max |diff| 0.00e+00
+  SCP_combo: 216 joined rows, max |diff| 0.00e+00
+
+== combo_sy contrasts
+S_sy10 - base                                  ALC -0.355 ± 0.175 | MA -0.32 MSWE -0.19 REAL -1.08 RCB +0.17 | B0 -0.94(0.53) B1 -0.56(0.34) B3 -0.41(0.17) B7 -0.24(0.11) B15 -0.07(0.05) B31 -0.04(0.02) | draws 144 pair-draws 216
+SCP_sy10 - base                                ALC -0.711 ± 0.194 | MA -0.67 MSWE -0.49 REAL -1.35 RCB -0.34 | B0 -0.94(0.53) B1 -0.59(0.34) B3 -0.63(0.18) B7 -0.59(0.15) B15 -0.69(0.20) B31 -1.18(0.30) | draws 144 pair-draws 216
+SCP_sy10 - SCP_combo                           ALC +0.528 ± 0.139 | MA +1.88 MSWE +0.06 REAL +0.06 RCB +0.11 | B0 +1.67(0.44) B1 +0.99(0.25) B3 +0.49(0.14) B7 +0.21(0.09) B15 +0.09(0.04) B31 +0.03(0.02) | draws 144 pair-draws 216
+S_sy10 - S_subjcal                             ALC +0.527 ± 0.139 | MA +1.88 MSWE +0.06 REAL +0.06 RCB +0.11 | B0 +1.67(0.44) B1 +0.99(0.25) B3 +0.49(0.14) B7 +0.21(0.09) B15 +0.09(0.04) B31 +0.03(0.02) | draws 144 pair-draws 216
+w20_SCP_sy10 - w20_SCP (combo_v1)              ALC +0.368 ± 0.093 | MA +1.21 MSWE +0.05 REAL +0.07 RCB +0.15 | B0 +1.46(0.37) B1 +0.66(0.16) B3 +0.28(0.09) B7 +0.11(0.05) B15 +0.05(0.03) B31 +0.02(0.01) | draws 144 pair-draws 216
+
+== combo_np contrasts (rule: SCP_np - SCP_combo <= +0.2 macro, no benchmark worse than +0.5)
+SCP_np - SCP_combo                             ALC -0.122 ± 0.405 | MA -1.99 MSWE +0.19 REAL +1.26 RCB +0.05 | B0 -0.38(1.23) B1 -0.32(0.76) B3 -0.03(0.37) B7 -0.01(0.25) B15 -0.06(0.11) B31 +0.01(0.04) | draws 144 pair-draws 216
+  per-bench SE: MA ±1.53, MSWE ±0.21, REAL ±0.44, RCB ±0.22
+S_np - base                                    ALC -1.011 ± 0.357 | MA -4.18 MSWE -0.07 REAL +0.10 RCB +0.10 | B0 -2.99(1.05) B1 -1.88(0.67) B3 -0.95(0.34) B7 -0.47(0.25) B15 -0.23(0.12) B31 -0.06(0.04) | draws 144 pair-draws 216
+base_np - base                                 ALC -0.071 ± 0.266 | MA -1.33 MSWE +0.15 REAL +0.87 RCB +0.02 | B0 -0.27(0.80) B1 -0.20(0.50) B3 -0.01(0.25) B7 +0.00(0.17) B15 -0.03(0.07) B31 +0.02(0.03) | draws 144 pair-draws 216
+SCP_np - base                                  ALC -1.362 ± 0.366 | MA -4.54 MSWE -0.36 REAL -0.15 RCB -0.41 | B0 -2.99(1.05) B1 -1.90(0.67) B3 -1.16(0.35) B7 -0.81(0.27) B15 -0.84(0.22) B31 -1.20(0.30) | draws 144 pair-draws 216
+
+== pdpool_bench_k2 (bench-keyed, k=2, 20 runs, random partners) vs base
+cav_x1.5 - base                                ALC -0.408 ± 0.097 | MA -0.40 MSWE -0.31 REAL -0.33 RCB -0.59 | B0 +0.00(0.00) B1 -0.06(0.03) B3 -0.20(0.06) B7 -0.37(0.10) B15 -0.71(0.19) B31 -1.41(0.30) | draws 80 pair-draws 160
+cav_x2.0 - base                                ALC -0.520 ± 0.134 | MA -0.51 MSWE -0.41 REAL -0.41 RCB -0.75 | B0 +0.00(0.00) B1 -0.08(0.04) B3 -0.26(0.09) B7 -0.47(0.14) B15 -0.90(0.26) B31 -1.77(0.42) | draws 80 pair-draws 160
+    per-bench SE: MA ±0.22, MSWE ±0.23, REAL ±0.37, RCB ±0.23
+cav_x2.5 - base                                ALC -0.576 ± 0.159 | MA -0.57 MSWE -0.47 REAL -0.43 RCB -0.83 | B0 +0.00(0.00) B1 -0.10(0.05) B3 -0.30(0.10) B7 -0.53(0.16) B15 -0.99(0.31) B31 -1.94(0.49) | draws 80 pair-draws 160
+cav_x3.0 - base                                ALC -0.604 ± 0.176 | MA -0.60 MSWE -0.51 REAL -0.44 RCB -0.87 | B0 +0.00(0.00) B1 -0.10(0.06) B3 -0.32(0.12) B7 -0.56(0.18) B15 -1.03(0.34) B31 -2.00(0.54) | draws 80 pair-draws 160
+    per-bench SE: MA ±0.27, MSWE ±0.29, REAL ±0.49, RCB ±0.31
+cav_x4.0 - base                                ALC -0.623 ± 0.196 | MA -0.62 MSWE -0.55 REAL -0.43 RCB -0.89 | B0 +0.00(0.00) B1 -0.11(0.06) B3 -0.35(0.13) B7 -0.58(0.20) B15 -1.06(0.38) B31 -2.02(0.61) | draws 80 pair-draws 160
+headA_x2.0 - base                              ALC -0.474 ± 0.116 | MA -0.41 MSWE -0.38 REAL -0.39 RCB -0.72 | B0 +0.00(0.00) B1 -0.07(0.03) B3 -0.23(0.07) B7 -0.41(0.11) B15 -0.86(0.23) B31 -1.62(0.38) | draws 80 pair-draws 160
+map_x2.0 - base                                ALC -0.539 ± 0.244 | MA -0.54 MSWE -0.55 REAL -0.19 RCB -0.86 | B0 +0.00(0.00) B1 -0.14(0.11) B3 -0.38(0.19) B7 -0.47(0.26) B15 -0.82(0.46) B31 -1.76(0.70) | draws 80 pair-draws 160
+    per-bench SE: MA ±0.37, MSWE ±0.35, REAL ±0.68, RCB ±0.48
+si10 - base                                    ALC -0.231 ± 0.172 | MA -0.63 MSWE -0.32 REAL +0.71 RCB -0.68 | B0 -2.25(0.31) B1 -0.44(0.37) B3 +0.33(0.26) B7 +0.25(0.25) B15 -0.00(0.22) B31 -0.35(0.25) | draws 80 pair-draws 160
+si15 - base                                    ALC +0.085 ± 0.427 | MA -0.85 MSWE +0.02 REAL +2.46 RCB -1.29 | B0 -5.64(0.82) B1 -0.68(0.93) B3 +1.51(0.65) B7 +1.37(0.60) B15 +0.89(0.51) B31 +0.30(0.54) | draws 80 pair-draws 160
+si20 - base                                    ALC +1.153 ± 0.701 | MA -0.46 MSWE +1.39 REAL +5.10 RCB -1.43 | B0 -8.87(1.42) B1 -0.45(1.49) B3 +3.51(1.05) B7 +3.41(0.93) B15 +2.73(0.78) B31 +2.02(0.80) | draws 80 pair-draws 160
+
+== pair-keyed (old) vs bench-keyed (new) subsample on identical picks (k=2, 20 runs)
+cav_x2.0 - base, pair-keyed                    ALC -0.346 ± 0.119 | MA -0.46 MSWE +0.01 REAL -0.49 RCB -0.43 | B0 +0.00(0.00) B1 -0.03(0.03) B3 -0.10(0.06) B7 -0.24(0.13) B15 -0.62(0.23) B31 -1.48(0.40) | draws 80 pair-draws 160
+cav_x2.0 - base, bench-keyed                   ALC -0.520 ± 0.134 | MA -0.51 MSWE -0.41 REAL -0.41 RCB -0.75 | B0 +0.00(0.00) B1 -0.08(0.04) B3 -0.26(0.09) B7 -0.47(0.14) B15 -0.90(0.26) B31 -1.77(0.42) | draws 80 pair-draws 160
+cav_x2.0: bench-keyed minus pair-keyed         ALC -0.174 ± 0.087 | MA -0.05 MSWE -0.42 REAL +0.09 RCB -0.32 | B0 +0.00(0.00) B1 -0.05(0.03) B3 -0.16(0.07) B7 -0.23(0.11) B15 -0.28(0.18) B31 -0.29(0.27) | draws 80 pair-draws 160
+cav_x3.0 - base, pair-keyed                    ALC -0.393 ± 0.158 | MA -0.55 MSWE +0.02 REAL -0.56 RCB -0.49 | B0 +0.00(0.00) B1 -0.04(0.04) B3 -0.12(0.08) B7 -0.26(0.17) B15 -0.71(0.31) B31 -1.68(0.53) | draws 80 pair-draws 160
+cav_x3.0 - base, bench-keyed                   ALC -0.604 ± 0.176 | MA -0.60 MSWE -0.51 REAL -0.44 RCB -0.87 | B0 +0.00(0.00) B1 -0.10(0.06) B3 -0.32(0.12) B7 -0.56(0.18) B15 -1.03(0.34) B31 -2.00(0.54) | draws 80 pair-draws 160
+cav_x3.0: bench-keyed minus pair-keyed         ALC -0.211 ± 0.115 | MA -0.05 MSWE -0.53 REAL +0.12 RCB -0.37 | B0 +0.00(0.00) B1 -0.07(0.04) B3 -0.20(0.09) B7 -0.30(0.14) B15 -0.33(0.24) B31 -0.33(0.36) | draws 80 pair-draws 160
+headA_x2.0 - base, pair-keyed                  ALC -0.308 ± 0.103 | MA -0.37 MSWE +0.02 REAL -0.46 RCB -0.41 | B0 +0.00(0.00) B1 -0.03(0.02) B3 -0.09(0.05) B7 -0.22(0.11) B15 -0.55(0.20) B31 -1.31(0.36) | draws 80 pair-draws 160
+headA_x2.0 - base, bench-keyed                 ALC -0.474 ± 0.116 | MA -0.41 MSWE -0.38 REAL -0.39 RCB -0.72 | B0 +0.00(0.00) B1 -0.07(0.03) B3 -0.23(0.07) B7 -0.41(0.11) B15 -0.86(0.23) B31 -1.62(0.38) | draws 80 pair-draws 160
+headA_x2.0: bench-keyed minus pair-keyed       ALC -0.167 ± 0.077 | MA -0.03 MSWE -0.40 REAL +0.07 RCB -0.31 | B0 +0.00(0.00) B1 -0.04(0.02) B3 -0.14(0.05) B7 -0.19(0.09) B15 -0.31(0.16) B31 -0.31(0.25) | draws 80 pair-draws 160
+si15 - base, pair-keyed                        ALC +0.207 ± 0.487 | MA -0.36 MSWE +0.08 REAL +2.30 RCB -1.20 | B0 -5.54(0.80) B1 +0.56(0.98) B3 +0.66(0.78) B7 +1.41(0.63) B15 +0.88(0.52) B31 +0.58(0.57) | draws 80 pair-draws 160
+si15 - base, bench-keyed                       ALC +0.085 ± 0.427 | MA -0.85 MSWE +0.02 REAL +2.46 RCB -1.29 | B0 -5.64(0.82) B1 -0.68(0.93) B3 +1.51(0.65) B7 +1.37(0.60) B15 +0.89(0.51) B31 +0.30(0.54) | draws 80 pair-draws 160
+si15: bench-keyed minus pair-keyed             ALC -0.122 ± 0.251 | MA -0.49 MSWE -0.06 REAL +0.16 RCB -0.09 | B0 -0.10(0.15) B1 -1.24(0.96) B3 +0.85(0.65) B7 -0.04(0.46) B15 +0.01(0.40) B31 -0.28(0.35) | draws 80 pair-draws 160
+si20 - base, pair-keyed                        ALC +1.351 ± 0.791 | MA +0.43 MSWE +1.37 REAL +4.88 RCB -1.28 | B0 -8.70(1.38) B1 +1.49(1.57) B3 +2.26(1.25) B7 +3.52(0.99) B15 +2.68(0.81) B31 +2.31(0.85) | draws 80 pair-draws 160
+si20 - base, bench-keyed                       ALC +1.153 ± 0.701 | MA -0.46 MSWE +1.39 REAL +5.10 RCB -1.43 | B0 -8.87(1.42) B1 -0.45(1.49) B3 +3.51(1.05) B7 +3.41(0.93) B15 +2.73(0.78) B31 +2.02(0.80) | draws 80 pair-draws 160
+si20: bench-keyed minus pair-keyed             ALC -0.199 ± 0.401 | MA -0.89 MSWE +0.02 REAL +0.22 RCB -0.15 | B0 -0.17(0.26) B1 -1.95(1.51) B3 +1.25(1.00) B7 -0.12(0.71) B15 +0.05(0.60) B31 -0.29(0.51) | draws 80 pair-draws 160
+
+== adj_wide (pair-keyed, ks 1,2, 20 runs) vs base (REF)
+n15D - base                                    ALC -2.382 ± 0.524 | MA -9.20 MSWE +2.12 REAL -1.92 RCB -0.53 | B0 -13.45(1.65) B1 -4.83(1.08) B3 -1.04(0.59) B7 +0.28(0.30) B15 +0.30(0.12) B31 +0.23(0.06) | draws 160 pair-draws 240
+n15D - base k=[1]                              ALC -2.755 ± 0.924 | MA -10.56 MSWE +1.76 REAL -2.90 RCB +0.67 | B0 -14.31(2.68) B1 -5.70(1.89) B3 -1.76(1.05) B7 +0.25(0.55) B15 +0.41(0.22) B31 +0.34(0.11) | draws 80 pair-draws 80
+n15D - base k=[2]                              ALC -2.008 ± 0.493 | MA -7.84 MSWE +2.48 REAL -0.94 RCB -1.74 | B0 -12.60(1.93) B1 -3.96(1.02) B3 -0.33(0.55) B7 +0.30(0.23) B15 +0.20(0.11) B31 +0.11(0.05) | draws 80 pair-draws 160
+w20_m20 - base                                 ALC -1.222 ± 0.640 | MA -9.04 MSWE +2.96 REAL -0.84 RCB +2.04 | B0 -7.22(0.88) B1 -3.17(1.63) B3 -0.54(1.03) B7 +0.64(0.56) B15 +0.43(0.27) B31 +0.29(0.13) | draws 160 pair-draws 240
+w20_m20 - base k=[1]                           ALC -1.193 ± 1.138 | MA -11.43 MSWE +3.35 REAL -1.46 RCB +4.77 | B0 -7.52(1.43) B1 -2.34(2.83) B3 -1.50(1.79) B7 +0.87(0.99) B15 +0.53(0.46) B31 +0.46(0.25) | draws 80 pair-draws 80
+w20_m20 - base k=[2]                           ALC -1.250 ± 0.585 | MA -6.64 MSWE +2.56 REAL -0.23 RCB -0.70 | B0 -6.92(1.04) B1 -4.00(1.61) B3 +0.41(1.03) B7 +0.40(0.51) B15 +0.34(0.26) B31 +0.12(0.10) | draws 80 pair-draws 160
+w20_m15 - base                                 ALC -1.984 ± 0.974 | MA -14.46 MSWE +5.17 REAL -1.38 RCB +2.73 | B0 -16.26(2.37) B1 -3.77(2.30) B3 -0.09(1.36) B7 +1.15(0.71) B15 +0.70(0.33) B31 +0.44(0.16) | draws 160 pair-draws 240
+w20_m15 - base k=[1]                           ALC -2.076 ± 1.744 | MA -17.79 MSWE +5.49 REAL -2.57 RCB +6.57 | B0 -17.27(3.84) B1 -3.27(4.06) B3 -1.23(2.40) B7 +1.51(1.28) B15 +0.90(0.58) B31 +0.69(0.31) | draws 80 pair-draws 80
+w20_m15 - base k=[2]                           ALC -1.893 ± 0.869 | MA -11.12 MSWE +4.84 REAL -0.19 RCB -1.11 | B0 -15.25(2.78) B1 -4.27(2.15) B3 +1.05(1.30) B7 +0.79(0.61) B15 +0.49(0.31) B31 +0.20(0.12) | draws 80 pair-draws 160
+w25_m25 - base                                 ALC +0.043 ± 0.711 | MA -7.27 MSWE +3.48 REAL +0.27 RCB +3.69 | B0 -0.55(0.39) B1 -1.15(2.04) B3 +0.07(1.25) B7 +0.90(0.66) B15 +0.51(0.32) B31 +0.32(0.16) | draws 160 pair-draws 240
+w25_m25 - base k=[1]                           ALC +0.341 ± 1.262 | MA -10.02 MSWE +4.30 REAL -0.03 RCB +7.12 | B0 -0.42(0.65) B1 +0.65(3.55) B3 -0.89(2.15) B7 +1.28(1.17) B15 +0.62(0.56) B31 +0.51(0.30) | draws 80 pair-draws 80
+w25_m25 - base k=[2]                           ALC -0.255 ± 0.657 | MA -4.51 MSWE +2.65 REAL +0.58 RCB +0.25 | B0 -0.68(0.45) B1 -2.96(2.03) B3 +1.03(1.26) B7 +0.52(0.60) B15 +0.40(0.31) B31 +0.13(0.11) | draws 80 pair-draws 160
+  base absolute macro 0.1921
+
+== pdadapt_sigma_g (pair-keyed, ks 1,2, 20 runs) vs base
+sg14 - base                                    ALC +0.481 ± 0.245 | MA +0.01 MSWE +1.67 REAL +0.81 RCB -0.56 | B0 -3.31(0.37) B1 +0.65(0.44) B3 +1.40(0.37) B7 +1.31(0.34) B15 +0.70(0.35) B31 +0.01(0.34) | draws 160 pair-draws 240
+sg20 - base                                    ALC +2.314 ± 0.575 | MA +1.05 MSWE +5.04 REAL +3.17 RCB -0.00 | B0 -8.04(1.00) B1 +2.49(1.12) B3 +4.64(0.89) B7 +4.53(0.75) B15 +3.23(0.73) B31 +1.39(0.65) | draws 160 pair-draws 240
+
+== pdadapt_simpool: sp (P2 at REF) - base, mean over pair-draws, SE clustered by draw
+  xname    ALC -0.582 (pair SE 0.204, draw SE 0.216; 144 pair-draws, 72 draws) | B0 +0.00 B1 -1.38 B3 -0.93 B7 -0.41 B15 -0.16 B31 -0.05
+  xrandom  ALC +0.000 (pair SE 0.000, draw SE 0.000; 48 pair-draws, 24 draws) | B0 +0.00 B1 +0.00 B3 -0.00 B7 -0.00 B15 -0.00 B31 -0.00
+  hsame    ALC -0.105 (pair SE 0.189, draw SE 0.125; 60 pair-draws, 30 draws) | B0 +0.00 B1 +0.09 B3 -0.00 B7 -0.35 B15 -0.18 B31 -0.15
+  hrandom  ALC +0.068 (pair SE 0.064, draw SE 0.070; 60 pair-draws, 30 draws) | B0 +0.00 B1 +0.12 B3 +0.11 B7 +0.07 B15 +0.04 B31 +0.00
+
+== shift_temporal_replay: variant - REF, mean over (new pair, seed), SE clustered by pair
+  T=2025.5 A156        ALC -3.98 ± 0.90 (n=68, pairs 34) | B0 -16.15 B1 -7.58 B3 -3.14 B7 -0.90 B15 -0.19 B31 -0.02
+  T=2025.5 A156+NP     ALC -6.03 ± 1.01 (n=68, pairs 34) | B0 -25.97 B1 -11.99 B3 -4.11 B7 -1.30 B15 +0.08 B31 +0.29
+  T=2025.5 A156+SY1.0  ALC +2.66 ± 0.66 (n=68, pairs 34) | B0 +10.34 B1 +5.35 B3 +2.02 B7 +0.79 B15 +0.01 B31 -0.07
+  T=2026.0 A156        ALC -3.82 ± 1.06 (n=42, pairs 21) | B0 -17.50 B1 -7.07 B3 -2.49 B7 -0.61 B15 -0.20 B31 +0.02
+  T=2026.0 A156+NP     ALC -6.10 ± 1.21 (n=42, pairs 21) | B0 -29.31 B1 -11.62 B3 -3.64 B7 -1.18 B15 +0.35 B31 +0.48
+  T=2026.0 A156+SY1.0  ALC +4.45 ± 0.90 (n=42, pairs 21) | B0 +19.40 B1 +8.61 B3 +2.99 B7 +1.07 B15 -0.04 B31 -0.18
+  T=2025.5 A156+SY1.0 - A156: +6.64 ± 0.91
+  T=2026.0 A156+SY1.0 - A156: +8.27 ± 1.45

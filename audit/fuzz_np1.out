@@ -1,0 +1,13 @@
+python 3.11.2 numpy 1.26.4
+  syntax ok for Python 3.7 grammar
+  syntax ok for Python 3.8 grammar
+  syntax ok for Python 3.9 grammar
+  syntax ok for Python 3.10 grammar
+  absolute imports: __future__, hashlib, json, math, numpy, os, pathlib, re
+  relative import inside try/except ImportError: True
+  post-3.8 stdlib / numpy-version-sensitive names used: ['match ']
+141 calls over 3 zips: 141 ok, 0 raised or invalid
+constant-fallback cases (10): evidence item lone surrogate, input 3 elements, input None, input [None, None], input [], input int, input str, item_content lone surrogate, label inf, subject is a list
+slowest cases (> 500 ms): [('2000 duplicate entries', 1162.18), ('2000 duplicate entries', 1114.24), ('2000 duplicate entries', 1055.11)]
+v6_combo_w20 values: valid input 0.4335; input None 0.1192 (fallback); input [] 0.1192 (fallback); input [None, None] 0.1192 (fallback); input [{}, {}] 0.2980; input str 0.1192 (fallback); input int 0.1192 (fallback); input 3 elements 0.1192 (fallback); input tuple 0.4335; item without benchmark_id/features 0.2703; benchmark_id '' 0.2810; benchmark_id None 0.2810; subject all None 0.5168; subject ints 0.5168; release_date 2026-13-45 0.6054; release_date garbage 0.5168; features_extra garbage 0.4716; reasoning_effort unknown 0.4716; item_content 1 MB 0.4335; item_content lone surrogate 0.1192 (fallback); item_content NUL/emoji/RTL 0.4335; item_features weird 0.3140; unseen benchmark 0.2810; subject extra keys 0.4716; item_content is a dict 0.4335; subject is a list 0.1192 (fallback); labeled None 0.2980; labeled [] 0.2980; labeled str 0.2980; labeled [None] 0.2980; entry [None, 1] 0.4335; entry without label 0.4335; label '1' 0.5126; label 2 0.5126; label 1.5 0.5126; label NaN 0.4335; label inf 0.1192 (fallback); label None 0.4335; label True 0.5126; entry item None 0.4335; evidence item lone surrogate 0.1192 (fallback); labeled tuple 0.4335; 2000 duplicate entries 0.0154; 31 ones on the target pair 0.8749; 31 zeros on the target pair 0.1040; contradictory labels same item 0.4820; labels on 60 benchmarks 0.4023
+python 3.11.2 numpy 2.4.6  vs  python 3.11.2 numpy 1.26.4: 141 cases, max |diff| = 5.24e-16

@@ -1,0 +1,7 @@
+v6_combo_w20: one refit at B31 with dense pairs (31 labels each, 4 pairs per benchmark), fresh subprocess
+labels | parameters | refit CPU s | refit wall s | next call ms | peak RSS MB | RSS before fit MB
+372 | 252 | 0.09 | 0.18 | 22.8 | 38 | 31
+744 | 501 | 0.42 | 0.89 | 34.6 | 56 | 35
+1488 | 1021 | 1.87 | 4.58 | 57.2 | 136 | 40
+labels | parameters | refit CPU s | refit wall s | next call ms | peak RSS MB | RSS before fit MB
+2976 | 2024 | 9.73 | 23.37 | 116.6 | 346 | 49

@@ -1,0 +1,19 @@
+720 pair-scores in 362s -> results/pdadapt_sigma_g.csv
+
+=== scenario none: bench-equal mean ALC, paired diff vs base (SE over pair-draws)
+model    alc    diff      se  d_matharena  d_multi_swebench  d_real_webagents  d_researchcodebench
+ base 0.1914 0.00000 0.00000       0.0000            0.0000            0.0000               0.0000
+ sg14 0.1919 0.00046 0.00023      -0.0001            0.0017            0.0008              -0.0006
+ sg20 0.1937 0.00228 0.00055       0.0008            0.0051            0.0032              -0.0001
+  macro (bench-equal, k-averaged): base 0.1921 (+0.0000)  sg14 0.1926 (+0.0005)  sg20 0.1945 (+0.0023)
+           matharena k=1 n= 20: sg14 +0.0004±0.0010  sg20 +0.0019±0.0023
+           matharena k=2 n= 40: sg14 -0.0004±0.0008  sg20 +0.0002±0.0018
+      multi_swebench k=1 n= 20: sg14 +0.0015±0.0007  sg20 +0.0047±0.0018
+      multi_swebench k=2 n= 40: sg14 +0.0018±0.0004  sg20 +0.0054±0.0010
+      real_webagents k=1 n= 20: sg14 +0.0008±0.0006  sg20 +0.0029±0.0015
+      real_webagents k=2 n= 40: sg14 +0.0009±0.0005  sg20 +0.0034±0.0012
+   researchcodebench k=1 n= 20: sg14 -0.0005±0.0004  sg20 +0.0002±0.0011
+   researchcodebench k=2 n= 40: sg14 -0.0006±0.0005  sg20 -0.0002±0.0013
+  per-budget diff vs ref (pooled): sg14: b0 -0.0033 b1 +0.0008 b3 +0.0014 b7 +0.0013 b15 +0.0006 b31 -0.0002; sg20: b0 -0.0079 b1 +0.0029 b3 +0.0046 b7 +0.0045 b15 +0.0028 b31 +0.0009
+  cell hard=False partner_hard=False (n=240): sg14: alc +0.0005 b0 -0.0033 b1 +0.0008 b3 +0.0014 b7 +0.0013 b15 +0.0006 b31 -0.0002; sg20: alc +0.0023 b0 -0.0079 b1 +0.0029 b3 +0.0046 b7 +0.0045 b15 +0.0028 b31 +0.0009
+

@@ -1,0 +1,80 @@
+{
+ "created_utc": "2026-10-06T15:04:16Z",
+ "mode": "pair",
+ "runs": 20,
+ "ks": "1,2",
+ "benches": "real_webagents,researchcodebench,multi_swebench,matharena",
+ "models": [
+  "base",
+  "SCP_combo",
+  "w20_SCP",
+  "smoothed_k2",
+  "empirical_mean"
+ ],
+ "spec": {
+  "base": {
+   "prior": "subjects",
+   "m0": -2.0,
+   "damped_newton": true
+  },
+  "SCP_combo": {
+   "prior": "subjects",
+   "m0": -2.0,
+   "damped_newton": true,
+   "class": "paiec.ext.combo:ComboModel",
+   "subjcal": true,
+   "attr_scale": 1.56,
+   "attr_year_max": 2026.4,
+   "pool_item": true,
+   "sigma_x": 3.0,
+   "pool_sim": true,
+   "rho_name": 0.45,
+   "rho_h": 0.288
+  },
+  "w20_SCP": {
+   "prior": "subjects",
+   "m0": -2.0,
+   "damped_newton": true,
+   "tau_mu": 2.0,
+   "class": "paiec.ext.combo:ComboModel",
+   "subjcal": true,
+   "attr_scale": 1.56,
+   "attr_year_max": 2026.4,
+   "pool_item": true,
+   "sigma_x": 3.0,
+   "pool_sim": true,
+   "rho_name": 0.45,
+   "rho_h": 0.288
+  }
+ },
+ "rows": 902130,
+ "pair_scores": 1200,
+ "rows_per_model": {
+  "SCP_combo": 180426,
+  "base": 180426,
+  "empirical_mean": 180426,
+  "smoothed_k2": 180426,
+  "w20_SCP": 180426
+ },
+ "compute_seconds_per_model": {
+  "base": 215.2,
+  "SCP_combo": 332.4,
+  "w20_SCP": 275.6,
+  "smoothed_k2": 88.5,
+  "empirical_mean": 89.2
+ },
+ "wall_seconds": 728.8,
+ "preds_file": "results/cal_preds_pair.parquet",
+ "preds_sha256": "95117b41cd97374968c98ec0b747ae3d59e750e060adda96c4be5a2af91e7183",
+ "checks": [
+  "check adj_wide.csv: base: 240/240 pair-scores matched, bit-identical 240/240, max|diff| 0  EXACT",
+  "check adj_wide.csv: SCP_combo: not in the reference file",
+  "check adj_wide.csv: w20_SCP: not in the reference file",
+  "check adj_wide.csv: smoothed_k2: 240/240 pair-scores matched, bit-identical 240/240, max|diff| 0  EXACT",
+  "check adj_wide.csv: empirical_mean: 240/240 pair-scores matched, bit-identical 240/240, max|diff| 0  EXACT"
+ ],
+ "python": "3.11.2",
+ "numpy": "2.4.6",
+ "pandas": "3.0.6",
+ "command": "swarm/round6/cal_sims/replay_preds.py --modes bench:18,pair:20 --ks 1,2 --benches real_webagents,researchcodebench,multi_swebench,matharena --out results/cal_preds --analyze swarm/round6/cal_sims/out_{mode} --max-minutes 38"
+}

@@ -1,0 +1,80 @@
+{
+ "created_utc": "2026-10-06T14:50:43Z",
+ "mode": "bench",
+ "runs": 18,
+ "ks": "1,2",
+ "benches": "real_webagents,researchcodebench,multi_swebench,matharena",
+ "models": [
+  "base",
+  "SCP_combo",
+  "w20_SCP",
+  "smoothed_k2",
+  "empirical_mean"
+ ],
+ "spec": {
+  "base": {
+   "prior": "subjects",
+   "m0": -2.0,
+   "damped_newton": true
+  },
+  "SCP_combo": {
+   "prior": "subjects",
+   "m0": -2.0,
+   "damped_newton": true,
+   "class": "paiec.ext.combo:ComboModel",
+   "subjcal": true,
+   "attr_scale": 1.56,
+   "attr_year_max": 2026.4,
+   "pool_item": true,
+   "sigma_x": 3.0,
+   "pool_sim": true,
+   "rho_name": 0.45,
+   "rho_h": 0.288
+  },
+  "w20_SCP": {
+   "prior": "subjects",
+   "m0": -2.0,
+   "damped_newton": true,
+   "tau_mu": 2.0,
+   "class": "paiec.ext.combo:ComboModel",
+   "subjcal": true,
+   "attr_scale": 1.56,
+   "attr_year_max": 2026.4,
+   "pool_item": true,
+   "sigma_x": 3.0,
+   "pool_sim": true,
+   "rho_name": 0.45,
+   "rho_h": 0.288
+  }
+ },
+ "rows": 783060,
+ "pair_scores": 1080,
+ "rows_per_model": {
+  "SCP_combo": 156612,
+  "base": 156612,
+  "empirical_mean": 156612,
+  "smoothed_k2": 156612,
+  "w20_SCP": 156612
+ },
+ "compute_seconds_per_model": {
+  "base": 200.0,
+  "SCP_combo": 286.4,
+  "w20_SCP": 276.4,
+  "smoothed_k2": 93.9,
+  "empirical_mean": 91.7
+ },
+ "wall_seconds": 691.4,
+ "preds_file": "results/cal_preds_bench.parquet",
+ "preds_sha256": "0aaf001fc03fa0ae20895a1200a4fbbf9292d065991475de011fa4e63663b727",
+ "checks": [
+  "check combo_v1.csv: base: 216/216 pair-scores matched, bit-identical 216/216, max|diff| 0  EXACT",
+  "check combo_v1.csv: SCP_combo: 216/216 pair-scores matched, bit-identical 216/216, max|diff| 0  EXACT",
+  "check combo_v1.csv: w20_SCP: 216/216 pair-scores matched, bit-identical 216/216, max|diff| 0  EXACT",
+  "check combo_v1.csv: smoothed_k2: 216/216 pair-scores matched, bit-identical 216/216, max|diff| 0  EXACT",
+  "check combo_v1.csv: empirical_mean: 216/216 pair-scores matched, bit-identical 216/216, max|diff| 0  EXACT"
+ ],
+ "python": "3.11.2",
+ "numpy": "2.4.6",
+ "pandas": "3.0.6",
+ "command": "swarm/round6/cal_sims/replay_preds.py --modes bench:18,pair:20 --ks 1,2 --benches real_webagents,researchcodebench,multi_swebench,matharena --out results/cal_preds --analyze swarm/round6/cal_sims/out_{mode} --max-minutes 38"
+}

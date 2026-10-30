@@ -1,0 +1,19 @@
+936 pair-scores in 230s -> results/pdadapt_simpool.csv
+
+=== hrandom: 60 pair-draws; diff vs base (mean, SE over pair-draws)
+  sp: alc +0.0001±0.0001  b0 +0.0000  b1 +0.0001  b3 +0.0001  b7 +0.0001  b15 +0.0000  b31 +0.0000
+  sp_small: alc +0.0000±0.0000  b0 +0.0000  b1 +0.0000  b3 +0.0001  b7 +0.0000  b15 +0.0000  b31 -0.0000
+  base absolute ALC 0.1566
+=== hsame: 60 pair-draws; diff vs base (mean, SE over pair-draws)
+  sp: alc -0.0001±0.0002  b0 +0.0000  b1 +0.0001  b3 -0.0000  b7 -0.0004  b15 -0.0002  b31 -0.0002
+  sp_small: alc -0.0001±0.0002  b0 +0.0000  b1 +0.0001  b3 -0.0000  b7 -0.0004  b15 -0.0002  b31 -0.0002
+  base absolute ALC 0.1616
+=== xname: 144 pair-draws; diff vs base (mean, SE over pair-draws)
+  sp: alc -0.0006±0.0002  b0 +0.0000  b1 -0.0014  b3 -0.0009  b7 -0.0004  b15 -0.0002  b31 -0.0000
+  sp_small: alc -0.0003±0.0001  b0 +0.0000  b1 -0.0006  b3 -0.0004  b7 -0.0002  b15 -0.0001  b31 -0.0000
+  base absolute ALC 0.2149
+=== xrandom: 48 pair-draws; diff vs base (mean, SE over pair-draws)
+  sp: alc +0.0000±0.0000  b0 +0.0000  b1 -0.0000  b3 -0.0000  b7 +0.0000  b15 -0.0000  b31 +0.0000
+  sp_small: alc +0.0000±0.0000  b0 +0.0000  b1 +0.0000  b3 -0.0000  b7 +0.0000  b15 +0.0000  b31 +0.0000
+  base absolute ALC 0.2222
+

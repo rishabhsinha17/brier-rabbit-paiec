@@ -1,0 +1,213 @@
+spec: base / SCP_combo / w20_SCP identical to compute_queue/done/combo_v1.json
+[bench] 8 cells x 18 runs, models ['base', 'SCP_combo', 'w20_SCP', 'smoothed_k2', 'empirical_mean'], 2 worker(s)
+[bench] cell 1/8 done: real_webagents k=1 (36990 rows) at 186s
+[bench] cell 2/8 done: real_webagents k=2 (66060 rows) at 248s
+[bench] cell 3/8 done: researchcodebench k=1 (42300 rows) at 372s
+[bench] cell 4/8 done: multi_swebench k=1 (43200 rows) at 430s
+[bench] cell 5/8 done: multi_swebench k=2 (81780 rows) at 553s
+[bench] cell 6/8 done: matharena k=1 (138750 rows) at 589s
+[bench] cell 7/8 done: researchcodebench k=2 (84600 rows) at 656s
+[bench] cell 8/8 done: matharena k=2 (289380 rows) at 683s
+[bench] 783060 prediction rows, 1080 pair-scores in 691s -> <repo>/results/cal_preds_bench.parquet
+[bench] compute seconds per model: {'base': 200.0, 'SCP_combo': 286.4, 'w20_SCP': 276.4, 'smoothed_k2': 93.9, 'empirical_mean': 91.7}
+macro (bench-equal, k-averaged):
+model
+w20_SCP           0.1888
+SCP_combo         0.1910
+base              0.1923
+smoothed_k2       0.2016
+empirical_mean    0.2250
+
+macro diff vs base (x1e-3):
+model
+SCP_combo         -1.240
+base               0.000
+empirical_mean    32.698
+smoothed_k2        9.373
+w20_SCP           -3.438
+
+per-budget Brier (pooled over pairs):
+                    b0      b1      b3      b7     b15     b31
+model                                                         
+SCP_combo       0.2394  0.2120  0.1910  0.1809  0.1726  0.1656
+base            0.2419  0.2135  0.1920  0.1817  0.1735  0.1672
+empirical_mean  0.2500  0.3348  0.2186  0.1928  0.1817  0.1767
+smoothed_k2     0.2649  0.2278  0.2010  0.1872  0.1802  0.1763
+w20_SCP         0.2318  0.2082  0.1893  0.1810  0.1726  0.1657
+
+platform-style ECE per budget (per pair, ten fixed bins; mean over pairs):
+                    e0      e1      e3      e7     e15     e31
+model                                                         
+SCP_combo       0.2158  0.1677  0.1308  0.1227  0.1072  0.1007
+base            0.2191  0.1708  0.1318  0.1227  0.1062  0.1008
+empirical_mean  0.2409  0.3348  0.1783  0.1219  0.0896  0.0709
+smoothed_k2     0.2669  0.2033  0.1486  0.1097  0.0851  0.0695
+w20_SCP         0.2073  0.1631  0.1311  0.1204  0.1064  0.0996
+check combo_v1.csv: base: 216/216 pair-scores matched, bit-identical 216/216, max|diff| 0  EXACT
+check combo_v1.csv: SCP_combo: 216/216 pair-scores matched, bit-identical 216/216, max|diff| 0  EXACT
+check combo_v1.csv: w20_SCP: 216/216 pair-scores matched, bit-identical 216/216, max|diff| 0  EXACT
+check combo_v1.csv: smoothed_k2: 216/216 pair-scores matched, bit-identical 216/216, max|diff| 0  EXACT
+check combo_v1.csv: empirical_mean: 216/216 pair-scores matched, bit-identical 216/216, max|diff| 0  EXACT
+
+[bench] analysis: <kit>/.venv/bin/python <repo>/swarm/round6/cal_sims/analyze.py --preds <repo>/results/cal_preds_bench.parquet --ref-scores <repo>/results/combo_v1.csv --outdir swarm/round6/cal_sims/out_bench
+783060 rows, models ['base', 'SCP_combo', 'w20_SCP', 'smoothed_k2', 'empirical_mean'], loaded in 1s
+cal_preds_bench_scores.csv: SCP_combo: 216/216 pair-draws matched on 13 columns, bit-identical 216/216, max|diff| 0  EXACT
+cal_preds_bench_scores.csv: base: 216/216 pair-draws matched on 13 columns, bit-identical 216/216, max|diff| 0  EXACT
+cal_preds_bench_scores.csv: empirical_mean: 216/216 pair-draws matched on 13 columns, bit-identical 216/216, max|diff| 0  EXACT
+cal_preds_bench_scores.csv: smoothed_k2: 216/216 pair-draws matched on 13 columns, bit-identical 216/216, max|diff| 0  EXACT
+cal_preds_bench_scores.csv: w20_SCP: 216/216 pair-draws matched on 13 columns, bit-identical 216/216, max|diff| 0  EXACT
+combo_v1.csv: SCP_combo: 216/216 pair-draws matched on 7 columns, bit-identical 216/216, max|diff| 0  EXACT
+combo_v1.csv: base: 216/216 pair-draws matched on 7 columns, bit-identical 216/216, max|diff| 0  EXACT
+combo_v1.csv: empirical_mean: 216/216 pair-draws matched on 7 columns, bit-identical 216/216, max|diff| 0  EXACT
+combo_v1.csv: smoothed_k2: 216/216 pair-draws matched on 7 columns, bit-identical 216/216, max|diff| 0  EXACT
+combo_v1.csv: w20_SCP: 216/216 pair-draws matched on 7 columns, bit-identical 216/216, max|diff| 0  EXACT
+combo_v1.csv: aggregates on the same 216 pair-draws (SCP_combo, base, empirical_mean, smoothed_k2, w20_SCP): macro ALC max|diff| 0, per-budget pooled Brier max|diff| 2.78e-17
+
+all benchmarks pooled (pair-weighted):
+         model budget   brier     ece  ece_floor     rel     res    resid     unc  ece_platform  ece_platform_floor
+          base      0 0.24190 0.14922    0.00758 0.03134 0.02176  0.00030 0.23201       0.21906             0.03555
+          base      1 0.21345 0.08847    0.00777 0.01003 0.02870  0.00012 0.23201       0.17083             0.03966
+          base      3 0.19204 0.05279    0.00783 0.00365 0.04276 -0.00086 0.23201       0.13182             0.04448
+          base      7 0.18173 0.02546    0.00879 0.00108 0.05008 -0.00128 0.23201       0.12273             0.04981
+          base     15 0.17354 0.03146    0.00828 0.00112 0.05864 -0.00095 0.23201       0.10618             0.05183
+          base     31 0.16719 0.03269    0.00760 0.00120 0.06540 -0.00062 0.23201       0.10081             0.05662
+          base    alc 0.19306 0.05783    0.00805 0.00643 0.04475 -0.00063 0.23201       0.13830             0.04637
+     SCP_combo      0 0.23944 0.14565    0.00812 0.03138 0.02437  0.00043 0.23201       0.21583             0.03371
+     SCP_combo      1 0.21198 0.09081    0.00790 0.00974 0.02999  0.00021 0.23201       0.16767             0.04025
+     SCP_combo      3 0.19096 0.04881    0.00885 0.00313 0.04293 -0.00125 0.23201       0.13083             0.04676
+     SCP_combo      7 0.18089 0.02510    0.00771 0.00110 0.05135 -0.00087 0.23201       0.12267             0.05040
+     SCP_combo     15 0.17257 0.03006    0.00820 0.00113 0.05974 -0.00083 0.23201       0.10716             0.05553
+     SCP_combo     31 0.16561 0.03070    0.00711 0.00112 0.06667 -0.00085 0.23201       0.10070             0.05945
+     SCP_combo    alc 0.19178 0.05659    0.00806 0.00627 0.04591 -0.00059 0.23201       0.13732             0.04791
+       w20_SCP      0 0.23180 0.11799    0.00766 0.02378 0.02437  0.00038 0.23201       0.20733             0.03687
+       w20_SCP      1 0.20817 0.04772    0.00812 0.00331 0.02703 -0.00012 0.23201       0.16309             0.04008
+       w20_SCP      3 0.18929 0.02801    0.00877 0.00145 0.04393 -0.00025 0.23201       0.13109             0.04677
+       w20_SCP      7 0.18099 0.02096    0.00830 0.00059 0.05093 -0.00068 0.23201       0.12037             0.05088
+       w20_SCP     15 0.17260 0.02572    0.00864 0.00092 0.05939 -0.00093 0.23201       0.10641             0.05545
+       w20_SCP     31 0.16566 0.02949    0.00819 0.00102 0.06673 -0.00064 0.23201       0.09956             0.06008
+       w20_SCP    alc 0.18996 0.03923    0.00835 0.00373 0.04537 -0.00042 0.23201       0.13488             0.04833
+   smoothed_k2      0 0.26494 0.21129    0.00598 0.05347 0.02054  0.00000 0.23201       0.26685             0.04148
+   smoothed_k2      1 0.22775 0.14196    0.00713 0.02671 0.03097 -0.00000 0.23201       0.20331             0.03984
+   smoothed_k2      3 0.20096 0.08282    0.00742 0.00875 0.04139  0.00158 0.23201       0.14860             0.03784
+   smoothed_k2      7 0.18720 0.03486    0.00801 0.00163 0.04551 -0.00094 0.23201       0.10966             0.03573
+   smoothed_k2     15 0.18018 0.02327    0.00757 0.00085 0.05140 -0.00128 0.23201       0.08513             0.03485
+   smoothed_k2     31 0.17628 0.01281    0.00741 0.00029 0.05493 -0.00109 0.23201       0.06947             0.03409
+   smoothed_k2    alc 0.20334 0.07899    0.00737 0.01296 0.04140 -0.00024 0.23201       0.14297             0.03721
+empirical_mean      0 0.25000 0.13412    0.00296 0.01799 0.00000  0.00000 0.23201       0.24087             0.04259
+empirical_mean      1 0.33475 0.33475    0.00000 0.12259 0.01985  0.00000 0.23201       0.33475             0.00000
+empirical_mean      3 0.21861 0.12354    0.00337 0.02395 0.03735  0.00000 0.23201       0.17828             0.02168
+empirical_mean      7 0.19278 0.07286    0.00499 0.00803 0.04682 -0.00044 0.23201       0.12193             0.02742
+empirical_mean     15 0.18167 0.04664    0.00660 0.00277 0.05270 -0.00042 0.23201       0.08963             0.03037
+empirical_mean     31 0.17669 0.02278    0.00712 0.00066 0.05540 -0.00058 0.23201       0.07088             0.03244
+empirical_mean    alc 0.22823 0.13125    0.00400 0.03333 0.03688 -0.00023 0.23201       0.17609             0.02339
+
+**Calibration.** On the local replay (bench-keyed LOBO draws of matharena, multi_swebench, real_webagents, researchcodebench, k = 1, 2, 216 pair-draws per model, pair-equal weights, 10 equal-mass bins), the ECE of W20+SCP is 0.1180 at B0 and 0.0295 at B31 against 0.1492 and 0.0327 for base (REF) (ALC-weighted 0.0392 against 0.0578). In the binned Murphy decomposition (Brier = REL - RES + UNC + R, UNC = 232.01 x 1e-3 for every model and budget), the ALC difference of -3.10 ± 0.65 x 1e-3 splits into REL -2.70 ± 0.76, RES +0.61 ± 0.50 (a RES increase lowers Brier) and within-bin terms +0.21 ± 0.24 (draw-clustered bootstrap SEs). The platform-style ECE (ten fixed bins within each pair, ALC-weighted, mean over pairs; the leaderboard's diagnostic) is 0.1349 for W20+SCP and 0.1383 for base (REF); with 44 to 113 evaluation items per pair it is dominated by within-pair binning noise: a perfectly calibrated forecaster with the same predictions would score 0.0483 (pooled ECE floor 0.0084).
+
+done in 78s -> <repo>/swarm/round6/cal_sims/out_bench
+
+[pair] 8 cells x 20 runs, models ['base', 'SCP_combo', 'w20_SCP', 'smoothed_k2', 'empirical_mean'], 2 worker(s)
+[pair] cell 1/8 done: real_webagents k=1 (41490 rows) at 209s
+[pair] cell 2/8 done: real_webagents k=2 (74100 rows) at 246s
+[pair] cell 3/8 done: researchcodebench k=1 (48480 rows) at 353s
+[pair] cell 4/8 done: multi_swebench k=1 (48690 rows) at 438s
+[pair] cell 5/8 done: multi_swebench k=2 (88320 rows) at 592s
+[pair] cell 6/8 done: matharena k=1 (158790 rows) at 631s
+[pair] cell 7/8 done: researchcodebench k=2 (93300 rows) at 676s
+[pair] cell 8/8 done: matharena k=2 (348960 rows) at 721s
+[pair] 902130 prediction rows, 1200 pair-scores in 729s -> <repo>/results/cal_preds_pair.parquet
+[pair] compute seconds per model: {'base': 215.2, 'SCP_combo': 332.4, 'w20_SCP': 275.6, 'smoothed_k2': 88.5, 'empirical_mean': 89.2}
+macro (bench-equal, k-averaged):
+model
+w20_SCP           0.1900
+SCP_combo         0.1910
+base              0.1921
+smoothed_k2       0.2033
+empirical_mean    0.2305
+
+macro diff vs base (x1e-3):
+model
+SCP_combo         -1.093
+base               0.000
+empirical_mean    38.371
+smoothed_k2       11.145
+w20_SCP           -2.163
+
+per-budget Brier (pooled over pairs):
+                    b0      b1      b3      b7     b15     b31
+model                                                         
+SCP_combo       0.2343  0.2073  0.1913  0.1803  0.1728  0.1658
+base            0.2367  0.2087  0.1922  0.1809  0.1734  0.1670
+empirical_mean  0.2500  0.3336  0.2251  0.1920  0.1816  0.1770
+smoothed_k2     0.2626  0.2266  0.2018  0.1859  0.1794  0.1762
+w20_SCP         0.2273  0.2042  0.1912  0.1809  0.1732  0.1660
+
+platform-style ECE per budget (per pair, ten fixed bins; mean over pairs):
+                    e0      e1      e3      e7     e15     e31
+model                                                         
+SCP_combo       0.2080  0.1611  0.1338  0.1180  0.1063  0.1008
+base            0.2114  0.1646  0.1356  0.1198  0.1059  0.0980
+empirical_mean  0.2432  0.3336  0.1851  0.1186  0.0891  0.0715
+smoothed_k2     0.2657  0.2055  0.1512  0.1059  0.0824  0.0684
+w20_SCP         0.1999  0.1579  0.1339  0.1181  0.1088  0.0994
+check adj_wide.csv: base: 240/240 pair-scores matched, bit-identical 240/240, max|diff| 0  EXACT
+check adj_wide.csv: SCP_combo: not in the reference file
+check adj_wide.csv: w20_SCP: not in the reference file
+check adj_wide.csv: smoothed_k2: 240/240 pair-scores matched, bit-identical 240/240, max|diff| 0  EXACT
+check adj_wide.csv: empirical_mean: 240/240 pair-scores matched, bit-identical 240/240, max|diff| 0  EXACT
+
+[pair] analysis: <kit>/.venv/bin/python <repo>/swarm/round6/cal_sims/analyze.py --preds <repo>/results/cal_preds_pair.parquet --ref-scores <repo>/results/adj_wide.csv --outdir swarm/round6/cal_sims/out_pair
+902130 rows, models ['base', 'SCP_combo', 'w20_SCP', 'smoothed_k2', 'empirical_mean'], loaded in 1s
+cal_preds_pair_scores.csv: SCP_combo: 240/240 pair-draws matched on 13 columns, bit-identical 240/240, max|diff| 0  EXACT
+cal_preds_pair_scores.csv: base: 240/240 pair-draws matched on 13 columns, bit-identical 240/240, max|diff| 0  EXACT
+cal_preds_pair_scores.csv: empirical_mean: 240/240 pair-draws matched on 13 columns, bit-identical 240/240, max|diff| 0  EXACT
+cal_preds_pair_scores.csv: smoothed_k2: 240/240 pair-draws matched on 13 columns, bit-identical 240/240, max|diff| 0  EXACT
+cal_preds_pair_scores.csv: w20_SCP: 240/240 pair-draws matched on 13 columns, bit-identical 240/240, max|diff| 0  EXACT
+adj_wide.csv: SCP_combo: not in the reference file
+adj_wide.csv: base: 240/240 pair-draws matched on 7 columns, bit-identical 240/240, max|diff| 0  EXACT
+adj_wide.csv: empirical_mean: 240/240 pair-draws matched on 7 columns, bit-identical 240/240, max|diff| 0  EXACT
+adj_wide.csv: smoothed_k2: 240/240 pair-draws matched on 7 columns, bit-identical 240/240, max|diff| 0  EXACT
+adj_wide.csv: w20_SCP: not in the reference file
+adj_wide.csv: aggregates on the same 240 pair-draws (base, empirical_mean, smoothed_k2): macro ALC max|diff| 0, per-budget pooled Brier max|diff| 0
+
+all benchmarks pooled (pair-weighted):
+         model budget   brier     ece  ece_floor     rel     res    resid     unc  ece_platform  ece_platform_floor
+          base      0 0.23674 0.13472    0.00716 0.02876 0.02204  0.00046 0.22956       0.21143             0.03513
+          base      1 0.20870 0.07624    0.00712 0.00769 0.02844 -0.00010 0.22956       0.16464             0.03951
+          base      3 0.19221 0.03097    0.00736 0.00177 0.03792 -0.00119 0.22956       0.13558             0.04455
+          base      7 0.18095 0.02532    0.00726 0.00099 0.04953 -0.00007 0.22956       0.11981             0.04947
+          base     15 0.17344 0.01860    0.00717 0.00050 0.05604 -0.00058 0.22956       0.10594             0.05317
+          base     31 0.16698 0.02813    0.00674 0.00108 0.06282 -0.00083 0.22956       0.09801             0.05623
+          base    alc 0.19143 0.04651    0.00717 0.00517 0.04287 -0.00043 0.22956       0.13614             0.04648
+     SCP_combo      0 0.23429 0.13608    0.00716 0.02742 0.02248 -0.00020 0.22956       0.20802             0.03477
+     SCP_combo      1 0.20735 0.07867    0.00777 0.00743 0.02965  0.00002 0.22956       0.16111             0.04081
+     SCP_combo      3 0.19131 0.03176    0.00764 0.00181 0.03842 -0.00163 0.22956       0.13375             0.04548
+     SCP_combo      7 0.18027 0.02260    0.00788 0.00079 0.05006 -0.00001 0.22956       0.11796             0.05034
+     SCP_combo     15 0.17280 0.01721    0.00793 0.00042 0.05648 -0.00070 0.22956       0.10632             0.05464
+     SCP_combo     31 0.16579 0.02840    0.00685 0.00101 0.06418 -0.00060 0.22956       0.10080             0.05789
+     SCP_combo    alc 0.19035 0.04650    0.00765 0.00493 0.04359 -0.00054 0.22956       0.13471             0.04752
+       w20_SCP      0 0.22727 0.10964    0.00765 0.02035 0.02243 -0.00020 0.22956       0.19994             0.03603
+       w20_SCP      1 0.20417 0.03525    0.00781 0.00260 0.02796 -0.00003 0.22956       0.15795             0.04038
+       w20_SCP      3 0.19123 0.02629    0.00751 0.00116 0.03851 -0.00097 0.22956       0.13388             0.04473
+       w20_SCP      7 0.18093 0.02708    0.00710 0.00105 0.04964 -0.00004 0.22956       0.11809             0.05177
+       w20_SCP     15 0.17323 0.02336    0.00731 0.00075 0.05611 -0.00097 0.22956       0.10877             0.05456
+       w20_SCP     31 0.16604 0.02976    0.00718 0.00115 0.06380 -0.00087 0.22956       0.09944             0.05919
+       w20_SCP    alc 0.18924 0.03634    0.00743 0.00326 0.04307 -0.00051 0.22956       0.13368             0.04781
+   smoothed_k2      0 0.26259 0.21015    0.00458 0.05205 0.01901  0.00000 0.22956       0.26572             0.04218
+   smoothed_k2      1 0.22664 0.14560    0.00644 0.02744 0.03035 -0.00000 0.22956       0.20546             0.03852
+   smoothed_k2      3 0.20181 0.06890    0.00720 0.00880 0.03265 -0.00389 0.22956       0.15117             0.03691
+   smoothed_k2      7 0.18593 0.04103    0.00828 0.00292 0.04536 -0.00118 0.22956       0.10595             0.03693
+   smoothed_k2     15 0.17944 0.02678    0.00705 0.00130 0.04968 -0.00174 0.22956       0.08241             0.03506
+   smoothed_k2     31 0.17623 0.02239    0.00698 0.00073 0.05255 -0.00151 0.22956       0.06842             0.03439
+   smoothed_k2    alc 0.20265 0.07972    0.00695 0.01337 0.03877 -0.00151 0.22956       0.14241             0.03714
+empirical_mean      0 0.25000 0.14299    0.00395 0.02044 0.00000  0.00000 0.22956       0.24322             0.04155
+empirical_mean      1 0.33361 0.33361    0.00000 0.12356 0.01951  0.00000 0.22956       0.33361             0.00000
+empirical_mean      3 0.22508 0.13376    0.00260 0.03124 0.03571  0.00000 0.22956       0.18513             0.01925
+empirical_mean      7 0.19199 0.07633    0.00510 0.00892 0.04637 -0.00011 0.22956       0.11858             0.02745
+empirical_mean     15 0.18162 0.05114    0.00653 0.00350 0.05071 -0.00073 0.22956       0.08910             0.03061
+empirical_mean     31 0.17704 0.03390    0.00619 0.00165 0.05268 -0.00149 0.22956       0.07151             0.03215
+empirical_mean    alc 0.22916 0.13666    0.00386 0.03565 0.03573 -0.00032 0.22956       0.17676             0.02283
+
+**Calibration.** On the local replay (pair-keyed LOBO draws of matharena, multi_swebench, real_webagents, researchcodebench, k = 1, 2, 240 pair-draws per model, pair-equal weights, 10 equal-mass bins), the ECE of W20+SCP is 0.1096 at B0 and 0.0298 at B31 against 0.1347 and 0.0281 for base (REF) (ALC-weighted 0.0363 against 0.0465). In the binned Murphy decomposition (Brier = REL - RES + UNC + R, UNC = 229.56 x 1e-3 for every model and budget), the ALC difference of -2.19 ± 0.63 x 1e-3 splits into REL -1.91 ± 0.64, RES +0.19 ± 0.42 (a RES increase lowers Brier) and within-bin terms -0.08 ± 0.21 (draw-clustered bootstrap SEs). The platform-style ECE (ten fixed bins within each pair, ALC-weighted, mean over pairs; the leaderboard's diagnostic) is 0.1337 for W20+SCP and 0.1361 for base (REF); with 44 to 113 evaluation items per pair it is dominated by within-pair binning noise: a perfectly calibrated forecaster with the same predictions would score 0.0478 (pooled ECE floor 0.0074).
+
+done in 56s -> <repo>/swarm/round6/cal_sims/out_pair
+

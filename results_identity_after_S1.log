@@ -1,0 +1,41 @@
+recorded 4158 calls in 2s
+REF    all off = HierModel                      n=4158 bit-exact=4158 max|diff|=0.0e+00
+REF    subjcal = SubjCalHier                    n=4158 bit-exact=4158 max|diff|=0.0e+00
+REF    pool_item = CavityPoolModel              n=4158 bit-exact=4158 max|diff|=0.0e+00
+REF    pool_sim(rho) = SimPool defaults         n=4158 bit-exact=4158 max|diff|=0.0e+00
+REF    pool_sim(rho) = SimPoolCorr(P2)          n=4158 bit-exact=4158 max|diff|=0.0e+00
+REF    pool_sim(rho None) = SimPool abs         n=4158 bit-exact=4158 max|diff|=0.0e+00
+REF    subjcal+pool_item = (SubjCal,Cavity)     n=4158 bit-exact=4158 max|diff|=0.0e+00
+REF    subjcal+pool_sim = (SubjCal,SimPool)     n=4158 bit-exact=4158 max|diff|=0.0e+00
+W20    all off = HierModel                      n=4158 bit-exact=4158 max|diff|=0.0e+00
+W20    subjcal = SubjCalHier                    n=4158 bit-exact=4158 max|diff|=0.0e+00
+W20    pool_item = CavityPoolModel              n=4158 bit-exact=4158 max|diff|=0.0e+00
+W20    pool_sim(rho) = SimPool defaults         n=4158 bit-exact=4158 max|diff|=0.0e+00
+W20    pool_sim(rho) = SimPoolCorr(P2)          n=4158 bit-exact=4158 max|diff|=0.0e+00
+W20    subjcal+pool_item = (SubjCal,Cavity)     n=4158 bit-exact=4158 max|diff|=0.0e+00
+W20    subjcal+pool_sim = (SubjCal,SimPool)     n=4158 bit-exact=4158 max|diff|=0.0e+00
+L15    all off = HierModel                      n=4158 bit-exact=4158 max|diff|=0.0e+00
+L15    subjcal = SubjCalHier                    n=4158 bit-exact=4158 max|diff|=0.0e+00
+L15    pool_item = CavityPoolModel              n=4158 bit-exact=4158 max|diff|=0.0e+00
+L15    pool_sim(rho) = SimPool defaults         n=4158 bit-exact=4158 max|diff|=0.0e+00
+L15    pool_sim(rho) = SimPoolCorr(P2)          n=4158 bit-exact=4158 max|diff|=0.0e+00
+L15    subjcal+pool_item = (SubjCal,Cavity)     n=4158 bit-exact=4158 max|diff|=0.0e+00
+L15    subjcal+pool_sim = (SubjCal,SimPool)     n=4158 bit-exact=4158 max|diff|=0.0e+00
+MIX25  all off = HierModel                      n=4158 bit-exact=4158 max|diff|=0.0e+00
+MIX25  subjcal = SubjCalHier                    n=4158 bit-exact=4158 max|diff|=0.0e+00
+MIX25  pool_item = CavityPoolModel              n=4158 bit-exact=4158 max|diff|=0.0e+00
+MIX25  pool_sim(rho) = SimPool defaults         n=4158 bit-exact=4158 max|diff|=0.0e+00
+MIX25  pool_sim(rho) = SimPoolCorr(P2)          n=4158 bit-exact=4158 max|diff|=0.0e+00
+MIX25  subjcal+pool_item = (SubjCal,Cavity)     n=4158 bit-exact=4158 max|diff|=0.0e+00
+MIX25  subjcal+pool_sim = (SubjCal,SimPool)     n=4158 bit-exact=4158 max|diff|=0.0e+00
+D06    all off = HierModel                      n=4158 bit-exact=4158 max|diff|=0.0e+00
+D06    subjcal = SubjCalHier                    n=4158 bit-exact=4158 max|diff|=0.0e+00
+D06    pool_item = CavityPoolModel              n=4158 bit-exact=4158 max|diff|=0.0e+00
+D06    pool_sim(rho) = SimPoolCorr(P2)          n=4158 bit-exact=4158 max|diff|=0.0e+00
+D06    pool_sim(rho None) = SimPool abs         n=4158 bit-exact=4158 max|diff|=0.0e+00
+D06    subjcal+pool_item = (SubjCal,Cavity)     n=4158 bit-exact=4158 max|diff|=0.0e+00
+D06    subjcal+pool_sim = (SubjCal,SimPool)     n=4158 bit-exact=4157 max|diff|=1.1e-16
+REF    all three: off-cavity n=4030 bit-exact=4030 max|diff|=0.0e+00 vs subjcal+pool_sim; cavity calls n=128: logit shift (all3 - subjcal+sim) mean -0.044 sd 0.535, (subjcal+cav - HierModel) mean -0.044 sd 0.535, corr 1.000
+W20    all three: off-cavity n=4030 bit-exact=4030 max|diff|=0.0e+00 vs subjcal+pool_sim; cavity calls n=128: logit shift (all3 - subjcal+sim) mean -0.051 sd 0.533, (subjcal+cav - HierModel) mean -0.051 sd 0.533, corr 1.000
+D06    all three: off-cavity n=4030 bit-exact=4030 max|diff|=0.0e+00 vs subjcal+pool_sim; cavity calls n=128: logit shift (all3 - subjcal+sim) mean -0.053 sd 0.537, (subjcal+cav - HierModel) mean -0.054 sd 0.539, corr 0.999
+elapsed 443s

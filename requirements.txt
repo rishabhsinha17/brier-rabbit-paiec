@@ -1,0 +1,11 @@
+# Research environment used for every number in the report (CPython 3.11.2, macOS arm64).
+# The submitted model.py needs only numpy (checked with numpy 1.26.4 and 2.4.6).
+numpy==2.4.6
+scipy==1.17.1
+pandas==3.0.6
+pyarrow==25.0.1
+scikit-learn==1.9.1
+matplotlib==3.11.2
+pytest==9.1.1
+# only for scripts/fetch_measurement_db.py (downloading the gated data)
+huggingface_hub
