@@ -18,7 +18,7 @@ its only requirements.
 | Path | Contents |
 |---|---|
 | `paiec/` | data loader, protocol replica (`protocol.py`), replay helpers, baselines, the model (`hier.py`, `subjects.py`) and its plug-ins (`ext/`, with the final composite in `ext/combo.py`) |
-| `submission_src/<name>/` | the exact files of every zip we built: `model.py` (generated, self-contained), `params.json`, `subject_prior.json` |
+| `submission_src/<name>/` | the exact files of every zip we built: `model.py` (generated, self-contained), `params.json`, `subject_prior.json`, and `prediction_config.json` on the insurance builds |
 | `submissions/*.zip`, `submissions/builds.csv` | every built zip and its sha256 |
 | `tools/` | `make_submission.py` (generate a submission), `build_submission.py` (zip it and run the kit checks), `verify_shipped.py` (submitted code vs research code), and the code of our live-analysis tools (`feedback.py`, `swarm_evalsci.py`, `daily_report.py`, `swarm_live_design.py`), which read formative logs that this repository does not include |
 | `experiments/` | replays (`paired.py` does most of the work) and the early parameter search |

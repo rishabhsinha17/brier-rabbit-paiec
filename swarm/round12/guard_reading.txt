@@ -1,0 +1,67 @@
+
+L1: 4 benchmarks, 8 folds, 216 pair-scores; ALC x1e-3, arm - w20_SCP
+  F0: mean +2.074  SE 0.698  z +2.97  worst benchmark +3.545  best +0.586
+     per benchmark: +0.59 +1.23 +2.94 +3.54
+  F2: mean +1.142  SE 0.548  z +2.08  worst benchmark +2.467  best +0.054
+     per benchmark: +0.05 +0.46 +1.59 +2.47
+  mean Brier by budget x1e-3:
+             b0      b1      b3      b7     b15     b31
+model                                                  
+F0       237.07  211.85  191.35  181.79  172.88  165.65
+F2       232.11  210.54  190.98  181.66  172.84  165.66
+w20_SCP  231.80  208.17  189.29  180.99  172.60  165.66
+L2 folds with no eligible draw: sib200__k1, sib200__k2
+
+L2: 23 benchmarks, 48 folds, 414 pair-scores; ALC x1e-3, arm - w20_SCP
+  F0: mean -0.857  SE 1.227  z -0.70  worst benchmark +5.655  best -21.078
+     per benchmark: -21.08 -9.06 -7.86 -6.31 -4.15 -1.27 -1.17 -0.87 -0.84 -0.80 -0.46 +0.14 +1.18 +1.50 +1.81 +2.18 +2.30 +2.72 +3.06 +3.90 +4.70 +5.02 +5.65
+  F2: mean -2.318  SE 1.080  z -2.15  worst benchmark +2.882  best -20.596
+     per benchmark: -20.60 -10.04 -8.04 -7.02 -4.19 -4.19 -4.06 -1.40 -1.00 -0.85 -0.81 -0.35 -0.19 -0.04 +0.08 +0.21 +0.43 +0.47 +0.60 +0.89 +1.42 +2.50 +2.88
+  mean Brier by budget x1e-3:
+             b0      b1      b3      b7     b15     b31
+model                                                  
+F0       319.91  251.99  228.29  215.15  207.73  202.49
+F2       312.08  249.86  227.70  214.95  207.66  202.46
+w20_SCP  323.18  254.42  229.41  215.36  207.70  202.49
+
+L1E: 4 benchmarks, 8 folds, 216 pair-scores; ALC x1e-3, arm - w20_SCP
+  E: mean +0.707  SE 0.280  z +2.52  worst benchmark +1.133  best -0.114
+     per benchmark: -0.11 +0.84 +0.97 +1.13
+  E2: mean +0.556  SE 0.365  z +1.52  worst benchmark +1.397  best -0.241
+     per benchmark: -0.24 +0.18 +0.89 +1.40
+  mean Brier by budget x1e-3:
+             b0      b1      b3      b7     b15     b31
+model                                                  
+E        232.78  209.57  190.22  181.33  172.72  165.70
+E2       229.89  209.36  190.51  181.50  172.82  165.74
+w20_SCP  231.80  208.17  189.29  180.99  172.60  165.66
+
+L2b: 24 benchmarks, 48 folds, 432 pair-scores; ALC x1e-3, arm - w20_SCP
+  E: mean -3.713  SE 1.429  z -2.60  worst benchmark +6.910  best -19.944
+     per benchmark: -19.94 -19.28 -16.43 -16.36 -5.98 -4.85 -3.98 -3.09 -3.02 -2.63 -0.81 -0.57 -0.27 +0.00 +0.00 +0.00 +0.00 +0.00 +0.00 +0.00 +0.00 +0.00 +1.22 +6.91
+  E2: mean -5.395  SE 1.652  z -3.27  worst benchmark +6.985  best -27.148
+     per benchmark: -27.15 -19.94 -16.43 -16.36 -12.07 -8.72 -8.32 -8.29 -7.46 -4.85 -3.03 -2.86 -2.63 -2.32 -0.01 +0.00 +0.00 +0.00 +0.00 +0.00 +0.00 +0.05 +3.93 +6.98
+  mean Brier by budget x1e-3:
+             b0      b1      b3      b7     b15     b31
+model                                                  
+E        338.41  243.87  208.84  190.42  180.98  174.46
+E2       330.48  241.02  207.78  189.97  180.83  174.36
+w20_SCP  355.48  250.97  210.91  190.97  180.99  174.45
+
+L1F: 4 benchmarks, 8 folds, 216 pair-scores; ALC x1e-3, arm - w20_SCP
+  E3: mean -0.185  SE 1.040  z -0.18  worst benchmark +1.881  best -3.072
+     per benchmark: -3.07 +0.07 +0.38 +1.88
+  mean Brier by budget x1e-3:
+             b0      b1      b3      b7     b15     b31
+model                                                  
+E3       225.17  208.32  190.21  181.41  172.83  165.75
+w20_SCP  231.80  208.17  189.29  180.99  172.60  165.66
+
+L2c: 23 benchmarks, 46 folds, 414 pair-scores; ALC x1e-3, arm - w20_SCP
+  E3: mean -2.732  SE 1.255  z -2.18  worst benchmark +5.580  best -14.078
+     per benchmark: -14.08 -12.87 -12.25 -11.39 -8.39 -7.79 -7.36 -5.81 -5.03 +0.00 +0.00 +0.00 +0.00 +0.00 +0.00 +0.89 +0.90 +2.01 +2.08 +2.99 +3.03 +4.67 +5.58
+  mean Brier by budget x1e-3:
+             b0      b1      b3      b7     b15     b31
+model                                                  
+E3       300.93  249.86  225.00  210.35  201.92  193.67
+w20_SCP  319.79  253.60  225.39  209.31  201.31  193.44

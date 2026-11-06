@@ -1,0 +1,282 @@
+bench,kept,why,response_type,rows,binary_rows
+abstract_reason,True,binary direction higher_is_better,binary,9095.0,9095.0
+adaptivestep,True,binary direction higher_is_better,binary,988160.0,931328.0
+advprompter,False,binary direction lower_is_better,binary,,
+aegis,True,binary direction higher_is_better,binary,11608.0,11608.0
+afrieval,True,binary direction higher_is_better,binary,1403380.0,1403380.0
+afrimedqa,True,binary direction higher_is_better,binary,302354.0,281354.0
+agc_bench,False,mixed with lower_is_better,mixed,,
+agentdojo,False,mixed with lower_is_better,mixed,,
+agentic_review_perturbation,True,binary direction higher_is_better,binary,315.0,315.0
+agi_elo,True,binary direction higher_is_better,binary,277106.0,277106.0
+ai2d_test,True,binary direction higher_is_better,binary,784352.0,784094.0
+aider,True,binary direction higher_is_better,binary,5356.0,5356.0
+algotune,True,binary direction higher_is_better,binary,2772.0,2772.0
+alignment_faking,False,binary direction unordered,binary,,
+alpacaeval,False,type continuous_bounded,continuous_bounded,,
+alpha_sql,True,binary direction higher_is_better,binary,1534.0,1533.0
+annotating_errors_wcf,False,mixed with lower_is_better,mixed,,
+appworld,True,binary direction higher_is_better,binary,10530.0,10530.0
+arcagi,False,type continuous_bounded,continuous_bounded,,
+atmossci_bench,False,type continuous,continuous,,
+auditing_sabotage_bench,True,binary direction higher_is_better,binary,1869.0,1869.0
+autoresearchbench,False,type continuous,continuous,,
+averimatec,True,binary direction higher_is_better,binary,152.0,152.0
+babilong,True,binary direction higher_is_better,binary,2020951.0,2020951.0
+bbq,True,binary direction higher_is_better,binary,380198.0,380089.0
+beavertails,True,binary direction higher_is_better,binary,1680.0,1680.0
+bedd_basalt,False,mixed with lower_is_better,mixed,,
+benger,True,binary direction higher_is_better,binary,9328.0,9302.0
+bertaqa,True,binary direction higher_is_better,binary,57072.0,57072.0
+bigfinancebench,True,"mixed, no opposing direction",mixed,9000.0,6035.0
+biggen,False,type likert_5,likert_5,,
+bird_sql,True,binary direction higher_is_better,binary,43200.0,43200.0
+brace,True,binary direction higher_is_better,binary,202096.0,202096.0
+braveguard,False,binary direction unordered,binary,,
+bridging_gap,True,binary direction higher_is_better,binary,4706881.0,4706881.0
+care_enzymes,False,type continuous_bounded,continuous_bounded,,
+causal_axioms,True,binary direction higher_is_better,binary,9000.0,9000.0
+cellverse,True,binary direction higher_is_better,binary,748.0,748.0
+ceobench,True,"mixed, no opposing direction",mixed,162.0,136.0
+ceval,True,binary direction higher_is_better,binary,14806.0,14806.0
+chartmuseum,False,under half the rows are 0 or 1,binary,162.0,0.0
+chatgpt_drift,False,mixed with unordered,mixed,,
+chi_bench,True,binary direction higher_is_better,binary,7700.0,7667.0
+chipbench,False,under half the rows are 0 or 1,mixed,1470.0,0.0
+clasheval,True,binary direction higher_is_better,binary,75216.0,75216.0
+classroom_ai,False,type ordinal,ordinal,,
+cmmlu,True,binary direction higher_is_better,binary,254804.0,254804.0
+coffeebench,False,type continuous_unbounded,continuous_unbounded,,
+complexbench,False,type fraction,fraction,,
+confagents,True,binary direction higher_is_better,binary,64.0,64.0
+corebench,False,type fraction,fraction,,
+critic_discernment_game,True,binary direction higher_is_better,binary,7276.0,7276.0
+crow,False,binary direction lower_is_better,binary,,
+cruxeval,True,binary direction higher_is_better,binary,992000.0,992000.0
+csedb,False,type fraction,fraction,,
+cseo_bench,False,type ordinal,ordinal,,
+das_med_hallucination,False,type ordinal,ordinal,,
+data_juicer2,False,type continuous_unbounded,continuous_unbounded,,
+dataclawbench,False,type fraction,fraction,,
+dave,True,binary direction higher_is_better,binary,19248.0,19248.0
+dbpa,False,binary direction unordered,binary,,
+decodingtrust,False,mixed with lower_is_better,mixed,,
+decompile_bench,False,type continuous,continuous,,
+devbench,True,binary direction higher_is_better,binary,5149.0,5149.0
+disco,True,binary direction higher_is_better,binary,111906.0,111906.0
+donotanswer,False,mixed with lower_is_better,mixed,,
+doris_mae,False,type ordinal,ordinal,,
+dpai,False,under half the rows are 0 or 1,mixed,4590.0,1191.0
+dqvis,False,type ordinal,ordinal,,
+dtap_bench,False,mixed with lower_is_better,mixed,,
+editbench,True,binary direction higher_is_better,binary,23328.0,23328.0
+edu_circuit_hw,True,binary direction higher_is_better,binary,3078.0,2886.0
+eduguardbench,False,mixed with lower_is_better,mixed,,
+edumath,False,mixed with lower_is_better,mixed,,
+egoschema,True,binary direction higher_is_better,binary,5500.0,5500.0
+ehrflowbench,True,binary direction higher_is_better,binary,140.0,140.0
+elicitation_game,True,binary direction higher_is_better,binary,14070.0,14070.0
+embodied_agent_interface,False,type continuous_bounded,continuous_bounded,,
+emoji_attack,False,binary direction lower_is_better,binary,,
+engdesign,True,binary direction higher_is_better,binary,5394.0,5393.0
+engibench,False,type continuous_unbounded,continuous_unbounded,,
+enginemt_qa,True,binary direction higher_is_better,binary,676.0,676.0
+erbench,True,binary direction higher_is_better,binary,213110.0,213110.0
+evouna,True,binary direction higher_is_better,binary,27548.0,25359.0
+exploitgym,True,binary direction higher_is_better,binary,6357.0,6357.0
+faithcot,True,binary direction higher_is_better,binary,2728.0,2519.0
+felm,True,binary direction higher_is_better,binary,4426.0,4426.0
+fetv,False,under half the rows are 0 or 1,mixed,41576.0,3868.0
+fewshot_ttt_bbh,True,binary direction higher_is_better,binary,7425.0,7425.0
+fgbench,False,mixed with lower_is_better,mixed,,
+financebench,True,binary direction higher_is_better,binary,2400.0,2400.0
+find_interp,False,mixed with lower_is_better,mixed,,
+finegrain_t2i,False,under half the rows are 0 or 1,binary,12861.0,3750.0
+frontieror,False,type ordinal,ordinal,,
+genai_learning,True,"mixed, no opposing direction",mixed,29013.0,23701.0
+ghosts_math,False,type likert_5,likert_5,,
+goodai_ltm_benchmark,True,"mixed, no opposing direction",mixed,3507.0,2832.0
+haiid,True,binary direction higher_is_better,binary,71364.0,71364.0
+hallusionbench,True,binary direction higher_is_better,binary,240857.0,239475.0
+harmbench,False,binary direction lower_is_better,binary,,
+healthadminbench,True,binary direction higher_is_better,binary,7020.0,7020.0
+helm_afr,True,binary direction higher_is_better,binary,745360.0,745360.0
+helm_airbench,False,type continuous_bounded,continuous_bounded,,
+helm_anthropic_redteam,False,type continuous_bounded,continuous_bounded,,
+helm_bbq,True,binary direction higher_is_better,binary,81000.0,81000.0
+helm_bold,False,type fraction,fraction,,
+helm_cleva,True,"mixed, no opposing direction",mixed,28724.0,24314.0
+helm_harmbench,False,type continuous_bounded,continuous_bounded,,
+helm_real_toxicity_prompts,False,type fraction,fraction,,
+helm_simple_safety_tests,False,type continuous_bounded,continuous_bounded,,
+helm_thaiexam,True,binary direction higher_is_better,binary,23730.0,23730.0
+helm_xstest,False,type continuous_bounded,continuous_bounded,,
+hivmedqa,False,type continuous,continuous,,
+hle,True,binary direction higher_is_better,binary,14588.0,13777.0
+icpc2_code_selector,True,binary direction higher_is_better,binary,70905.0,70905.0
+igakuqa,True,binary direction higher_is_better,binary,7355.0,7355.0
+igakuqa119,True,binary direction higher_is_better,binary,400.0,400.0
+ikp,True,binary direction higher_is_better,binary,268351.0,268351.0
+image2struct,True,"mixed, no opposing direction",mixed,142968.0,85109.0
+imagenet_hard,False,withheld,binary,,
+imgedit,False,type continuous,continuous,,
+indeterminacy,True,"mixed, no opposing direction",mixed,386240.0,341143.0
+ineqmath,False,under half the rows are 0 or 1,binary,1000.0,0.0
+infibench,False,type continuous_unbounded,continuous_unbounded,,
+interchangeable_token_embeddings,True,binary direction higher_is_better,binary,399956.0,399731.0
+intercode,True,"mixed, no opposing direction",mixed,17740.0,16041.0
+jailbreakbench,False,binary direction lower_is_better,binary,,
+jetts,True,"mixed, no opposing direction",mixed,328685.0,296705.0
+judgetuning,True,binary direction higher_is_better,binary,21000.0,21000.0
+katakomba,False,type continuous_unbounded,continuous_unbounded,,
+kernelbench,True,binary direction higher_is_better,binary,73998.0,73984.0
+kmmlu,True,binary direction higher_is_better,binary,1012300.0,1007230.0
+kormedmcqa,True,binary direction higher_is_better,binary,21391.0,21391.0
+kris_bench,False,type likert_5,likert_5,,
+lambda_fp_course,False,under half the rows are 0 or 1,mixed,6798.0,2798.0
+lawbench,True,"mixed, no opposing direction",mixed,918000.0,536239.0
+legal_rag_bench,True,binary direction higher_is_better,binary,1800.0,1800.0
+legalbench,True,binary direction higher_is_better,binary,63457.0,63457.0
+lexeval,True,"mixed, no opposing direction",mixed,1076280.0,900817.0
+lingoly,True,binary direction higher_is_better,binary,24926.0,24926.0
+live_agent_risk,True,binary direction higher_is_better,binary,256.0,256.0
+liveaopsbench,True,binary direction higher_is_better,binary,69264.0,69264.0
+livebench,False,type continuous,continuous,,
+llm4ir,False,mixed with unordered,mixed,,
+llm_bp_tag,True,binary direction higher_is_better,binary,158596.0,158596.0
+llm_survey_simulation,False,mixed with unordered,mixed,,
+llm_uncertainty_bench,True,binary direction higher_is_better,binary,5100000.0,5100000.0
+llmail_inject,False,binary direction lower_is_better,binary,,
+llms_lean_formalization,True,binary direction higher_is_better,binary,64960.0,64092.0
+lohi_drug_discovery,False,under half the rows are 0 or 1,mixed,1246925.0,0.0
+matharena,True,"original six, bc8204d8 tables",,,
+matharena_platform,True,"mixed, no opposing direction",mixed,32503.0,31747.0
+mathconstraint,True,binary direction higher_is_better,binary,11862.0,11862.0
+mathvista_mini,True,binary direction higher_is_better,binary,285000.0,268820.0
+medagentboard,False,mixed with unordered,mixed,,
+medhelm_ehr_sql,True,binary direction higher_is_better,binary,13000.0,13000.0
+medhelm_head_qa,True,binary direction higher_is_better,binary,13000.0,13000.0
+medhelm_med_mcqa,True,binary direction higher_is_better,binary,13000.0,13000.0
+medhelm_med_qa,True,binary direction higher_is_better,binary,13000.0,13000.0
+medhelm_medbullets,True,binary direction higher_is_better,binary,4004.0,4004.0
+medhelm_medcalc_bench,True,binary direction higher_is_better,binary,13000.0,13000.0
+medhelm_medec,True,binary direction higher_is_better,binary,7761.0,7761.0
+medhelm_medhallu,True,binary direction higher_is_better,binary,13000.0,13000.0
+medhelm_pubmed_qa,True,binary direction higher_is_better,binary,11000.0,11000.0
+medhelm_race_based_med,True,binary direction higher_is_better,binary,2171.0,2171.0
+medwatermark_fws,False,type likert_5,likert_5,,
+mergebench,False,mixed with lower_is_better,mixed,,
+mind2web,True,binary direction higher_is_better,binary,17153.0,17153.0
+mj_bench,False,under half the rows are 0 or 1,binary,209509.0,102859.0
+mlip_arena,False,mixed with lower_is_better,mixed,,
+mlrbench,False,type likert_10,likert_10,,
+mmbench_v11,True,binary direction higher_is_better,binary,3262900.0,3115891.0
+mmdocrag,False,"original six, bc8204d8 tables",,,
+mmedbench,False,type continuous,continuous,,
+mmlu,True,binary direction higher_is_better,binary,2106300.0,2106300.0
+mmlupro,True,binary direction higher_is_better,binary,575807.0,536290.0
+mmmu_dev_val,False,under half the rows are 0 or 1,binary,265650.0,0.0
+mmoral_bench,True,"mixed, no opposing direction",mixed,28679.0,28679.0
+mochi,False,type continuous_bounded,continuous_bounded,,
+moe_cap,True,"mixed, no opposing direction",mixed,65238.0,58088.0
+monkey_power_laws,True,binary direction higher_is_better,binary,28780000.0,28780000.0
+morphkv,True,binary direction higher_is_better,binary,4105.0,3674.0
+morqa,False,type continuous_bounded,continuous_bounded,,
+mtbbench,True,binary direction higher_is_better,binary,8412.0,8397.0
+mtbench,False,type continuous_bounded,continuous_bounded,,
+multi_moe,True,"mixed, no opposing direction",mixed,9620.0,9060.0
+multi_swebench,True,"original six, bc8204d8 tables",,,
+multimodal_stem_ai,False,type continuous_bounded,continuous_bounded,,
+mypcbench,True,binary direction higher_is_better,binary,118.0,118.0
+naep_llm_students,True,binary direction higher_is_better,binary,53680.0,53680.0
+nanobaselib,False,type continuous_bounded,continuous_bounded,,
+naturalreasoning,False,under half the rows are 0 or 1,binary,1145824.0,0.0
+naturebench,True,binary direction higher_is_better,binary,2070.0,2070.0
+nester,True,binary direction higher_is_better,binary,1128.0,1128.0
+nis3d,False,type continuous,continuous,,
+nyu_ctf_bench,True,binary direction higher_is_better,binary,2979.0,2979.0
+oasst,False,type ordinal,ordinal,,
+ocrbench_v2,False,type continuous,continuous,,
+ood_prediction,True,binary direction higher_is_better,binary,142805.0,142805.0
+openbiorq,True,binary direction higher_is_better,binary,7227.0,7213.0
+os_harm,False,binary direction None,binary,,
+perfcodebench,True,binary direction higher_is_better,binary,23854.0,23854.0
+perumedqa,True,binary direction higher_is_better,binary,92180.0,85107.0
+phyblock,False,type continuous,continuous,,
+pku_saferlhf,True,binary direction higher_is_better,binary,164236.0,164236.0
+planbench,True,binary direction higher_is_better,binary,38061.0,38061.0
+preference_dissection,False,type nominal,nominal,,
+prism,True,"mixed, no opposing direction",mixed,136742.0,71954.0
+prm800k,False,type ordinal,ordinal,,
+programbench,False,type continuous_bounded,continuous_bounded,,
+proofaug,True,binary direction higher_is_better,binary,244.0,244.0
+proteininvbench,False,type continuous_bounded,continuous_bounded,,
+prox,True,binary direction higher_is_better,binary,24298.0,24298.0
+psychosis_bench,False,mixed with lower_is_better,mixed,,
+putnam_axiom,False,type ordinal,ordinal,,
+pxplore,True,binary direction higher_is_better,binary,4079.0,3966.0
+qatch,False,type continuous,continuous,,
+radar,True,binary direction higher_is_better,binary,1.0,1.0
+rakuda,False,type continuous,continuous,,
+rclicks,False,mixed with lower_is_better,mixed,,
+real_pocqi,False,type win_rate,win_rate,,
+real_webagents,True,"original six, bc8204d8 tables",,,
+realtimeqa,True,binary direction higher_is_better,binary,64822.0,63620.0
+reasoning_gym,False,type continuous_bounded,continuous_bounded,,
+refgrader,False,type ordinal,ordinal,,
+reliancescope,True,binary direction higher_is_better,binary,7200.0,7200.0
+researchclawbench,False,type continuous,continuous,,
+researchcodebench,True,"original six, bc8204d8 tables",,,
+revolve,True,binary direction higher_is_better,binary,3100.0,3100.0
+rewardbench,False,type ordinal,ordinal,,
+risebench,True,binary direction higher_is_better,binary,8280.0,8271.0
+robust_reasoning_benchmark,True,binary direction higher_is_better,binary,146160.0,146040.0
+safeagentbench,False,binary direction unordered,binary,,
+scale_mrt,False,under half the rows are 0 or 1,mixed,51491.0,13741.0
+scbench_long,True,binary direction higher_is_better,binary,346.0,346.0
+sciarena,False,type win_rate,win_rate,,
+scigym,False,mixed with lower_is_better,mixed,,
+sgrades,False,under half the rows are 0 or 1,binary,1444320.0,673768.0
+sib200,True,binary direction higher_is_better,binary,765204.0,681564.0
+sketchjudge,True,binary direction higher_is_better,binary,38564.0,38562.0
+software_world_models,True,binary direction higher_is_better,binary,7830.0,7830.0
+stanford_orb,False,mixed with lower_is_better,mixed,,
+statqa,True,binary direction higher_is_better,binary,53498.0,44194.0
+subjective_qa,True,binary direction higher_is_better,binary,16168.0,16164.0
+sugarcrepe,True,binary direction higher_is_better,binary,15024.0,15024.0
+summeval,False,type likert_5,likert_5,,
+sustainable_food,True,binary direction higher_is_better,binary,3000.0,2999.0
+svrpbench,False,mixed with lower_is_better,mixed,,
+swe_rebench,True,"original six, bc8204d8 tables",,,
+swe_smith,True,binary direction higher_is_better,binary,49897.0,49897.0
+swe_together,False,withheld,binary,,
+swebench_live,True,binary direction higher_is_better,binary,14613.0,8656.0
+swepolybench,True,binary direction higher_is_better,binary,1871.0,1870.0
+synthpai,False,type ordinal,ordinal,,
+tabarena,False,mixed with lower_is_better,mixed,,
+tau2_bench,True,binary direction higher_is_better,binary,23342.0,23210.0
+taubench,True,binary direction higher_is_better,binary,4330.0,4314.0
+tengu,False,type ordinal,ordinal,,
+tensortrust,False,binary direction unordered,binary,,
+theagentcompany,False,type fraction,fraction,,
+threeeed,False,type continuous,continuous,,
+truthfulqa_mc,True,binary direction higher_is_better,binary,122550.0,122550.0
+tulu_human_eval,True,binary direction higher_is_better,binary,2300.0,2300.0
+tumlu,True,binary direction higher_is_better,binary,143316.0,137388.0
+txbench_pp,True,binary direction higher_is_better,binary,576.0,576.0
+ultrafeedback,False,type likert_5,likert_5,,
+vhelm,False,mixed with lower_is_better,mixed,,
+visit_bench,True,"mixed, no opposing direction",mixed,71406.0,61546.0
+visual_memory,False,withheld,binary,,
+visual_riddles,True,binary direction higher_is_better,binary,3186.0,3186.0
+visualwebarena,True,binary direction higher_is_better,binary,600.0,600.0
+vl_rewardbench,True,binary direction higher_is_better,binary,111452.0,105697.0
+weavebench,True,binary direction higher_is_better,binary,114.0,114.0
+wikihow_agent,True,binary direction higher_is_better,binary,171412.0,171412.0
+wildvision,False,type ordinal,ordinal,,
+wmt_mqm,False,binary direction lower_is_better,binary,,
+wonderbread,False,mixed with lower_is_better,mixed,,
+workarena,True,binary direction higher_is_better,binary,475.0,475.0
+workbench_revisited,True,binary direction higher_is_better,binary,16560.0,16560.0
+worldcentralbanks,True,binary direction higher_is_better,binary,405600.0,405558.0
+xstest,False,type nominal,nominal,,
