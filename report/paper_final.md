@@ -1,21 +1,13 @@
 # Predicting AI Evaluation Outcomes on Unseen Benchmarks: A Shrinkage-First Hierarchical Model and Matched-Pair Live Evaluation
 
 *Rishabh Sinha (Team Brier Rabbit), independent researcher participating in a personal capacity;
-rsinha17@terpmail.umd.edu. Code: https://github.com/rishabhsinha17/brier-rabbit-paiec (MIT license; code at commit 3aeaa02c).*
+rsinha17@terpmail.umd.edu. Code: https://github.com/rishabhsinha17/brier-rabbit-paiec (MIT license; code at commit 3afa5de8).*
 
 *Keywords: predictive evaluation; item response theory; hierarchical Bayesian models; Laplace approximation; Brier
 score; cold start; matched-pair experiments; pre-registration.*
 
-*TL;DR: A shrinkage-first hierarchical logistic model predicts AI systems' outcomes on unseen benchmarks from 0 to 31
-labels; per-pair determinism turns formative feedback into a matched-pair experiment with calibrated errors and hashed
-pre-registration.*
-
-*PAIEC technical report, final version, 2026-10-30. The final look, the composite guard and the selected run date from
-04:15 to 04:21 UTC on 2026-10-30 (Sections 7.4 and 10, Table 6); other live numbers are as of 03:24 UTC on 2026-10-20
-unless dated otherwise; local replays and simulations finished by about 16:00 UTC on 2026-10-06, plus the headroom,
-guard and additivity analyses of 2026-10-07 to 10-15 (Section 7.4, Appendices C and D); hashed pre-registration
-snapshots run up to 04:21 UTC on 2026-10-30. Sections 1 to 11 are the main text; Appendix H is the NeurIPS paper
-checklist. Effects are in $10^{-3}$ Brier ALC, arm minus reference (negative favours the arm), unless a unit is given.*
+*PAIEC technical report, final version, 2026-10-30. Effects are in $10^{-3}$ Brier ALC, arm minus reference (negative
+favours the arm), unless a unit is given (dates: head of the appendices).*
 
 # Abstract
 
@@ -51,12 +43,10 @@ it varies widely: our identical incumbent submission, run 103 times by 2026-10-2
 
 We took a shrinkage-first approach. The predictor is a Bayesian hierarchical model cheap enough to refit at every
 checkpoint and small enough for exact calculations, paired public replays decide whatever public data can decide, and
-live tests are reserved for the level prior, which public data cannot identify. We contribute the model and the
-submitted composite with its ablation and decision records (Section 4); a protocol replica and a subsampling bias in it
-that understated pooling (Section 5); a matched-pair live methodology built on per-pair determinism, with calibrated
-standard errors, hashed pre-registration, a holdout, connector arms, a regime test with exact predictions and an
-adaptive allocation of uploads, whose operating characteristics we simulate (Sections 6 and 7); an analysis of why one
-item variance under-pools, with a cavity correction (Section 8); and twenty graded negative results (Section 9).
+live tests are reserved for the level prior, which public data cannot identify. We contribute the model and composite
+(Section 4); a protocol replica and a subsampling bias in it that understated pooling (Section 5); a matched-pair live
+methodology built on per-pair determinism, with simulated operating characteristics (Sections 6 and 7); a cavity
+correction for under-pooling by one item variance (Section 8); and twenty graded negative results (Section 9).
 
 **Related work.** Item response theory is the standard tool for AI evaluation with few labels [1, 20, 21]. Our model is
 an explanatory, GLMM-style IRT model [27] without per-item discrimination, with shrinkage in the empirical-Bayes
@@ -82,39 +72,31 @@ pair IDs and label counters, and $L_{\mathrm{rem}}$ and $I_{\mathrm{rem}}$ count
 the persistent split, a pair's revealed labels and evaluation items are then the same in every submission, which differ
 on a pair only through their predictors and the labels of other pairs in the draw. In 455 formative logs (401 ours, 54
 public; 2026-10-20) no pair's evaluation-pool size changed and the budget-0 scores of all 768 arm-pair combinations seen
-more than once were identical; on 2026-10-06 all 50 repeated alone-pair scores were identical at all six budgets.
+more than once were identical (Appendix D).
 
 # 3 Data
 
-We trained and tuned only on the public measurement-db release (`aims-foundations/measurement-db`, revision `bc8204d8`;
-curation under CC BY-SA 4.0, each benchmark under its upstream licence) [3]. On 2026-10-06 the organizers published
-formatted tables for about 280 benchmarks on the dataset's `main` branch (revision `54074453`), against six at
-`bc8204d8`, whose tables are unchanged except one added Multi-SWE-bench item and its rows. The competition page does not
-say whether the
-new benchmarks belong to the public training pool (the dataset card still lists the six), so nothing in the submission
-or in this report uses them: every number here comes from revision `bc8204d8`, which is still served.
+We trained and tuned the submission only on the public `aims-foundations/measurement-db` release [3] at revision
+`bc8204d8` (curation under CC BY-SA 4.0, each benchmark under its upstream licence). A late, pre-registered test of the
+larger collection published on 2026-10-06 is reported in Appendix J; it did not change the submission.
 
 **Table 1.** Public training data, binary-valued responses only. Script:
 `swarm/round3/report_writer_sims/data_facts.py`.
 
 | Benchmark | Binary responses | Item IDs (distinct texts) | Subjects | Eligible pairs | Median items per pair | Mean success |
-|----------------------------|---------|-------------|--------|--------|--------|--------|
+|----------------------------|---------|------------|-------|-------|-----------|--------|
 | MathArena [28] | 92,861 | 1,751 (894) | 104 | 81 | 213 | 0.654 |
 | Multi-SWE-bench [29] | 57,975 | 2,126 (2,078) | 82 | 82 | 495 | 0.148 |
 | REAL [30] | 4,449 | 233 (233) | 33 | 26 | 112 | 0.358 |
 | ResearchCodeBench [31] | 6,784 | 212 (212) | 31 | 31 | 212 | 0.361 |
 | SWE-rebench [32] (subject prior only) | 67,074 | 6,306 (6,271) | 1 | 1 | 6,306 | 0.479 |
 
-Our loader keeps every row graded exactly 0 or 1, so MathArena's rows include 3,379 rubric-criterion grades besides
-89,482 final-answer grades. MMDocRAG [33] is graded fractionally, so we exclude it, as the official baseline does. Local
-evaluation uses the four multi-pair benchmarks (220 eligible pairs). For 52 MathArena subjects whose `normalized_name`,
-`provider` and `release_date` are empty we recover the canonical name from `subject_features_extra`, giving 122 named
-models, 96 on one benchmark only. Item difficulty is largely shared across systems (crossed Rasch item SDs of 2.5 to 3.1
-logits outside MathArena), and the first `item_features` token explains 1% to 39% of item easiness variance. We use no
-pretrained models, embeddings, runtime APIs or inventory-wide catalogs. The MathArena tables also hold system prompts
-stored as item content, prompts that differ from the graded problem and repeated attempts (202 items, 19 items and
-5,848 rows; Appendix C). Local numbers include these rows; removing them with the rubric grades moves the composite's
-MathArena gain from $-2.55 \pm 0.74$ to $-3.30 \pm 0.69$ (Appendix C).
+Our loader keeps every row graded exactly 0 or 1. MMDocRAG [33] is graded fractionally, so we exclude it, as the
+official baseline does. Local evaluation uses the four multi-pair benchmarks (220 eligible pairs). Recovering missing
+names gives 122 named models, 96 on one benchmark only. We use no pretrained models, embeddings, runtime APIs or
+inventory-wide catalogs. The MathArena tables also hold system prompts stored as item content, prompts that differ from
+the graded problem and repeated attempts. Local numbers include these rows; removing them with the rubric grades moves
+the composite's MathArena gain from $-2.55 \pm 0.74$ to $-3.30 \pm 0.69$ (Appendix C).
 
 # 4 Model
 
@@ -138,16 +120,13 @@ arm and the source of each value).
 For each canonical name, $\theta_s$ averages the benchmark-centred smoothed logits $\log\frac{k + 0.5}{n - k + 0.5}$ of
 its public pairs over the $K$ benchmarks that contain it, shrunk by $K/(K+1)$, with variance $1/(K+1)$. Unseen names get
 $\theta_s$ from a weighted ridge regression on 17 attributes and an intercept (provider, release year, reasoning effort,
-a reasoning-mode flag, size words). In leave-one-benchmark-out fits $\theta_s$ correlates 0.30 to 0.47 with the
-held-out pair logit (one correlation per public benchmark, each over its 26 to 82 eligible pairs).
-Because the ridge is fit on shrunk targets, its predictions are compressed by about 1.56 (Section 4.6).
+a reasoning-mode flag, size words). Because the ridge is fit on shrunk targets, its predictions are compressed by about 1.56 (Section 4.6).
 
 ## 4.3 Inference and prediction
 
 At every new evidence set the model finds the posterior mode of all effects present in `labeled` and the Laplace
 covariance $\Sigma = H^{-1}$, cached under a hash of the evidence. Undamped Newton steps diverged under prior-data
-conflict (at $m_0 = -2.0$, 31 labels at 74% success drove $\hat\mu_b$ to $-13.5$). The solver now halves each step until
-the log posterior does not decrease, which gains $-0.43 \pm 0.22$, all at B15 and B31 (Table C1). The predictive mean
+conflict, so the solver halves each step until the log posterior does not decrease, which gains $-0.43 \pm 0.22$, all at B15 and B31 (Table C1). The predictive mean
 $m$ and variance $v$ add the posterior moments of the target's effects in the fit and the prior moments of absent
 effects, and the output is the probit approximation [4] $\hat p = \sigma(m / \sqrt{1 + \pi v/8})$, clipped to $[0.005,
 0.995]$. In a synthetic study the plug-in $\sigma(m)$ cost $+3.95 \pm 0.14$ and was worse at every budget. For the
@@ -167,31 +146,26 @@ re-tuning of the level block.
 
 The predictor uses numpy only, is deterministic and never raises, and before every upload the generated single-file
 model is checked to reproduce the research model bit for bit (maximum difference 0.0 over 2,166 replay predictions;
-Appendix A). The organizers allow external packages on request, installed under their control (their Discord reply of
-2026-10-06; the website still says packages are disabled by default); the submission needs only numpy and ships no
-`requirements.txt`, so the policy does not bind it.
+Appendix A).
 
 ## 4.6 The submitted composite
 
 The submitted predictor adds three components to the level block chosen live (Section 7). Each passed a local adoption
 rule written before its decisive replay finished, none was tuned on formative feedback, and each leaves the predictions
 it does not target unchanged (P up to floating-point rounding). A later robustness rule for the whole composite failed
-at B0 on one benchmark (dense-draw record below). **S** multiplies attribute-path abilities by 1.56 (refitting the
-ridge on unshrunk targets scales its predictions by 1.56 to 1.60 in each fold) and clamps the release-year feature at
-2026.4, the last public release. Name-path abilities are unchanged. **C** is cavity item pooling with $\sigma_x = 3.0$
-(Section 8), which acts only on items another system of the draw labelled. **P** splits the pair effect into a component
-shared by subjects with the same canonical model name (on any benchmark), one shared by subjects with the same harness
-on the same benchmark, and a remainder, with variance shares 0.45 and 0.288 of $\tau_\phi^2 + \tau_\delta^2$, so every
-pair's prior variance is unchanged. On public data the pair residuals of one model on two benchmarks correlate at
-$+0.49$ (72 names, pooled over benchmark combinations by Fisher $z$, SE 0.14 on the $z$ scale), and those of models
-sharing a harness on Multi-SWE-bench at $+0.82$ (401 pairs of pairs).
+at B0 on one benchmark (dense-draw record below). **S** multiplies attribute-path abilities by 1.56 and clamps the
+release-year feature at 2026.4, the last public release. Name-path abilities are unchanged. **C** is cavity item pooling
+with $\sigma_x = 3.0$ (Section 8), which acts only on items another system of the draw labelled. **P** splits the pair
+effect into a component shared by subjects with the same canonical model name (on any benchmark), one shared by subjects
+with the same harness on the same benchmark, and a remainder, with variance shares 0.45 and 0.288 of $\tau_\phi^2 +
+\tau_\delta^2$, so every pair's prior variance is unchanged.
 
 **Table 2.** Composite ablation on one benchmark-keyed replay (18 draws per benchmark and $k \in \{1, 2\}$, 216
 pair-draws per arm; draw-clustered SE). Benchmark columns are ALC (MSWE = Multi-SWE-bench). Script:
 `swarm/round5/writer_sims/paper_tables_v3.py`.
 
 | Comparison | $\Delta$ALC (SE) | MathArena | MSWE | REAL | RCB | B0 | B1 | B3 | B7 | B15 | B31 |
-|------------------|-------------|-----------|-------|------|------|-----|-----|-----|-----|-----|-----|
+|-----------------------|-----------|----------|-------|------|------|-----|-----|-----|-----|-----|-----|
 | S vs REF | -0.88 (0.21) | -2.19 | -0.25 | -1.14 | +0.06 | -2.6 | -1.6 | -0.9 | -0.5 | -0.2 | -0.1 |
 | C vs REF | -0.35 (0.10) | -0.35 | -0.29 | -0.25 | -0.51 | 0.0 | -0.1 | -0.2 | -0.3 | -0.6 | -1.1 |
 | P vs REF | 0.00 (0.01) | 0.00 | -0.01 | 0.00 | 0.00 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
@@ -200,23 +174,17 @@ pair-draws per arm; draw-clustered SE). Benchmark columns are ALC (MSWE = Multi-
 | S + C + P on L15 vs L15 | -1.31 (0.22) | -2.27 | -0.66 | -1.52 | -0.79 | -2.9 | -1.7 | -1.2 | -0.8 | -0.8 | -1.2 |
 
 Together the components gain $-1.24 \pm 0.22$, negative in every benchmark and budget column: S at B0 to B3, mainly on
-MathArena and REAL, and C mostly from B3 on and only when a benchmark has two pairs ($k = 2$: $-0.70 \pm 0.19$). P
-changed 6 of 216 pair-draws by more than $10^{-6}$ (all Multi-SWE-bench at $k = 2$; the rest agree with REF to within
-$3 \times 10^{-16}$), and its evidence is a replay with the same model on two held-out benchmarks ($-0.58 \pm 0.22$;
-different-name controls exactly 0). The components are additive (residual $-0.004 \pm 0.002$), and one plug-in class
-carries all three, bit-identical to each stand-alone class on 4,158 recorded calls at five level blocks.
+MathArena and REAL, and C mostly from B3 on and only when a benchmark has two pairs. P's evidence is a replay with the
+same model on two held-out benchmarks ($-0.58 \pm 0.22$). On public data the pair residuals of one model on two
+benchmarks correlate at $+0.49$, and those of models sharing a harness on Multi-SWE-bench at $+0.82$. The components are
+additive (Appendix C).
 
-**Decision records** (Appendix C). Four variants were not adopted under their pre-registered rules: SY1.0, a version
-of S that leaves the release-year coefficient unscaled, is worse than S on public replays ($+0.53 \pm 0.14$) and on a
-strict temporal hold-out that S wins ($-3.98 \pm 0.90$ and $-3.82 \pm 1.06$ at cut-offs 2025.5 and 2026.0; newer
-systems alone on their benchmark, the closest public analogue to the eligible test subjects [37]; Table C6); a
-provider-free ridge (NP) broke its per-benchmark cap; a larger item-group variance failed its rule; and $\lambda = 1.6$
-gains mainly where we read it as compensating a mis-centred level. One rule failed and was overridden: the composite's
-dense replay (four and eight pairs per benchmark; Section 8) carried a rule written in its job file before it ran, and
-S + C + P failed it at B0 on ResearchCodeBench through S ($+2.81 \pm 0.81$ at $k = 4$). We kept S + C + P, a decision
-taken after the result and hashed at 13:51 UTC (Table D3), because the rule targeted early-budget costs of pooling,
-which did not occur, the composite's ResearchCodeBench ALC is negative at every density and S wins the hold-out; the
-literal rule is reported as failed, and Appendix C gives every rule, result and reason.
+**Decision records** (Appendix C). We did not adopt SY1.0, a version of S that leaves the release-year coefficient
+unscaled, a provider-free ridge (NP), a larger item-group variance or $\lambda = 1.6$. One rule failed and was
+overridden: the composite's dense replay (four and eight pairs per benchmark; Appendix F) carried a rule written in its
+job file before it ran, and S + C + P failed it at B0 on ResearchCodeBench through S ($+2.81 \pm 0.81$ at $k = 4$). We
+kept S + C + P, a decision taken after the result and hashed at 13:51 UTC (Table D3); the literal rule is reported as
+failed, and Appendix C gives every rule, result and reason.
 
 # 5 Local evaluation
 
@@ -228,15 +196,12 @@ subsampled so that evaluation pools match the platform's 44 to 113 items. Every 
 identical draws, benchmark-equal and $k$-averaged, with a draw-clustered SE. We report per-benchmark values because
 averages hide failures [34].
 
-**Use of AI assistance.** An LLM coding assistant (Claude Code) wrote most of the model, replica and analysis code and
-drafted this text under the author's direction; Section 13 gives the disclosure and the checks behind every number.
-
 **Table 3.** Local paired replays on one draw set (benchmark-keyed, 18 draws per benchmark and $k$; a constant 0.5
 scores 0.2500 and the organizers' empirical mean 0.2250). Each $\Delta$ compares a row with the row named in "vs".
 Script: `swarm/round5/writer_sims/paper_tables_v3.py`; Table C1 holds the pair-keyed ladder, Figure C1 plots this one.
 
 | Model | Macro ALC | $\Delta$ALC (SE) | vs | $\Delta$B0 | $\Delta$B1 | $\Delta$B3 | $\Delta$B7 | $\Delta$B15 | $\Delta$B31 |
-|--------------------------------|-------|-----------|-------------|------|------|------|------|------|------|
+|---------------------------------|------|------------|--------------|-----|-----|-----|-----|------|------|
 | Smoothed mean ($\kappa = 2$) | 0.2016 | -48.4 (5.2) | constant | +16.1 | -25.3 | -51.3 | -63.9 | -71.6 | -75.3 |
 | Hierarchical, untuned ($m_0 = -0.5$) | 0.1947 | -6.9 (1.1) | smoothed | -34.2 | -11.6 | -2.2 | +0.2 | -1.8 | -4.3 |
 | Hierarchical, tuned | 0.1925 | -2.2 (0.5) | untuned | -0.9 | -0.9 | -2.5 | -2.9 | -3.0 | -3.1 |
@@ -253,187 +218,113 @@ the live-chosen $m_0 = -2.0$ costs $+3.2 \pm 1.7$, all at B0 and B1, and the bes
 not identified, so it is the one block we tune live.
 
 **A replay-subsampling bias.** The original replica subsampled items by a hash keyed by the pair, so co-drawn pairs kept
-independent subsets and a partner covered as few of a pair's items as in the larger public groups. Keying the subsample
-on the benchmark fixes this (B31 partner coverage on Multi-SWE-bench 0.015 to 0.051; Table C3). On identical picks
-cavity pooling gains $-0.39 \pm 0.16$ under the old subsample and $-0.60 \pm 0.18$ under the new one: the old replica
-understated the value of item pooling by about a third (paired difference $-0.21 \pm 0.11$, Table C4).
+independent subsets, which lowered partner coverage. Keying the subsample on the benchmark fixes this (Table C3). On
+identical picks cavity pooling gains $-0.39 \pm 0.16$ under the old subsample and $-0.60 \pm 0.18$ under the new one:
+the old replica understated the value of item pooling by about a third (paired difference $-0.21 \pm 0.11$, Table C4).
 
 # 6 Live evaluation methodology
 
-**Data and use of IDs.** We use our own logs (401 scored runs by 2026-10-20; 496 at the final look) and, as
-connector arms in
-arm-level contrasts, the public MIT-licensed logs of two other teams (52 from `aghasalim/predictive-eval` at `e40aa6d0`,
-3 from `doctawho42/PAIEC` at `d64ff8b9`), cited at those commits and used as their MIT licenses allow. Anonymous IDs are used only as opaque keys: to join a pair's results across submissions,
-as the organizers intend, to assign the holdout by a fixed hash, and to mark whether a pair shared its benchmark within
-a draw (Appendix D lists every use). No per-benchmark or per-pair value is used otherwise or reported, we never tried to
-identify a benchmark or subject, feedback chose only global settings that act identically on every pair, and feedback
-numbers are never model inputs. On 2026-10-17 the platform created 529 submissions of our own zips in our account that
-we had not uploaded; none was scored and all were removed by 2026-10-19, so none entered the evidence. Uploads paused
-while they might count toward the per-person cap, and the 10-17 and 10-18 windows were missed while our upload session
-was down (Appendix D).
+**Data and use of IDs.** We use our own logs (401 scored runs by 2026-10-20; 496 at the final look) and, as connector
+arms in arm-level contrasts, the public MIT-licensed logs of two other teams (52 from `aghasalim/predictive-eval` at
+`e40aa6d0`, 3 from `doctawho42/PAIEC` at `d64ff8b9`). Anonymous IDs are used only as opaque keys (Appendix D lists every
+use): no per-benchmark or per-pair value is used otherwise or reported, we never tried to identify a benchmark or
+subject, feedback chose only global settings that act identically on every pair, and feedback numbers are never model
+inputs.
 
 **Estimators and errors.** Two-way fixed effects $y_{ua} = \alpha_u + \beta_a + e_{ua}$ with $\beta_{\mathrm{REF}} = 0$
 identify arm effects directly or through chains. A co-drawn pair of the same benchmark improves a pair's score through
 pooling ($-5.0 \pm 2.7$ for our arms), so the condition, alone or sharing, must enter. The pre-registered primary
 estimator is a pair fixed effect with a shared-condition covariate on our logs alone ("ours only"). The secondary one
 adds the connector arms and uses alone cells for B1 to B31 and every cell for B0 ("with connectors"). Every live number
-here gives both. A stratified pair bootstrap was anti-conservative in a null simulation on the real design, and our
-first tool was too small by a median factor of 2.05, so we use $\mathrm{SE}_h = \max(1.2\,\mathrm{SE}_{\mathrm{boot}},
-\mathrm{SE}_{\mathrm{CR1}}, \mathrm{SD}_{\mathrm{arm}}/\sqrt{K})$, with a pair-clustered CR1 sandwich [36], $K$ the
-pairs matched directly with REF and a floor on $\mathrm{SD}_{\mathrm{arm}}$ (ALC 0.0147; Appendix D). Then 20 REF and 10
-challenger runs match about 40 pairs for an ALC SE of 0.0023; by 2026-10-20, W20's 87 runs matched 141 selection-set
-pairs with REF for an ALC SE$_h$ of 0.0012, at the floor, and local ladder steps of 0.001 to 0.002 are decided on
-public data.
+here gives both. A stratified pair bootstrap was anti-conservative in a null simulation on the real design, so we use
+$\mathrm{SE}_h = \max(1.2\,\mathrm{SE}_{\mathrm{boot}}, \mathrm{SE}_{\mathrm{CR1}},
+\mathrm{SD}_{\mathrm{arm}}/\sqrt{K})$, with a pair-clustered CR1 sandwich [36], $K$ the pairs matched directly with REF
+and a floor on $\mathrm{SD}_{\mathrm{arm}}$ (ALC 0.0147; Appendix D). Local ladder steps of 0.001 to 0.002 are decided
+on public data.
 
-**Pre-registration and its timeline.** Rules and predictions were written before the uploads or replays they govern, in
-the round reports and a queue file, and from 10:14 UTC on 2026-10-06 also as SHA-256-hashed snapshots of the queue file
-(`submissions/prereg/LOG.csv`); from 2026-10-07 each snapshot is also a commit in the author's local git history. A new arm is dropped after about six runs if its ALC effect exceeds
-$+3.5$ or B0, B1 or B3 is two SEs worse than REF, and the incumbent changes only if a six-item checklist passes,
-including a holdout effect of at most zero and $z \le -1.64$ on all pairs ($-1.8$ with two or more finalists) [22, 23].
-The holdout (a fixed hash of the pair IDs; 21.8% of the 303 distinct pairs seen by 2026-10-20) was implemented at 09:14
-UTC, after the decisions of Section 7.1 and before any decision under the screen rule, so it gives no clean check of
-the earlier choice of REF.
-Each revision of the live rules was recorded before the uploads it governs (Tables D3 and D4; Appendix D states every
-rule and revision). Of the five on 2026-10-06, one (10:14 UTC) let disagreement between the estimators keep $m_0 =
--2.0$, a reading written after interim data that favours the incumbent, so Table 4 reports both readings, and the last
-(16:03 UTC), after all feedback of that day, dropped the SD floor from the switch SE at the final look for arms with at
-least 60 direct matches with REF, after simulations showed that it blocked effects weaker than about $-1.7$. Later
-amendments added the exploration arm MXs (2026-10-07), additivity guards for composites on new level blocks (2026-10-07
-and 10-15), a composite readiness amendment (2026-10-16), a treatment rule for the platform-created runs above and
-insurance builds (2026-10-19; Section 10).
+**Pre-registration and its timeline.** Rules and predictions were written before the uploads or replays they govern, and
+from 10:14 UTC on 2026-10-06 also as SHA-256-hashed snapshots of the queue file (`submissions/prereg/LOG.csv`). A new
+arm is dropped after about six runs if its ALC effect exceeds $+3.5$ or B0, B1 or B3 is two SEs worse than REF, and the
+incumbent changes only if a six-item checklist passes, including a holdout effect of at most zero and $z \le -1.64$ on
+all pairs ($-1.8$ with two or more finalists) [22, 23]. The holdout (a fixed hash of the pair IDs) was implemented after
+the decisions of Section 7.1, so it gives no clean check of the earlier choice of REF. Each revision of the live rules
+was recorded before the uploads it governs (Tables D3 and D4; Appendix D states every rule and revision). Of the five on
+2026-10-06, one let disagreement between the estimators keep $m_0 = -2.0$, a reading written after interim data that
+favours the incumbent, so Table D7 reports both readings, and the last, after all feedback of that day, dropped the SD
+floor from the switch SE at the final look for arms with at least 60 direct matches with REF.
 
 # 7 Evidence about the hidden pool
 
-This section reports arm-level contrasts and global summaries only. Anonymous IDs stay fixed across submissions, and
-every draw is selected by the same documented rule from the formative evaluation data (kit README), so draw-level
-hyperparameters are constants of that data, better estimated across draws than inside one draw [11]. A pair can share
-its benchmark with another pair of its draw, and then pooling improves its score (Section 6).
-
-
 ## 7.1 Early decisions, re-estimated
 
-Our first level moves predate the matched-pair estimator ($m_0$ from $-0.5$ to $-1.5$ after two single draws, then to
-$-2.0$, REF, on five matched pairs with an SE tool later found about half the true SE). Re-estimated with
-calibrated SEs (Table D1), the early ALC contrasts with connectors stay within 1.4 SE of zero (1.8 SE without the one
-public log that the pre-registered connector set excludes), except one shared-level variant ($+24.8 \pm 7.4$); on our
-logs alone none exceeds 1.3 SE and six of 13 change sign, so the early drops rest on the connector
-estimator plus local evidence (Section 9). Live, REF and $m_0 = -1.5$ still differ by at most about one SE after 43 L15 runs
-($+0.4 \pm 1.7$ with connectors, $-1.5 \pm 1.4$ ours only; Table 4), while public replays favour $-1.5$ by
-$2.4 \pm 0.5$: REF remains the default of our rules only as the incumbent; the evidence does not support it over
-$m_0 = -1.5$.
+Our first level moves predate the matched-pair estimator: the move to $m_0 = -2.0$, REF, came on five matched pairs with
+an SE tool later found about half the true SE. Re-estimated with calibrated SEs (Table D1; Appendix D), the early ALC
+contrasts with connectors stay within 1.4 SE of zero (1.8 SE on the pre-registered connector set), except one
+shared-level variant; on our logs alone none exceeds 1.3 SE, so the early drops rest on the connector estimator plus
+local evidence (Section 9). Live, REF and $m_0 = -1.5$ still differ by at most about one SE after 43 L15 runs ($+0.4 \pm
+1.7$ with connectors, $-1.5 \pm 1.4$ ours only; Table D7), while public replays favour $-1.5$ by $2.4 \pm 0.5$: REF
+remains the default of our rules only as the incumbent; the evidence does not support it over $m_0 = -1.5$.
 
 ## 7.2 A regime test with predicted and observed arm contrasts
 
-For a pair alone on its benchmark with success rate $r$, random acquisition makes revealed labels exchangeable with
-evaluation items, so
-$$\mathbb{E}[B_n \mid r] = \sum_{k=0}^{n} \binom{n}{k} r^k (1 - r)^{n-k}\left[(q(k, n) - r)^2 + r(1 - r)\right],$$
-where $q(k, n)$ is an arm's prediction after $k$ successes in $n$ own labels, tabulated with the real model classes and
-validated replicas of the connector teams' predictors. A hypothesis about the hidden pool transforms the 220 public pair
-rates (logit shift, spread factor, share moved to a low-success component), and averaging over pairs gives its predicted
-contrasts, which we compare with 13 observed arm contrasts at B0, B1, B3 and B7 (52 numbers, with connectors, joint
-bootstrap covariance) plus one global constraint, the benchmark-balanced mean of B31 (Appendix E).
-
-Against the best point of a 315-point grid of transformations, $\Delta\chi^2$ is 63 for a narrow core (R1: spread
-$\times 0.8$, shift $-0.5$), 78 for a zero-inflated pool (R2: 35% of pairs near 1.5%), 13 for a wide pool (R3: spread
-$\times 1.3$) and 34 for the unchanged public pool (Table E1 adds six variants and the pre-registered-set rerun: 73,
-90, 9.9 and 30). A parametric bootstrap that refits the
-whole grid in every replicate (Table E2) puts the 99% point of $\Delta\chi^2$ at 9 to 13: R1, R2 and the unchanged
-public pool are rejected ($p < 0.001$; $p \le 0.003$ after scaling the covariance by the best point's misfit factor of
-1.68), while R3 is inconsistent with the data at $p = 0.005$ but not after that scaling ($p = 0.07$). The best grid
-point itself misfits ($p = 0.0035$) unless the subject-calibration nuisance of Section 7.3 is added, which lowers its
-$\chi^2$ from 83.8 to 55.1 ($p = 0.35$; Appendix E). The cleanest experiment is another team's trial of three arms that
-differ only in how fast the level moves: the faster arm did better than the base arm at B1 ($-7.5 \pm 5.0$, SE$_h$)
-and the slower arm lost at B7 ($+2.5 \pm 1.3$), against R1 predictions of $+16.1$ and $-1.0$. R1 is inconsistent with
-the data in every variant except one restricted to our sparse arms, and R2 fits the spread trial but not budget 0 or
-the B31 constraint (Appendix E). The best transformations are as dispersed as the B31 constraint allows and include a
-low-success component, which favours faster level adaptation over narrow pair priors and zero-inflated mixtures.
+For a pair alone on its benchmark, random acquisition makes revealed labels exchangeable with evaluation items, so an
+arm's expected Brier score given the pair's success rate has an exact form (Appendix E). A hypothesis about the hidden
+pool transforms the 220 public pair rates; we compare its predicted contrasts with 13 observed arm contrasts at B0, B1,
+B3 and B7 (52 numbers, with connectors) plus one global constraint, the benchmark-balanced mean of B31. Against the best
+point of a 315-point grid of transformations, $\Delta\chi^2$ is 63 for a narrow core (R1), 78 for a zero-inflated pool
+(R2), 13 for a wide pool (R3) and 34 for the unchanged public pool. A parametric bootstrap that refits the whole grid in
+every replicate (Table E2) rejects R1, R2 and the unchanged public pool ($p < 0.001$), while R3 is inconsistent with the
+data at $p = 0.005$ but not after scaling the covariance by the best point's misfit factor ($p = 0.07$). The best point
+itself misfits ($p = 0.0035$) unless the subject-calibration nuisance of Section 7.3 is added ($p = 0.35$). The best
+transformations are as dispersed as the B31 constraint allows and include a low-success component, which favours faster
+level adaptation over narrow pair priors and zero-inflated mixtures.
 
 ## 7.3 The level is not identified globally
 
 The connector arms are not penalized at B0 although their budget-0 predictions are well above ours, while our own $m_0$
 sweep prefers $-2.0$ to $-1.0$. A joint fit reconciles the two only through a global offset of our subject prior on
-hidden subjects ($\Delta\chi^2 = 29$ for 1.5 to 2 logits). Our prior does not explain such an offset: on a strict public
-temporal hold-out it under-predicts newer systems by 0.6 to 1.2 logits and places a realistic 2025 to 2026 cohort only
-0.2 to 0.7 logits above the public reference, so most of the offset would belong to the benchmark level, which $m_0$
-absorbs. We keep two hypotheses, H_pub (the prior is calibrated on hidden subjects) and H_cal (the offset exists, so
-REF's level is near our budget-0 optimum), and pre-registered two probes (Table 4).
+hidden subjects ($\Delta\chi^2 = 29$ for 1.5 to 2 logits). Our prior does not explain such an offset, so most of it
+would belong to the benchmark level, which $m_0$ absorbs (Appendix D). We keep two hypotheses, H_pub (the prior is
+calibrated on hidden subjects) and H_cal (the offset exists, so REF's level is near our budget-0 optimum), and
+pre-registered two probes (Table D7), L15 ($m_0 = -1.5$) and W20 ($\tau_\mu = 2.0$).
 
-**Table 4.** Predictions and interim observations (B0/B1/B3/B7 in brackets). Predictions computed at 08:37 UTC and
-recorded with the rules at 08:50 UTC, before the first probe upload at 09:00 UTC (file times); they are pre-registered
-for every row except $m_0 = -2.5$, whose prediction comes from a regime fit that already included two of its three
-runs. H_cal is the mean over its joint-fit cells, range in brackets. Observed: selection set at 03:24 UTC on
-2026-10-20, SE$_h$, ours only / with connectors; at the final look (04:15 UTC on 2026-10-30) L15 $-1.2 \pm 1.3$ /
-$-0.4 \pm 1.5$ (49 runs), W20 $-1.8 \pm 1.2$ / $-0.0 \pm 1.4$ with B1 $-3.0 \pm 3.8$ / $+1.1 \pm 4.5$ (101 runs), and W20
-at $m_0 = -1.5$ $-1.2 \pm 1.7$ / $-0.7 \pm 1.6$ (35 runs). Scripts: `swarm/round2/adjudicator_sims/recommend2.py`,
-`tools/daily_report.py`.
-
-| Arm | Change from REF | H_pub | H_cal | R3 | Observed (interim) |
-|------------|--------------|----------------------|-------------------|-----|--------------------------------|
-| L15 | $m_0 = -1.5$ | -3.1 (-13.1/-6.0/-2.2/-0.6) | +1.6 (-0.3 to +3.6); B0 +6.7 | -4.5 | ALC -1.5 ± 1.4 / +0.4 ± 1.7; B0 -7.9 ± 5.4 / -7.4 ± 5.4 (43 runs) |
-| W20 | $\tau_\mu = 2.0$ | -3.1 (-8.5/-6.4/-3.1/-1.25) | -0.25 (-1.9 to +0.6); B1 +0.4 | -3.7 | ALC -2.0 ± 1.2 / +0.6 ± 1.5; B1 -3.7 ± 4.1 / +2.3 ± 4.9 (87 runs) |
-| W20 at $m_0 = -1.5$ | both | -4.3 | +0.9 (-1.9 to +2.4) | -5.9 | ALC -1.2 ± 1.8 / +0.0 ± 1.7 (35 runs) |
-| d06 | $\tau_\delta$ 0.6, $\tau_\phi$ 0.3, $m_0$ -1.69 | +0.03 | +1.5 | -0.7 | no feedback (never left the platform queue) |
-| $m_0 = -2.5$ | $m_0 = -2.5$ | +4.4 | +1.0 | +5.8 | ALC +3.9 ± 5.1 / +9.5 ± 6.4 (3 runs; dropped) |
-
-L15's budget-0 contrast separates the two predictions ($-13.1$ against $+6.7$, per-pair SD about 35). After 43 runs the
-original reading (Appendix D) is undecided ($z = -0.77$ against $-3.2$), and under the amended one both estimators
-lie below $-3.2$, selecting H_pub, a reading we report only for the record. In simulation the rule is a weak test of
-the offset $d$ (it calls H_pub in only 50% of design-posterior worlds with $d \le 0.75$; Appendix D), the design
-posterior replaced it for arm choice on 2026-10-06 (P(H_pub) 0.24 then, 0.98 on 2026-10-20), and we do not cite the
-test's outcome as evidence on $d$. W20 widens the level prior (after one success it predicts 0.53 instead of 0.42, with budget 0 almost unchanged); its B1 effect is negative ours only, as H_pub predicts, but positive with
-connectors (Table 4); local and live evidence agree poorly on the level, since raising $m_0$ helped B0 locally but hurt
-it live in round 1 and public replays favour both probes almost entirely through MathArena (Appendix C).
+After 43 runs the original reading of L15's budget-0 test is undecided and the amended one selects H_pub, a reading we
+report only for the record: in simulation the rule is a weak test of the offset $d$, the design posterior of Section 7.4
+replaced it for arm choice on 2026-10-06, and we do not cite the test's outcome as evidence on $d$ (Appendix D). W20's
+B1 effect is negative ours only, as H_pub predicts, but positive with connectors (Table D7). Local and live evidence
+agree poorly on the level, since raising $m_0$ helped B0 locally but hurt it live in round 1 and public replays favour
+both probes almost entirely through MathArena (Appendix C).
 
 ## 7.4 Adaptive allocation of the remaining uploads
 
 From 2026-10-07 an adaptive allocation replaces the fixed rotation of REF, L15 and W20 (Appendix D). A grid posterior
 over pool regimes, our prior's offset $d$ (H_pub is $d \le 0.85$) and a discrepancy scale is fitted to the selection-set
-contrasts and the B31 constraint without the holdout pairs; arm predictions are the exact calculation of Section 7.2
-plus a Gaussian-process discrepancy over $(m_0, \tau_\mu, \tau_\delta)$. Each day the final run counts of at most five
-non-REF grid arms are chosen to minimize the expected true effect of whatever the switch checklist would select, REF
-keeps at least 20% of the uploads, and the screen still drops arms permanently. In 225 simulated live streams from the
-policy's own posterior (which favours it), the arm the plan selected beat the rotation's choice by $-1.18 \pm 0.10$ in
-true ALC and was never worse than REF; without arm discrepancies the gain is $-0.40 \pm 0.19$.
+contrasts and the B31 constraint without the holdout pairs. Each day the final run counts of at most five non-REF grid
+arms are chosen to minimize the expected true effect of whatever the switch checklist would select, REF keeps at least
+20% of the uploads, and the screen still drops arms permanently. In 225 simulated live streams from the policy's own
+posterior (which favours it), the arm the plan selected beat the rotation's choice by $-1.18 \pm 0.10$ in true ALC and
+was never worse than REF; without arm discrepancies the gain is $-0.40 \pm 0.19$.
 
-**Operating characteristics.** In 1,780 simulated campaigns from the state of 2026-10-06 to the final look, on pools
-calibrated to our logs (Appendix D), the amended procedure never switched when all candidates equal REF on the
-formative pool (0 of 77), switched in 3% to 5% when they equal REF only in a larger population, never switched to a
-worse arm (0 of 424), and selected an arm better by 2 in 97% of campaigns and one better by 1 in 29% (88% and 1%
-before the amendment).
-
-**Headroom (2026-10-07).** An exact calculus over the design posterior refit with that day's runs (which put
-P(H_pub) at 0.87, from 0.24 the day before) bounds what any level rule for pairs alone on their benchmark
-can still gain over W20 at $-1.37$; the best normal level prior captures 28% to 35% of that, so this analysis added no
-normal-family arm, and a two-component level prior matched to the posterior (MXs; Table A1), which captures 92% in
-the calculus but is not robust across views, was pre-registered at 05:10 UTC as an exploration arm outside the grid.
-Appendix D gives the calculus, the guards and a red-team pass that found no lever worth 2 (Appendix G, item 20).
-
-**State on 2026-10-20.** With 401 scored runs (103 of REF), four arms are provisional finalists (Tables 4 and D6): W20
-($-2.0 \pm 1.2$, $z = -1.60$, 87 runs), W15m16 ($m_0 = -1.5$, $\tau_\mu = 1.6$, $\tau_\delta = 1.4$; $-2.1 \pm
-1.6$, 39 runs), MXs ($-1.6 \pm 1.5$, 30 runs) and L15 ($-1.5 \pm 1.4$, 43 runs), all within 0.6 of zero with
-connectors. Read daily with the SD floor, none passes the switch checklist (W20 and W15m16 fail only (b), $z = -1.57$
-and $-1.22$ against $-1.8$); a final-look rehearsal on the data of 2026-10-16, without that floor, had W20 pass every
-item ($z = -2.17$). The design posterior gives P(H_pub) 0.98 and W15m16 the lead (best among the shortlisted arms and
-REF with probability 0.38; an interim commit needs 0.80), with probability 0.13 that no arm passes. The final look
-below made the decision.
+**Operating characteristics and interim state.** In 1,780 simulated campaigns (Table D5) the amended procedure never
+switched when all candidates equal REF on the formative pool (0 of 77), switched in 3% to 5% when they equal REF only in
+a larger population, never switched to a worse arm (0 of 424), and selected an arm better by 2 in 97% of campaigns. A
+headroom calculus of 2026-10-07 added only a two-component exploration arm, MXs (Table A1). On 2026-10-20, with 401
+scored runs, none of the four provisional finalists passed the switch checklist read daily with the SD floor (Table D6;
+Appendix D).
 
 **Final look (2026-10-30).** It ran at 04:15 UTC on 2026-10-30, before the pre-registered window of 12:00 to 20:00 UTC,
-because the author asked for the release then and earlier sessions of the upload agent had ended without warning.
-Availability set the timing, which a hashed snapshot recorded before the run. Rules and thresholds stayed as
-registered, and the guard tool gained only an option to read rule (b) on an insurance build and its parent together, as
-that day's plan specified. Of that day's runs, five were still in flight after two hours and counted as dead before
-scoring. Since the
-state above, uploads ran on 2026-10-21, 10-28 and 10-30, and we missed the windows of 2026-10-22 to 10-27 and of 10-29
-(Appendix D). With 496 scored runs (150 of REF), the finalists were the five non-dropped arms with at least 30 runs
-(W20, W15m16, L15, MXs and W20 at $m_0 = -1.5$), so item (b) needed $z \le -1.8$. W20 passed every item: holdout
-$-1.5 \pm 2.4$ ($K = 38$), all pairs $-1.7 \pm 1.0$ with $z = -2.06$ without the floor ($K = 200$), benchmark-balanced
-$-2.0$, largest leave-one-benchmark-out estimate $-0.4$, no budget worse than REF by two SE$_h$, and the local guard.
-W15m16 failed only (b) ($z = -1.26$), L15 and W20 at $m_0 = -1.5$ failed (a), (b) and (d), and MXs failed (a) and (b).
-W20's level block replaces REF's in the final model. Including connectors, W20's all-pairs effect is $+0.4 \pm 1.2$, so the switch
-rests on our own matched runs. On the fresh pairs, the only confirmatory estimate, W20 is $-6.0 \pm 4.0$ against REF
-($z = -1.49$, $K = 33$). Every finalist's fresh-pairs contrast is negative, W15m16's the largest ($-10.0 \pm 4.3$,
-$z = -2.34$, $K = 23$), and by the pre-registered rules none of them selects an arm. Read on all four scored runs of
-the W20 composite and its insurance build, the composite guard of rule (b) gave $-0.7 \pm 2.9$ against plain W20 on
+because the author asked for the release then. Availability set the timing, which a hashed snapshot recorded before the
+run. Rules and thresholds stayed as registered, and five runs still in flight counted as dead before scoring (Appendix
+D). With 496 scored runs (150 of REF), the finalists were the five non-dropped arms with at least 30 runs (W20, W15m16
+with $m_0 = -1.5$, $\tau_\mu = 1.6$ and $\tau_\delta = 1.4$, L15, MXs and W20 at $m_0 = -1.5$), so item (b) needed $z
+\le -1.8$. W20 passed every item: holdout $-1.5 \pm 2.4$ ($K = 38$), all pairs $-1.7 \pm 1.0$ with $z = -2.06$ without
+the floor ($K = 200$), benchmark-balanced $-2.0$, largest leave-one-benchmark-out estimate $-0.4$, no budget worse than
+REF by two SE$_h$, and the local guard. W15m16 failed only (b) ($z = -1.26$), and the others failed two or three items.
+W20's level block replaces REF's in the final model. Including connectors, W20's all-pairs effect is $+0.4 \pm 1.2$, so
+the switch rests on our own matched runs. On the fresh pairs, the only confirmatory estimate, W20 is $-6.0 \pm 4.0$
+against REF ($z = -1.49$, $K = 33$). Every finalist's fresh-pairs contrast is negative, W15m16's the largest ($-10.0 \pm
+4.3$, $z = -2.34$, $K = 23$), and by the pre-registered rules none of them selects an arm. Read on all four scored runs
+of the W20 composite and its insurance build, the composite guard of rule (b) gave $-0.7 \pm 2.9$ against plain W20 on
 the selection set ($K = 25$) with no composite run ending without scores, which keeps the composite in the final build
 (Section 10).
 
@@ -443,68 +334,39 @@ On shared pairs the best-covered public arm scored better than each of our arms 
 one SE). Both connector teams give each item its own effect with SD 2 to 3 logits, against our $\sigma_i = 0.6$, but a
 larger $\sigma_i$ loses on every pair, because in the joint Laplace fit the same variance also lets a pair's own labels
 explain away its evidence and moderates every unlabelled item, while it pays only on rows a partner labelled (Appendix
-F). So pooling runs at a fifth of item-level strength: after a partner's success our prediction moves by $+0.20$
-logit at $n = 31$, against $+1.03$ for an exact item-level model (Table F1), while $\sigma_i = 2$ loses $+2.0$ to
-$+3.5$ per budget from B3.
+F).
 
 `CavityPoolModel` changes a prediction only if another system labelled the target's item text: it removes those labels
-from the Laplace posterior by a Woodbury downdate (which also removes the double counting of a partner's label in its
-level), integrates a shared item effect $u \sim N(0, \sigma_x^2)$ over the labellers' cavity levels and adds the
-resulting logit shift to the base prediction (Appendix F). In its pre-registered benchmark-keyed replay ($k = 2$, 20
-draws per benchmark; Table C4) it gains $-0.52 \pm 0.13$, $-0.58 \pm 0.16$ and $-0.60 \pm 0.18$ at $\sigma_x = 2.0$,
-2.5 and 3.0, with every benchmark negative, and its rule selects 3.0. Simpler designs tie in ALC (two-scale pooling
-$-0.47 \pm 0.12$, plug-in MAP offsets $-0.54 \pm 0.24$), so the case for the cavity version is its calibration after a
-partner's label (Table F1). The projected live gain is at most about $-0.5$ at formative density and grows with pairs
-per benchmark: in denser benchmark-keyed draws (`results/combo_dense.csv`) C alone gains $-2.64 \pm 0.48$ and
-$-5.44 \pm 0.54$ on ResearchCodeBench at $k = 4$ and 8, with no cell from B1 to B31 worse than $+0.07$ (Appendix C
-gives the composite's cells and the B0 failure of that replay's rule, which belongs to S, since C is exactly zero at
-B0).
+from the Laplace posterior, integrates a shared item effect $u \sim N(0, \sigma_x^2)$ over the labellers' cavity levels
+and adds the resulting logit shift to the base prediction. In its pre-registered replay (Table C4) it gains $-0.60 \pm
+0.18$ at $\sigma_x = 3.0$, which its rule selects, with every benchmark negative. Simpler designs tie in ALC, so the
+case for the cavity version is its calibration after a partner's label (Table F1). The projected live gain is at most
+about $-0.5$ at formative density and grows with pairs per benchmark (Appendix F).
 
 # 9 Negative results
 
-Table 5 lists the ideas with replay or live evidence that are not in the final model. Section 4.6 covers $\sigma_g$,
-$\lambda$, SY1.0 and NP, and Appendix G gives all twenty, graded A (paired replay or live contrast with an SE), B
-(exact calculation or simulation) or C (reasoning only).
-
-**Table 5.** Negative and neutral results with replay or live evidence (live values: Table D1).
-
-| Idea | Grade | Key result | Decision |
-|-------------------------|------|------------------------------------------------------------|-------------------|
-| Shared level ($\tau_M$) | A | replay at most +0.6 (no SE); live +3.1 to +24.8 (connectors), -5.0 to +11.8 (ours) | dropped |
-| Student-t(3) level prior | A, B | replay -0.41 ± 0.07, B0 only; live +5.9 ± 5.6 (connectors), +1.0 ± 7.1 (ours) | dropped |
-| Zero-inflated mixture | A, B | replay -1.79 ± 0.60, MathArena; live +5.6 ± 4.4 (connectors), -4.6 ± 5.6 (ours) | dropped |
-| Narrow pair priors | A, B | d06 -0.33 ± 0.30, taus × 0.8 -0.28 ± 0.26; worse from B3 | dropped |
-| Per-budget recalibration | A | cross-fitted Brier B0 +16.3, B1 +17.1, B3 +8.6 (no SE) | not used |
-| Exact inference | A, B | +1.3 to +2.5 per alone pair per benchmark; -0.6 to +0.7 by calculation | not used |
-| $\sigma_i = 2$; plug-in offsets | A | +1.15 ± 0.70; offsets tie the cavity in ALC but overshoot | cavity pooling |
-| Likelihood tempering [15] | B, A | synthetic regret lower at $\alpha$ 1.25 to 1.5; replay at 1.3 +0.47 (n.s.) | superseded by W20 |
-| Acquisition policies [19] | B | synthetic -0.65 ± 0.16 with informative item features, +0.03 without; about -0.1 expected here | default kept |
-| Late-budget de-moderation | A | bias confirmed (+0.05 at B31 on near-zero pairs); plug-in -0.09 ± 0.04 against a pre-registered -0.15 | not adopted |
-
-Several ideas gain locally only on MathArena at B0 and B1, where REF's level is centred too low for an easy benchmark.
-The two of them tested live, the mixture and the Student-t prior, showed no resolvable live gain.
+Appendix G gives all twenty graded negative results, and Table G1 lists those with replay or live evidence. Several ideas
+gain locally only on MathArena at B0 and B1, where REF's level is centred too low for an easy benchmark. The two of them
+tested live, the mixture and the Student-t prior, showed no resolvable live gain.
 
 # 10 Final submission
 
-**Table 6.** Final submission (local values on the draws of Table 3).
+**Table 4.** Final submission (local values on the draws of Table 3).
 
 | Item | Value |
 |----------------------|--------------------------------------------------------------|
 | Configuration | level block W20 ($m_0 = -2.0$, $\tau_\mu = 2.0$, $\tau_\delta = 1.0$) + S + C ($\sigma_x = 3.0$) + P, shipped as the insurance build `v6_combo_w20_c1.zip` (SHA-256 prefix e15a4e3f); selected Codabench submission 1020301 |
 | Local macro ALC | 0.1910, 0.1888, 0.1880 with the REF, W20, L15 blocks (builds verified bit-exact) |
 | Live effect vs REF: all, holdout, fresh pairs | level block: $-1.7 \pm 1.0$ ($K = 200$), $-1.5 \pm 2.4$ ($K = 38$), $-6.0 \pm 4.0$ ($K = 33$) (fresh pairs: first seen after the snapshot of 2026-10-06 13:51 UTC; the only confirmatory estimate, Appendix D); composite against plain W20 on the selection set: $-0.7 \pm 2.9$ ($K = 25$) |
-| Formative mean (draw CI); platform ECE | 0.186 over the four Finished runs of the build and its parent (95% $t$ interval over draws 0.165 to 0.208; the selected run 0.190 on 9 pairs; the mean is optimistic: selected among arms); platform ECE 0.117 to 0.142 on those runs (0.121 for the selected run); locally the platform's ECE is 0.135 to 0.137 with the W20 or REF block, against a noise floor of 0.048 (Appendix C) |
-| Platform; runtime; uploads | composites Finished on the W20 (2026-10-07), REF and W20 at $m_0 = -1.5$ blocks (2026-10-19); the W15m16 composite's check and its rerun died before scoring and its insurance build Finished three times; the shipped build Finished three times (1006743 on 2026-10-21, 1020286 and 1020301 on 2026-10-30; a fourth run was still in flight at the final look); locally at most about 30 s per draw and worker (REF 18 s; Appendix A); 575 uploads (467 by 2026-10-20) |
+| Formative mean (draw CI); platform ECE | 0.186 over the four Finished runs of the build and its parent (95% $t$ interval over draws 0.165 to 0.208; the selected run 0.190 on 9 pairs; the mean is optimistic: selected among arms); platform ECE 0.117 to 0.142 on those runs (0.121 for the selected run; local values in Appendix C) |
+| Platform; runtime; uploads | the shipped build Finished three times (1006743 on 2026-10-21, 1020286 and 1020301 on 2026-10-30; a fourth run was still in flight at the final look); locally at most about 30 s per draw and worker (REF 18 s; Appendix A); 575 uploads (467 by 2026-10-20) |
 
-**Composite guard and insurance builds.** A readiness amendment (2026-10-16) made precise when composite runs trip
-final-selection rule (b), which then ships the plain level-block build, because platform failures alone would trip its
-literal reading with probability about 0.5; it moved composite platform checks forward and added
-`tools/composite_guard.py` to read the rule (Appendix D). As the summative draw size is unknown, the W20 and W15m16
-composites also have insurance builds that only add `prediction_config.json` with `{"concurrency": 1}` (one worker
-instead of up to four) and predict identically; the winner's ships in its place if it has a Finished run. W20's insurance
-build `v6_combo_w20_c1.zip` has three and is the final build. Rule (a) names the most recent of them, 1020301, in the
-selection e-mail. The script `swarm/round5/release/final_check.py` confirmed its status, upload time, SHA-256 and bit-exact
-predictions.
+**Insurance builds.** As the summative draw size is unknown, the W20 and W15m16 composites also have insurance builds
+that only add `prediction_config.json` with `{"concurrency": 1}` (one worker instead of up to four) and predict
+identically. W20's insurance build `v6_combo_w20_c1.zip` has three Finished runs and is the final build; rule (a) names
+the most recent, 1020301, as the selected submission, and `swarm/round5/release/final_check.py` confirmed its status,
+upload time, SHA-256 and bit-exact predictions (Appendix D). A late test of subject priors fitted on the full public
+database (Appendix J) did not change the submission.
 
 # 11 Limitations
 
@@ -522,51 +384,41 @@ locally. Its largest component, S, acts mainly on MathArena, whose tables have t
 gain there survives their removal), and the composite failed, through S, a dense-draw robustness rule at B0 on
 ResearchCodeBench, which we report and overrode (Section 4.6). An LLM coding assistant produced most of the code and
 analysis (Section 13). Tests, bit-exact checks and script-generated tables reduce the risk of errors but cannot remove
-it.
+it. The full-database prior of Appendix J passed its local checks too late to be tested live.
 
 # 12 Reproducibility
 
-The repository (https://github.com/rishabhsinha17/brier-rabbit-paiec, MIT license) contains the predictor, the protocol replica, the replay and analysis
-scripts with their saved outputs, the build and verification tools, and 26 unit tests (`../.venv/bin/python -m pytest -q
-tests`). The environment is Python 3.11 with numpy, scipy, pandas, pyarrow, scikit-learn and matplotlib; the submission
-needs only numpy. The data fetcher pins revision `bc8204d8` (Hugging Face access to the gated dataset is required); it
-and the synthetic-study scripts live outside `brier_rabbit/` in our tree and move into the repository at release. Every
-queued replay used `experiments/paired.py` with the arguments recorded in its log, and quick checks used the scripts in
-Appendix B. The release is built from an allow-list: `paiec/`, `experiments/`, `tools/` without feedback dumps,
-`tests/`, `report/`, analysis scripts whose outputs use public data, and the arm-level live tables of this report. It
-excludes our per-pair formative logs and every file derived from them. Other teams' logs are referenced by repository
-and commit and are not redistributed. We do not release our own formative logs, which list
-the hidden pool's anonymous IDs.
+The repository (https://github.com/rishabhsinha17/brier-rabbit-paiec, MIT license) contains the predictor, the protocol
+replica, the replay and analysis scripts with their saved outputs, the build and verification tools, and 26 unit tests.
+Its README gives every step, and Appendix B maps each number to its script. The environment is Python 3.11 with numpy,
+scipy, pandas, pyarrow, scikit-learn and matplotlib; the submission needs only numpy. The release excludes our per-pair
+formative logs and every file derived from them, so the live tables are reproducible at arm level only. Other teams'
+logs are cited by commit and not redistributed (Appendix I).
+
+**Commands.** Clone the repository inside the unpacked official starting kit (Codabench competition 17828, Files tab) as
+`KIT/brier_rabbit/` and work there, with `python` standing for `../.venv/bin/python`. Create the environment with
+`python3.11 -m venv ../.venv && ../.venv/bin/pip install -r requirements.txt`. After you accept the gated dataset's
+terms and log in to Hugging Face, `python scripts/fetch_measurement_db.py` downloads revision `bc8204d8` (add `--verify`
+to check the files). `python -m pytest -q tests` should report 25 passed and 1 skipped (that test needs the other teams'
+logs). `python scripts/rebuild_check.py` rebuilds the four final zips byte for byte. `python tools/verify_shipped.py
+submission_src/v6_combo_w20_c1` checks the submitted code against the research code. `PAIEC_WORKERS=2 python
+scripts/run_job.py combo_v1 --out results/combo_v1_rerun.csv` reruns the composite ablation behind Tables 2 and 3 in
+about 13 minutes, and `results/JOB_ARGS.json` records every queued replay.
 
 # 13 Disclosures and acknowledgments
 
-**LLM assistance.** The author used Claude Code (Anthropic), an LLM coding
-assistant, throughout the project: to write the model, the protocol replica and the analysis tools, to run and summarize
-experiments, to search the literature, and to draft this report. Several assistant sessions worked in parallel as
-specialized reviewers, including one that re-derived, fuzz-tested and checked the purity of every model variant. Every
-number in the main text is traceable to a script or saved output listed in Appendix B, each citation was checked against
-arXiv, Semantic Scholar, Crossref or the publisher's page, and the submitted model is verified to reproduce the research
-code bit for bit. The author reviewed the code and the text and takes full responsibility for both.
+**LLM assistance.** The author used Claude Code (Anthropic), an LLM coding assistant, to write most of the code and
+analysis and to draft this report, reviewed the code and the text and takes full responsibility for both.
 
-**Formative feedback.** Used as described in Section 6: global settings only, through arm-level comparisons and global
-summaries, with anonymous IDs used only as opaque keys. This report publishes neither per-pair results nor per-benchmark
-summaries, and we did not attempt to identify hidden benchmarks or subjects. Number of uploads: 575 of the
-1,000 allowed per person (467 by 2026-10-20), not counting the 529 submissions the platform created in our account on
-2026-10-17 (Section 6).
+**Training data and uploads.** The submitted model uses public measurement-db revision `bc8204d8` only; the late test
+of Appendix J also used the public benchmarks of revision `54074453`. The submission is self-contained numpy
+code without pretrained models, embeddings, external data or inference APIs, and compute was one laptop CPU, without a
+GPU. Formative feedback was used as described in Section 6, and we did not attempt to identify hidden benchmarks or
+subjects. Number of uploads: 575 of the 1,000 allowed per person (467 by 2026-10-20), not counting the 529 submissions
+the platform created in our account on 2026-10-17, which were never scored (Appendix D).
 
-**Training data and models.** Public measurement-db revision `bc8204d8` only (the six-benchmark release of
-2026-09-18); the expanded collection published on 2026-10-06 (Section 3) was not used for any shipped or reported
-result. The submission is self-contained numpy
-code without pretrained models, embeddings, external data or inference APIs. Compute was one laptop CPU, without a GPU.
-
-**Other teams' public material.** We thank the GitHub users aghasalim (`github.com/aghasalim/predictive-eval`) and
-doctawho42 (`github.com/doctawho42/PAIEC`) for publishing their code and formative logs under the MIT license. We used
-their logs only as connector arms in arm-level contrasts, and their code to build validated replicas of their predictors
-for the regime test and to check their acquisition setting. We also thank lucaluo925 for MIT-licensed public results we
-cite in Appendices D and G.
-
-**Community and data contributions.** We release the code, the protocol replica with its unit tests, the replay
-outputs on public data and the data-quality checks of Appendix C under the MIT license (https://github.com/rishabhsinha17/brier-rabbit-paiec).
+**Acknowledgments.** We thank the GitHub users aghasalim and doctawho42 for publishing their code and formative logs
+under the MIT license, and lucaluo925 for MIT-licensed public results (full text: Appendix I).
 
 # References
 
@@ -610,6 +462,21 @@ outputs on public data and the data-quality checks of Appendix C under the MIT l
 38. Murphy. A New Vector Partition of the Probability Score. Journal of Applied Meteorology 12(4):595-600, 1973. doi:10.1175/1520-0450(1973)012<0595:ANVPOT>2.0.CO;2
 39. Stephenson, Coelho, Jolliffe. Two Extra Components in the Brier Score Decomposition. Weather and Forecasting 23(4):752-757, 2008. doi:10.1175/2007WAF2006116.1
 
+# Appendices
+
+**Version note.** PAIEC technical report, final version, 2026-11-05 (first final version 2026-10-30; this one adds
+Appendix J and the shortened main text). The final look, the composite guard and the selected run date from
+04:15 to 04:21 UTC on 2026-10-30 (Sections 7.4 and 10, Table 4); other live numbers are as of 03:24 UTC on 2026-10-20
+unless dated otherwise; local replays and simulations finished by about 16:00 UTC on 2026-10-06, plus the headroom,
+guard and additivity analyses of 2026-10-07 to 10-15 (Section 7.4, Appendices C and D); hashed pre-registration
+snapshots run up to 2026-11-06 (Appendix J). Sections 1 to 13 are the main text; Appendix H is the NeurIPS paper
+checklist. Effects are in $10^{-3}$ Brier ALC, arm minus reference (negative favours the arm), unless a unit is given. Detail moved out of the main text sits under run-in headings that name its
+section, for example "(Section 7.4)".
+
+*TL;DR: A shrinkage-first hierarchical logistic model predicts AI systems' outcomes on unseen benchmarks from 0 to 31
+labels; per-pair determinism turns formative feedback into a matched-pair experiment with calibrated errors and hashed
+pre-registration.*
+
 # Appendix A. Configurations and engineering
 
 **Table A1.** Hyperparameters of REF and of the arms discussed. Empty cells equal REF. All arms share the subject prior
@@ -634,6 +501,9 @@ an attribute prediction exists.
 | MXs (exploration arm, 2026-10-07) | -0.5 | 1.07 | 0.33 | | | | | $\pi$ 0.3, hard component $N(-2.9, 0.55^2)$ | damped |
 | Composite (any level block) | | | | | | | | S: attribute scale 1.56, year clamp 2026.4; C: $\sigma_x = 3.0$; P: variance shares 0.45 (name), 0.288 (harness) | damped |
 
+**Subject prior (Section 4.2).** In leave-one-benchmark-out fits $\theta_s$ correlates 0.30 to 0.47 with the
+held-out pair logit (one correlation per public benchmark, each over its 26 to 82 eligible pairs).
+
 **Sources of the values.** $\tau_\mu$, $\lambda$, $\tau_\delta$, $\sigma_i$ and $\sigma_g$ come from the v1 coordinate
 search (undamped solver, $m_0 = -0.5$, no subject prior; E2), which also swept $\tau_\phi$ and $\tau_\theta$ and kept
 their defaults of 0.5. $m_0 = -2.0$ was chosen live (Section 7.1). Two later coordinate searches (around $m_0 = -0.5$
@@ -653,10 +523,15 @@ the import path and `paiec` imports blocked, and the composite builds also pass 
 difference 0.0 over 9,468 calls). A fuzz test of 7,650 malformed calls over 15 configurations, and 3,060 more for the
 composite, returned a finite probability inside (0, 1) every time, without exceptions or mutated arguments, and the
 composite's predictions are identical under fresh instances per checkpoint, reversed call order and random interleaving.
+Undamped Newton steps diverged under prior-data
+conflict (at $m_0 = -2.0$, 31 labels at 74% success drove $\hat\mu_b$ to $-13.5$).
+The organizers allow external packages on request, installed under their control (their Discord reply of
+2026-10-06; the website still says packages are disabled by default); the submission needs only numpy and ships no
+`requirements.txt`, so the policy does not bind it.
 
 # Appendix B. Sources of each number
 
-Paths are relative to the repository root. Each replay's exact arguments are in the log next to its output. Rows marked "not released" read our per-pair formative logs or files derived from them, which the release excludes (Section 12); the scripts of those rows are released where they read only public data.
+Paths are relative to the repository root. Each replay's exact arguments are in the log next to its output. Rows marked "not released" read our per-pair formative logs or files derived from them, which the release excludes (Section 12); the scripts of those rows are released where they read only public data. A row that names a section also covers that section's detail now held in an appendix.
 
 | Item | Script | Inputs |
 |----------------|------------------------------------------------------------|--------------------|
@@ -665,7 +540,7 @@ Paths are relative to the repository root. Each replay's exact arguments are in 
 | Table C6 | `swarm/round3/shift_sims/temporal_replay.py` (log `results_shift_temporal_replay.log`) | public data |
 | Dense draws (Section 8), dense-draw record (Section 4.6, Appendix C), P's changed pair-draws (Section 4.6), guards of the 2026-10-07 grid arms (Appendix D), MathArena without the data defects (Section 3, Appendix C), composition stress test (Section 11, Appendix C) | `swarm/round7/writer_sims/paper_numbers_v3_1.py` (output `.out`); the dense rule's text is in `compute_queue/done/combo_dense.json`, the cleaning job's reading in `compute_queue/done/contrib_ma_clean.json` (their `why` fields, which the release's job listing omits; the dense rule is quoted in Section 4.6 and Appendix C, the cleaning job's reading in Appendix C), the stress test's rules in `swarm/round4/frontier_watch.md` (section 5) | `results/combo_dense.csv`, `combo_v1.csv`, `ld_guard_1007.csv`, `adj_wide.csv`, `contrib_ma_clean.csv`, `fw_kstress.csv` |
 | Reweighted guards of the 2026-10-07 grid arms (Appendix D) | `swarm/round7/writer_sims/writer_B_guard_rw.py` (calls `tools/daily_report.py`; output `.out`) | `results/adj_wide.csv`, `ld_guard_1007.csv`; global summaries of our logs (not released: derived from our formative logs) |
-| Calibration (Table C7, Figure C2, Table 6) | `swarm/round6/cal_sims/replay_preds.py`, `analyze.py` (outputs `out_bench/`, `out_pair/`); table rounding `swarm/round7/writer_sims/writer_B_cal_table.py` | `results/cal_preds_bench.parquet`, `cal_preds_pair.parquet` (public data) |
+| Calibration (Table C7, Figure C2, Table 4) | `swarm/round6/cal_sims/replay_preds.py`, `analyze.py` (outputs `out_bench/`, `out_pair/`); table rounding `swarm/round7/writer_sims/writer_B_cal_table.py` | `results/cal_preds_bench.parquet`, `cal_preds_pair.parquet` (public data) |
 | Figure C1 | `swarm/round5/writer_sims/fig_ladder_v3.py` | `results/combo_v1.csv` |
 | Tables C1, C2 | `swarm/round3/report_writer_sims/paper_tables.py`, `report/make_tables.py` | `results/paired*.csv`, `results/pd1_priors.csv`, `results/headA_itempool.csv` |
 | Figure 1, Section 4.4 | `swarm/round3/report_writer_sims/paper_figures.py`, `swarm/round1/head_researcher_B_sims/check_laplace.py`, `effective_alpha.py` | real model class, synthetic inputs |
@@ -680,9 +555,9 @@ Paths are relative to the repository root. Each replay's exact arguments are in 
 | REF SD across draws (Section 1, Appendix D); upload and configuration counts (Sections 6, 10, 11, 13, Table D2) | `submissions/ledger.csv` (arm `v3b_noM_n_m20`, column `alc`, scored runs; one row per upload) | our own draw-level scores (not released: our upload records) |
 | Section 6 and Appendix D | `swarm/round2/adjudicator_sims/audit_evalsci.py`, `tools/swarm_evalsci.py power`, `swarm/round2/builder_infra_sims/public_arms_se.py`, `public_sensitivity.py`, `public_split_check.py`, `k_eff.py`, `swarm/round2/adjudicator_sims/validate_calc.py` | formative logs, public code (not released: derived from our formative logs) |
 | Table D1 | `swarm/round2/adjudicator_sims/live_evidence.py` (with connectors); `tools/daily_report.py --upto 963848 --public all --all-arms --reps 200 --csv` (ours only; outputs `swarm/round5/writer_sims/daily_report_upto963848.*`) | formative logs (not released: derived from our formative logs) |
-| Table 4 observed, Table D6, live numbers of 2026-10-20 (Sections 2, 6, 7), local guard (Appendix C) | `tools/daily_report.py --reps 500` at 03:24 UTC on 2026-10-20 (output `swarm/round11/daily_report_1020.txt`); the 12:07 UTC values of 2026-10-06 from `--reps 300` (outputs `swarm/round5/writer_sims/daily_report_1207utc.*`) | formative logs, `results/adj_wide.csv`, `ld_guard_1010.csv`, `hr_mix_guard.csv` (not released: derived from our formative logs) |
+| Table D7 observed, Table D6, live numbers of 2026-10-20 (Sections 2, 6, 7), local guard (Appendix C) | `tools/daily_report.py --reps 500` at 03:24 UTC on 2026-10-20 (output `swarm/round11/daily_report_1020.txt`); the 12:07 UTC values of 2026-10-06 from `--reps 300` (outputs `swarm/round5/writer_sims/daily_report_1207utc.*`) | formative logs, `results/adj_wide.csv`, `ld_guard_1010.csv`, `hr_mix_guard.csv` (not released: derived from our formative logs) |
 | Section 7.2, Appendix E | `swarm/round2/adjudicator_sims/regime_test3.py`, `regime_variants.py`, `spread_test.py`, `regime_dtheta.py`, `regime_subject.py`; rerun on the pre-registered connector set `swarm/round10/regime_rerun/rerun_prereg.py` (outputs beside it: `summary_prereg.json`, `loao_prereg.csv`, `pred_vs_obs_best_prereg.csv`) | formative logs, public data (not released: derived from our formative logs) |
-| Table 4 predictions | `swarm/round2/adjudicator_sims/recommend.py`, `recommend2.py` | exact calculation |
+| Table D7 predictions | `swarm/round2/adjudicator_sims/recommend.py`, `recommend2.py` | exact calculation |
 | L15 test operating characteristics (Section 7.3, Appendix D) | `swarm/round6/oc_sims/oc_calib.py` (caches `cache/calib_stylised.jsonl`, `calib_posterior.jsonl`; summary in `swarm/round6/operating_characteristics.md` section 2.4) | arm-level summaries of our logs, design posterior (not released: derived from our formative logs) |
 | Regime-test bootstrap (Section 7.2, Table E2) | `swarm/round6/oc_sims/regime_boot.py` (`boot 2000` output in `cache/plan.log`; `scaled 300` output `swarm/round7/writer_sims/regime_boot_scaled300.out`) | arm-level contrasts of Section 7.2 (`swarm/round2/adjudicator_sims/draws_all.npz`), public data |
 | Operating characteristics (Section 7.4, Appendix D, Table D5) | `swarm/round6/oc_sims/` (`run_oc.py`, `oc_pipeline.py`, `oc_core.py`; tables `oc_tables.py`, `oc_diag.py`, `oc_extra.py`, outputs `cache/final_*.txt`; report `swarm/round6/operating_characteristics.md`) | arm-level and global summaries of our logs (`live_targets.json`), design posterior, public data (not released: derived from our formative logs) |
@@ -690,12 +565,13 @@ Paths are relative to the repository root. Each replay's exact arguments are in 
 | Final-look rehearsal (Section 7.4, Appendix D) | `tools/daily_report.py --final-look --reps 300` on the data of 2026-10-16 (output `swarm/round11/finallook_rehearsal_1016.txt`) | formative logs (not released: derived from our formative logs) |
 | Composite additivity guards (Appendix D) | `swarm/round11/scp_add_read.py` (outputs `swarm/round11/scp_add_1008_reading.txt`, `scp_add_1015_reading.txt`) | `results/scp_add_1008.csv`, `scp_add_1015.csv` (public data) |
 | Composite readiness, guard tool, insurance builds, platform-created runs (Sections 6 and 10, Appendix D) | `submissions/QUEUE.md` (notes of 2026-10-16 to 10-20), `tools/composite_guard.py`, `tools/verify_shipped.py`, `submissions/builds.csv`, `submissions/platform_runs_2026-10-17.md` | our upload records (not released) |
-| Headroom calculus, MXs and wide-arm guards, late-budget de-moderation (Section 7.4, Table 5, Table A1, Appendix D, Appendix G item 20) | `swarm/round8/headroom_sims/` (scripts, `params_mxs.json`; summary `swarm/round8/headroom.md`), `paiec/ext/rt8_unseen.py`; job files `compute_queue/done/hr_mix_guard.json`, `r8_dlike_guard.json`, `rt8_unseen.json` | `results/hr_mix_guard.csv`, `r8_dlike_guard.csv`, `rt8_unseen.csv` (public data); the design posterior refit (not released: derived from our formative logs) |
+| Headroom calculus, MXs and wide-arm guards, late-budget de-moderation (Section 7.4, Table G1, Table A1, Appendix D, Appendix G item 20) | `swarm/round8/headroom_sims/` (scripts, `params_mxs.json`; summary `swarm/round8/headroom.md`), `paiec/ext/rt8_unseen.py`; job files `compute_queue/done/hr_mix_guard.json`, `r8_dlike_guard.json`, `rt8_unseen.json` | `results/hr_mix_guard.csv`, `r8_dlike_guard.csv`, `rt8_unseen.csv` (public data); the design posterior refit (not released: derived from our formative logs) |
 | Table F1, Section 8, Appendix F | `swarm/round2/pooling_sims/why_underpool.py`, `unit_checks.py`, `shift_check.py`, `check_cavity.py`, `replay.py`, `pool_tables.py`, `diag_covered.py`, `scale_to_platform.py` | public data |
-| Table 5, Appendix G | `experiments/l2o_shared_level.py`, `experiments/calibration_check.py`, `swarm/round2/skeptic_plugins_sims/quick_alc.py`, `two_pair_narrow.py`, `swarm/round1/postdoc_adaptation_sims/two_pair_exact.py`, `stacking_headroom.py`, `item_signal.py`, `test_bcm.py`, `swarm/round1/head_researcher_B_sims/eb_sims.py`, `time_forward.py`, synthetic study (moves into the repository at release) | public data, synthetic |
+| Table G1, Appendix G | `experiments/l2o_shared_level.py`, `experiments/calibration_check.py`, `swarm/round2/skeptic_plugins_sims/quick_alc.py`, `two_pair_narrow.py`, `swarm/round1/postdoc_adaptation_sims/two_pair_exact.py`, `stacking_headroom.py`, `item_signal.py`, `test_bcm.py`, `swarm/round1/head_researcher_B_sims/eb_sims.py`, `time_forward.py`, synthetic study (moves into the repository at release) | public data, synthetic |
 | Section 4.5, Appendix A | `tools/verify_shipped.py`, `tools/build_submission.py`, `swarm/round2/skeptic_plugins_sims/fuzz.py`, `replay_checks.py`, `timing_refit.py` | built submissions |
 | Pre-registered rules | `submissions/QUEUE.md`; hashed snapshots in `submissions/prereg/` (`LOG.csv`) | |
-| Final look, composite guard, selected run (abstract, Sections 7.4 and 10, Table 6, Appendix D) | `tools/daily_report.py --final-look --finalists 5 --reps 500` at 04:15 UTC on 2026-10-30 (output `swarm/round11/FINAL_LOOK_2026-10-30.txt`); `tools/composite_guard.py v6_combo_w20_c1 v5_w20_m20 --pool v6_combo_w20` (outputs `swarm/round11/COMPOSITE_GUARD_2026-10-30_pooled.txt`, `_c1.txt`, `_parent.txt`); `swarm/round5/release/final_check.py 1020301 --verify` (output `swarm/round11/FINAL_CHECK_1020301.txt`); `submissions/ledger.csv` (formative mean, platform ECE, upload counts) | formative logs, our upload records (not released: derived from our formative logs) |
+| Final look, composite guard, selected run (abstract, Sections 7.4 and 10, Table 4, Appendix D) | `tools/daily_report.py --final-look --finalists 5 --reps 500` at 04:15 UTC on 2026-10-30 (output `swarm/round11/FINAL_LOOK_2026-10-30.txt`); `tools/composite_guard.py v6_combo_w20_c1 v5_w20_m20 --pool v6_combo_w20` (outputs `swarm/round11/COMPOSITE_GUARD_2026-10-30_pooled.txt`, `_c1.txt`, `_parent.txt`); `swarm/round5/release/final_check.py 1020301 --verify` (output `swarm/round11/FINAL_CHECK_1020301.txt`); `submissions/ledger.csv` (formative mean, platform ECE, upload counts) | formative logs, our upload records (not released: derived from our formative logs) |
+| Appendix J (late full-database test) | `swarm/round12/pair_rates.py`, `full_prior.py`, `replay.py` (output `guard_reading.txt`), `diag1.py`, `diag2.py`, `diag4.py`; live Brier shape `diag3.py` | public data (measurement-db `54074453`, public benchmarks); diag3 reads our formative logs (arm-level output, not released) |
 
 # Appendix C. Additional local comparisons
 
@@ -751,6 +627,12 @@ moderation through extra group-variance terms rather than information. The resca
 pre-registered rule (macro at most $-0.3$, no benchmark worse than $+0.5$) and is component S. The $\sigma_g$ rows
 failed theirs (adopt only if the macro is at most $-0.5$).
 
+**A replay-subsampling bias, in full (Section 5).** The original replica subsampled items by a hash keyed by the pair, so co-drawn pairs kept
+independent subsets and a partner covered as few of a pair's items as in the larger public groups. Keying the subsample
+on the benchmark fixes this (B31 partner coverage on Multi-SWE-bench 0.015 to 0.051; Table C3). On identical picks
+cavity pooling gains $-0.39 \pm 0.16$ under the old subsample and $-0.60 \pm 0.18$ under the new one: the old replica
+understated the value of item pooling by about a third (paired difference $-0.21 \pm 0.11$, Table C4).
+
 **Table C3.** Partner coverage at B31, $k = 2$, 30 draws per benchmark. "Complete public groups" uses the same two pairs
 without subsampling; the old pair-keyed subsample reproduces it, and the benchmark-keyed one reproduces platform-sized
 groups. Script: `swarm/round2/builder_infra_sims/partner_coverage.py`.
@@ -805,6 +687,29 @@ Script: `swarm/round3/shift_sims/temporal_replay.py` (log `results_shift_tempora
 | S with SY1.0 | +2.66 ± 0.66 [-1.00] | +4.45 ± 0.90 [-0.42] | +10.3 / +19.4 |
 | S with NP | -6.03 ± 1.01 [-5.95] | -6.10 ± 1.21 [-7.33] | -26.0 / -29.3 |
 
+**Composite details (Section 4.6).** Refitting the ridge on unshrunk targets scales its predictions by 1.56 to 1.60 in each
+fold. On public data the pair residuals of one model on two benchmarks correlate at
+$+0.49$ (72 names, pooled over benchmark combinations by Fisher $z$, SE 0.14 on the $z$ scale), and those of models
+sharing a harness on Multi-SWE-bench at $+0.82$ (401 pairs of pairs).
+Together the components gain $-1.24 \pm 0.22$, negative in every benchmark and budget column: S at B0 to B3, mainly on
+MathArena and REAL, and C mostly from B3 on and only when a benchmark has two pairs ($k = 2$: $-0.70 \pm 0.19$). P
+changed 6 of 216 pair-draws by more than $10^{-6}$ (all Multi-SWE-bench at $k = 2$; the rest agree with REF to within
+$3 \times 10^{-16}$), and its evidence is a replay with the same model on two held-out benchmarks ($-0.58 \pm 0.22$;
+different-name controls exactly 0). The components are additive (residual $-0.004 \pm 0.002$), and one plug-in class
+carries all three, bit-identical to each stand-alone class on 4,158 recorded calls at five level blocks.
+
+**Decision records, overview (Section 4.6).** Four variants were not adopted, three under pre-registered rules: SY1.0, a version
+of S that leaves the release-year coefficient unscaled, is worse than S on public replays ($+0.53 \pm 0.14$) and on a
+strict temporal hold-out that S wins ($-3.98 \pm 0.90$ and $-3.82 \pm 1.06$ at cut-offs 2025.5 and 2026.0; newer
+systems alone on their benchmark, the closest public analogue to the eligible test subjects [37]; Table C6); a
+provider-free ridge (NP) broke its per-benchmark cap; a larger item-group variance failed its rule; and $\lambda = 1.6$, which had no rule,
+gains mainly where we read it as compensating a mis-centred level. One rule failed and was overridden: the composite's
+dense replay (four and eight pairs per benchmark; Appendix F) carried a rule written in its job file before it ran, and
+S + C + P failed it at B0 on ResearchCodeBench through S ($+2.81 \pm 0.81$ at $k = 4$). We kept S + C + P, a decision
+taken after the result and hashed at 13:51 UTC (Table D3), because the rule targeted early-budget costs of pooling,
+which did not occur, the composite's ResearchCodeBench ALC is negative at every density and S wins the hold-out; the
+literal rule is reported as failed, and the paragraphs below give every rule, result and reason.
+
 **Decision records, summary.** SY1.0 passed its job rule, which compared it with REF ($-0.71 \pm 0.19$ inside the
 composite); the decision, however, is between SY1.0 and S, and SY1.0 is worse on public replays ($+0.53 \pm 0.14$) and
 failed a second pre-registered rule, at most zero within one SE on the strict temporal hold-out. We kept S (hashed at
@@ -833,8 +738,8 @@ before its replay: adopt if the composite with NP is at most $+0.2$ worse than t
 benchmark above $+0.5$. The macro passed ($-0.12 \pm 0.40$), but REAL was $+1.26 \pm 0.44$ ($+1.13$ in the pair-weighted
 convention of the decision record), so NP was not adopted at 11:30 UTC. (iii) *$\sigma_g$.* The rule (adopt 1.4 if the
 macro is at most $-0.5$, B1 to B31 improve on two of the three benchmarks with informative features, and Multi-SWE-bench
-is not worse than $+0.5$) failed on its first item (Table C2). (iv) *$\lambda$.* No rule was pre-registered; Section 4.6
-gives the reason it was not adopted. (v) *Dense-draw robustness rule.* Another team reported a B1 cost of pooling on
+is not worse than $+0.5$) failed on its first item (Table C2). (iv) *$\lambda$.* No rule was pre-registered; the overview
+above gives the reason it was not adopted. (v) *Dense-draw robustness rule.* Another team reported a B1 cost of pooling on
 dense draws of one public benchmark, so before the composite's dense replay ran (REAL and ResearchCodeBench, $k = 4$ and
 8, 10 draws per cell; job file by 11:35 UTC, result 12:23 UTC) its job file stated the rule: pass if S + C + P and C are
 not worse than REF at any budget by more than two SEs and B1 is not worse than $+0.5$. C passes, with every cell from B1
@@ -848,6 +753,18 @@ reasons (the rule was written against early-budget costs of pooling, which did n
 ResearchCodeBench ALC is negative at every density tried, $-0.12 \pm 0.31$, $-0.79 \pm 0.46$, $-2.56 \pm 0.63$ and
 $-5.92 \pm 0.61$ at $k = 1$, 2, 4 and 8, and its REAL ALC $-1.01 \pm 0.51$ and $-3.28 \pm 0.83$ at $k = 4$ and 8; and
 S wins the temporal hold-out of Table C6), and hashed at 13:51 UTC (Table D3).
+
+**Data details (Section 3).** On 2026-10-06 the organizers published formatted tables for about 280 benchmarks on the
+dataset's `main` branch (revision `54074453`), against six at `bc8204d8`, whose tables are unchanged except one added
+Multi-SWE-bench item and its rows. Until late October the competition page did not say whether the new benchmarks
+belong to the public training pool (the dataset card still lists the six), so nothing in the submission uses them, and
+every number outside Appendix J comes from revision `bc8204d8`, which is still served. Our loader keeps every row graded exactly 0 or 1, so
+MathArena's rows include 3,379 rubric-criterion grades besides 89,482 final-answer grades. For 52 MathArena subjects
+whose `normalized_name`, `provider` and `release_date` are empty we recover the canonical name from
+`subject_features_extra`, giving 122 named models, 96 on one benchmark only. Item difficulty is largely shared across
+systems (crossed Rasch item SDs of 2.5 to 3.1 logits outside MathArena), and the first `item_features` token explains 1%
+to 39% of item easiness variance. The MathArena tables also hold system prompts stored as item content, prompts that
+differ from the graded problem and repeated attempts (202 items, 19 items and 5,848 rows).
 
 **MathArena without the data defects.** In the MathArena tables 37.6% of a pair's items share their text with another
 item of the pair (Section 3). The replay of Table 2 on MathArena with the system prompts, mismatched prompts,
@@ -931,9 +848,27 @@ the models. On the pair-keyed draws of the local guard (`results/cal_preds_pair.
 `adj_wide.csv` bit for bit) the ALC-weighted ECE is 0.047 for REF and 0.036 for W20 + S + C + P, whose Brier
 difference of $-2.19 \pm 0.63$ splits into REL $-1.91 \pm 0.64$ and RES $+0.19 \pm 0.42$.
 Local calibration describes the method on public data only; local and live evidence disagree on the level at B0
-(Section 7.3), and the level block is chosen live. The platform ECE of the final build's four Finished runs is 0.117 to 0.142 (Table 6).
+(Section 7.3), and the level block is chosen live. The platform ECE of the final build's four Finished runs is 0.117 to 0.142 (Table 4).
+In the terms of Table 4, locally the platform's ECE is 0.135 to 0.137 with the W20 or REF block, against a noise floor of 0.048.
 
 # Appendix D. Live methodology details
+
+**Determinism counts (Section 2).** On 2026-10-06 all 50 repeated alone-pair scores were identical at all six budgets.
+
+**Draw-level constants (Section 7).** Section 7 reports arm-level contrasts and global summaries only. Anonymous IDs stay fixed across submissions, and
+every draw is selected by the same documented rule from the formative evaluation data (kit README), so draw-level
+hyperparameters are constants of that data, better estimated across draws than inside one draw [11]. A pair can share
+its benchmark with another pair of its draw, and then pooling improves its score (Section 6).
+
+**Early decisions, in full (Section 7.1).** Our first level moves predate the matched-pair estimator ($m_0$ from $-0.5$ to $-1.5$ after two single draws, then to
+$-2.0$, REF, on five matched pairs with an SE tool later found about half the true SE). Re-estimated with
+calibrated SEs (Table D1), the early ALC contrasts with connectors stay within 1.4 SE of zero (1.8 SE without the one
+public log that the pre-registered connector set excludes), except one shared-level variant ($+24.8 \pm 7.4$); on our
+logs alone none exceeds 1.3 SE and six of 13 change sign, so the early drops rest on the connector
+estimator plus local evidence (Section 9). Live, REF and $m_0 = -1.5$ still differ by at most about one SE after 43 L15 runs
+($+0.4 \pm 1.7$ with connectors, $-1.5 \pm 1.4$ ours only; Table D7), while public replays favour $-1.5$ by
+$2.4 \pm 0.5$: REF remains the default of our rules only as the incumbent; the evidence does not support it over
+$m_0 = -1.5$.
 
 **Table D1.** Early live decisions re-estimated (arm minus REF; negative favours the arm) on the data of 2026-10-06
 08:00 UTC (22 of our logs and 55 public). With connectors: the secondary estimator of Section 6, SE = max(1.2 ×
@@ -1065,11 +1000,35 @@ the contrasts of 2026-10-20 and Section 7.4 those of the final look. UTC date: f
 | 15:57 | last simulation chunks and final tables of the operating characteristics (Table D5) |
 | 16:03 | fifth revision: final-look SE without the SD floor at 60 or more direct matches |
 
+**Logs and platform-created runs (Section 6).** The other teams' logs are cited at those commits and used as their MIT
+licenses allow. Anonymous IDs serve to join a pair's results across submissions, as the organizers intend, to assign the
+holdout by a fixed hash, and to mark whether a pair shared its benchmark within a draw. On 2026-10-17 the platform
+created 529 submissions of our own zips in our account that we had not uploaded; none was scored and all were removed by
+2026-10-19, so none entered the evidence. Uploads paused while they might count toward the per-person cap, and the 10-17
+and 10-18 windows were missed while our upload session was down (Platform operations below).
+
 **Use of IDs in full (Section 6).** Anonymous IDs are used only as opaque keys: to join a pair's results across
 submissions, as the organizers intend; as the input of a fixed hash that assigns the holdout; and to group pairs by
 benchmark key within a draw, to mark whether a pair shared its benchmark, stratify the bootstrap and compute two
 further gates of the switch rule. Planning simulations model draw composition with per-key pair counts from our logs,
 used only to simulate how matched pairs accumulate, never as a model input.
+
+**Pre-registration and its timeline, in full (Section 6).** Rules and predictions were written before the uploads or replays they govern, in
+the round reports and a queue file, and from 10:14 UTC on 2026-10-06 also as SHA-256-hashed snapshots of the queue file
+(`submissions/prereg/LOG.csv`); from 2026-10-07 each snapshot is also a commit in the author's local git history. A new arm is dropped after about six runs if its ALC effect exceeds
+$+3.5$ or B0, B1 or B3 is two SEs worse than REF, and the incumbent changes only if a six-item checklist passes,
+including a holdout effect of at most zero and $z \le -1.64$ on all pairs ($-1.8$ with two or more finalists) [22, 23].
+The holdout (a fixed hash of the pair IDs; 21.8% of the 303 distinct pairs seen by 2026-10-20) was implemented at 09:14
+UTC, after the decisions of Section 7.1 and before any decision under the screen rule, so it gives no clean check of
+the earlier choice of REF.
+Each revision of the live rules was recorded before the uploads it governs (Tables D3 and D4; the next paragraphs state every
+rule and revision). Of the five on 2026-10-06, one (10:14 UTC) let disagreement between the estimators keep $m_0 =
+-2.0$, a reading written after interim data that favours the incumbent, so Table D7 reports both readings, and the last
+(16:03 UTC), after all feedback of that day, dropped the SD floor from the switch SE at the final look for arms with at
+least 60 direct matches with REF, after simulations showed that it blocked effects weaker than about $-1.7$. Later
+amendments added the exploration arm MXs (2026-10-07), additivity guards for composites on new level blocks (2026-10-07
+and 10-15), a composite readiness amendment (2026-10-16), a treatment rule for the platform-created runs (Platform operations below) and
+insurance builds (2026-10-19; Section 10).
 
 **Holdout and the revisions of the live rules (Section 6).** The holdout is the set of pairs with
 `sha256("brier-rabbit-holdout|subject_<id>|benchmark_<id>")[:2] < "40"` (22.3% of distinct pairs on 2026-10-06, 21.8%
@@ -1079,7 +1038,7 @@ mixture drop under the round-1 regime gate used all pairs). The revisions: at 08
 add L15 and W20 with their predictions; at 10:14 UTC, after six probe results and an internal finding that the two
 estimators pointed to opposite hypotheses on L15's budget-0 test, to raise SE floors, fix the decision tool and let
 disagreement between the estimators keep $m_0 = -2.0$, a reading written after interim data that favours the incumbent,
-so Table 4 reports both readings; at 11:56 UTC, before the 2026-10-07 uploads, to adopt the adaptive allocation of
+so Table D7 reports both readings; at 11:56 UTC, before the 2026-10-07 uploads, to adopt the adaptive allocation of
 Section 7.4, which leaves the drop rules and the switch checklist unchanged; at 13:51 UTC, to record the failed
 dense-draw rule and the decision to keep the composite (Section 4.6), define the confirmatory fresh-pairs estimate
 (Section 10) and fix the rules for naming the final run; and at 16:03 UTC, after simulations of the whole decision
@@ -1157,12 +1116,20 @@ ALC 0.0147, B0 0.055, B1 0.0487, B3 0.0132, B7 0.0076, B15 0.0043 and B31 0.0039
 raised on 2026-10-06 to the live matched SDs. The arm-specific SD grows with how far an arm's predictions move from
 REF's: exact calculations give B0 SDs of 0.013 for d06, 0.020 for W20, 0.035 for L15 and 0.054 for $m_0 = -1.25$, and
 competitor-type arms show direct matched SDs of 0.088 at B0, 0.0186 for ALC, 0.0225 at B3 and 0.0118 at B7 (1.3 times
-the pooled floor for ALC and about twice the earlier floors at B0, B3 and B7).
+the pooled floor for ALC and about twice the earlier floors at B0, B3 and B7). Our first tool was too small by a median factor of 2.05. With these floors, 20 REF and 10 challenger
+runs match about 40 pairs for an ALC SE of 0.0023; by 2026-10-20, W20's 87 runs matched 141 selection-set pairs with
+REF for an ALC SE$_h$ of 0.0012, at the floor, and local ladder steps of 0.001 to 0.002 are decided on public data.
 
 **Switch-rule power (illustration).** With an independent normal approximation and the ALC floor, a true effect of
 $-3.1$ passes $z \le -1.64$ with probability 0.21, 0.38 and 0.68 at 16, 40 and 100 matched pairs, and a holdout covering
 about 22% of pairs is at most zero with probability 0.65, 0.73 and 0.84. The simulation below replaces this
 illustration for the procedure as run.
+
+**Operating characteristics, summary (Section 7.4).** In 1,780 simulated campaigns from the state of 2026-10-06 to the final look, on pools
+calibrated to our logs (below), the amended procedure never switched when all candidates equal REF on the
+formative pool (0 of 77), switched in 3% to 5% when they equal REF only in a larger population, never switched to a
+worse arm (0 of 424), and selected an arm better by 2 in 97% of campaigns and one better by 1 in 29% (88% and 1%
+before the amendment).
 
 **Operating characteristics (simulation).** We simulated the complete live procedure: the screens, the adaptive
 allocation of Section 7.4 (its in-simulation version, with a fixed shortlist of seven arms) and the switch checklist,
@@ -1235,6 +1202,15 @@ one; the largest disagreement between the two was 3.1 SE, and we report both.
 disagree on the holdout status of a third of appearances, so the prefixed form is pinned. The holdout covers 22.4% of
 distinct pairs in the data of Table D1, 22.3% at 12:07 UTC and 21.8% (66 of 303) on 2026-10-20.
 
+**Adaptive allocation, overview (Section 7.4).** From 2026-10-07 an adaptive allocation replaces the fixed rotation of REF, L15 and W20 (detail below). A grid posterior
+over pool regimes, our prior's offset $d$ (H_pub is $d \le 0.85$) and a discrepancy scale is fitted to the selection-set
+contrasts and the B31 constraint without the holdout pairs; arm predictions are the exact calculation of Section 7.2
+plus a Gaussian-process discrepancy over $(m_0, \tau_\mu, \tau_\delta)$. Each day the final run counts of at most five
+non-REF grid arms are chosen to minimize the expected true effect of whatever the switch checklist would select, REF
+keeps at least 20% of the uploads, and the screen still drops arms permanently. In 225 simulated live streams from the
+policy's own posterior (which favours it), the arm the plan selected beat the rotation's choice by $-1.18 \pm 0.10$ in
+true ALC and was never worse than REF; without arm discrepancies the gain is $-0.40 \pm 0.19$.
+
 **Adaptive allocation in detail (round-4 amendment).** *Posterior.* A uniform prior on a grid: logit shift of the
 regular component against the public pairs ($-0.5$ to $+1.0$, 7 values), spread (0.8 to 1.4), near-zero share (0 to 0.4,
 logit-normal around 6%), subject offset $d$ ($-0.5$ to $+2.5$ in steps of 0.25) and discrepancy scale (1.0 to 3.0). The
@@ -1271,6 +1247,13 @@ for $(-2.5, 2.5, 0.6)$ (MathArena $-10.8$ and $-5.7$, Multi-SWE-bench $+5.0$ and
 ResearchCodeBench $+4.6$ and $+3.3$), and $+0.63 \pm 1.00$ and $+0.90 \pm 0.69$ reweighted to the live joint
 distribution of B0 and B31 as in Appendix C, so all three pass the guard (at most 2.0 worse than REF, unweighted and
 reweighted).
+
+**Headroom (2026-10-07; Section 7.4).** An exact calculus over the design posterior refit with that day's runs (which put
+P(H_pub) at 0.87, from 0.24 the day before) bounds what any level rule for pairs alone on their benchmark
+can still gain over W20 at $-1.37$; the best normal level prior captures 28% to 35% of that, so this analysis added no
+normal-family arm, and a two-component level prior matched to the posterior (MXs; Table A1), which captures 92% in
+the calculus but is not robust across views, was pre-registered at 05:10 UTC as an exploration arm outside the grid.
+The next paragraph gives the calculus, the guards and a red-team pass that found no lever worth 2 (Appendix G, item 20).
 
 *2026-10-07, headroom and guards (round 8).* The design posterior refit with the day's runs gave $E[d] = 0.36$ and
 P(H_pub) $= 0.87$ (1.16 and 0.24 on 2026-10-06). On it, an exact calculus of the alone-pair ALC of candidate level rules
@@ -1309,6 +1292,15 @@ does not model MXs). The plan for 2026-10-21 gives REF 11, L15 7, W15m16 5, W20 
 three MXs uploads, the two insurance runs and the rerun of the W15m16 composite check; its expected true effect of the
 shipped arm is $-1.99$, against $-1.91$ for the fixed rotation of REF, W20 and L15.
 
+**State on 2026-10-20 (Section 7.4).** With 401 scored runs (103 of REF), four arms are provisional finalists (Tables D6 and D7): W20
+($-2.0 \pm 1.2$, $z = -1.60$, 87 runs), W15m16 ($m_0 = -1.5$, $\tau_\mu = 1.6$, $\tau_\delta = 1.4$; $-2.1 \pm
+1.6$, 39 runs), MXs ($-1.6 \pm 1.5$, 30 runs) and L15 ($-1.5 \pm 1.4$, 43 runs), all within 0.6 of zero with
+connectors. Read daily with the SD floor, none passes the switch checklist (W20 and W15m16 fail only (b), $z = -1.57$
+and $-1.22$ against $-1.8$); a final-look rehearsal on the data of 2026-10-16, without that floor, had W20 pass every
+item ($z = -2.17$). The design posterior gives P(H_pub) 0.98 and W15m16 the lead (best among the shortlisted arms and
+REF with probability 0.38; an interim commit needs 0.80), with probability 0.13 that no arm passes. The final look
+below made the decision.
+
 **Live state on 2026-10-20 in full.** Table D6 lists every level arm of the daily report of 03:24 UTC on 2026-10-20.
 Our 401 scored runs (103 of REF) cover 302 distinct pairs; with the 54 connector logs there are 303 distinct pairs, and
 38% of the 3,943 appearances share their benchmark with another pair of the draw. W20 at $m_0 = -1.5$ is not a
@@ -1338,6 +1330,36 @@ finalists, so (b) needs $z \le -1.8$). $K$: pairs matched directly with REF on t
 | Mixture, $\pi = 0.25$ | 2 | 12 | -3.1 ± 4.2 | -0.73 | +0.2 ± 6.6 | dropped | -2.5 ± 3.7 | -0.69 | (b) |
 | Mixture, $\pi = 0.35$ | 1 | 8 | -0.1 ± 7.0 | -0.01 | +5.8 ± 8.9 | dropped | -0.3 ± 6.4 | -0.05 | (b) to (d) |
 
+**The two probes (Section 7.3).** Our prior does not explain such an offset: on a strict public
+temporal hold-out it under-predicts newer systems by 0.6 to 1.2 logits and places a realistic 2025 to 2026 cohort only
+0.2 to 0.7 logits above the public reference, so most of the offset would belong to the benchmark level, which $m_0$
+absorbs.
+L15's budget-0 contrast separates the two predictions ($-13.1$ against $+6.7$, per-pair SD about 35). After 43 runs the
+original reading (Pre-registered readings of the L15 test above) is undecided ($z = -0.77$ against $-3.2$), and under the amended one both estimators
+lie below $-3.2$, selecting H_pub, a reading we report only for the record. In simulation the rule is a weak test of
+the offset $d$ (it calls H_pub in only 50% of design-posterior worlds with $d \le 0.75$), the design
+posterior replaced it for arm choice on 2026-10-06 (P(H_pub) 0.24 then, 0.98 on 2026-10-20), and we do not cite the
+test's outcome as evidence on $d$. W20 widens the level prior (after one success it predicts 0.53 instead of 0.42, with budget 0 almost unchanged); its B1 effect is negative ours only, as H_pub predicts, but positive with
+connectors (Table D7); local and live evidence agree poorly on the level, since raising $m_0$ helped B0 locally but hurt
+it live in round 1 and public replays favour both probes almost entirely through MathArena (Appendix C).
+
+**Table D7.** Predictions and interim observations (B0/B1/B3/B7 in brackets). Predictions computed at 08:37 UTC and
+recorded with the rules at 08:50 UTC, before the first probe upload at 09:00 UTC (file times); they are pre-registered
+for every row except $m_0 = -2.5$, whose prediction comes from a regime fit that already included two of its three
+runs. H_cal is the mean over its joint-fit cells, range in brackets. Observed: selection set at 03:24 UTC on
+2026-10-20, SE$_h$, ours only / with connectors; at the final look (04:15 UTC on 2026-10-30) L15 $-1.2 \pm 1.3$ /
+$-0.4 \pm 1.5$ (49 runs), W20 $-1.8 \pm 1.2$ / $-0.0 \pm 1.4$ with B1 $-3.0 \pm 3.8$ / $+1.1 \pm 4.5$ (101 runs), and W20
+at $m_0 = -1.5$ $-1.2 \pm 1.7$ / $-0.7 \pm 1.6$ (35 runs). Scripts: `swarm/round2/adjudicator_sims/recommend2.py`,
+`tools/daily_report.py`.
+
+| Arm | Change from REF | H_pub | H_cal | R3 | Observed (interim) |
+|------------|--------------|----------------------|-------------------|-----|--------------------------------|
+| L15 | $m_0 = -1.5$ | -3.1 (-13.1/-6.0/-2.2/-0.6) | +1.6 (-0.3 to +3.6); B0 +6.7 | -4.5 | ALC -1.5 ± 1.4 / +0.4 ± 1.7; B0 -7.9 ± 5.4 / -7.4 ± 5.4 (43 runs) |
+| W20 | $\tau_\mu = 2.0$ | -3.1 (-8.5/-6.4/-3.1/-1.25) | -0.25 (-1.9 to +0.6); B1 +0.4 | -3.7 | ALC -2.0 ± 1.2 / +0.6 ± 1.5; B1 -3.7 ± 4.1 / +2.3 ± 4.9 (87 runs) |
+| W20 at $m_0 = -1.5$ | both | -4.3 | +0.9 (-1.9 to +2.4) | -5.9 | ALC -1.2 ± 1.8 / +0.0 ± 1.7 (35 runs) |
+| d06 | $\tau_\delta$ 0.6, $\tau_\phi$ 0.3, $m_0$ -1.69 | +0.03 | +1.5 | -0.7 | no feedback (never left the platform queue) |
+| $m_0 = -2.5$ | $m_0 = -2.5$ | +4.4 | +1.0 | +5.8 | ALC +3.9 ± 5.1 / +9.5 ± 6.4 (3 runs; dropped) |
+
 **Final-look rehearsal.** On the data of 2026-10-16 (347 of our runs, 84 of REF; 300 bootstrap replicates) the
 final-look mode of the decision tool ran cleanly. It counts as finalists every non-dropped arm with at least 30 runs
 (then four: L15, W20, W15m16 and W20 at $m_0 = -1.5$), drops the $\mathrm{SD}/\sqrt{K}$ floor in items (b) and (e) for
@@ -1348,6 +1370,36 @@ passed (b) ($z$ from $-1.05$ to $+1.21$). The fresh pairs, first seen in our run
 numbered 81 (221 appearances, 56 of them REF's), so each finalist had 11 to 15 direct matches with REF on them; all
 four fresh-pairs contrasts were negative and within 1.71 SE of zero. These are rehearsal outputs on data four days old;
 the final look of 2026-10-30 reached the same verdict (Section 7.4).
+
+**Final look (2026-10-30), in full (Section 7.4).** It ran at 04:15 UTC on 2026-10-30, before the pre-registered window of 12:00 to 20:00 UTC,
+because the author asked for the release then and earlier sessions of the upload agent had ended without warning.
+Availability set the timing, which a hashed snapshot recorded before the run. Rules and thresholds stayed as
+registered, and the guard tool gained only an option to read rule (b) on an insurance build and its parent together, as
+that day's plan specified. Of that day's runs, five were still in flight after two hours and counted as dead before
+scoring. Since the
+state above, uploads ran on 2026-10-21, 10-28 and 10-30, and we missed the windows of 2026-10-22 to 10-27 and of 10-29
+(Platform operations below). With 496 scored runs (150 of REF), the finalists were the five non-dropped arms with at least 30 runs
+(W20, W15m16, L15, MXs and W20 at $m_0 = -1.5$), so item (b) needed $z \le -1.8$. W20 passed every item: holdout
+$-1.5 \pm 2.4$ ($K = 38$), all pairs $-1.7 \pm 1.0$ with $z = -2.06$ without the floor ($K = 200$), benchmark-balanced
+$-2.0$, largest leave-one-benchmark-out estimate $-0.4$, no budget worse than REF by two SE$_h$, and the local guard.
+W15m16 failed only (b) ($z = -1.26$), L15 and W20 at $m_0 = -1.5$ failed (a), (b) and (d), and MXs failed (a) and (b).
+W20's level block replaces REF's in the final model. Including connectors, W20's all-pairs effect is $+0.4 \pm 1.2$, so the switch
+rests on our own matched runs. On the fresh pairs, the only confirmatory estimate, W20 is $-6.0 \pm 4.0$ against REF
+($z = -1.49$, $K = 33$). Every finalist's fresh-pairs contrast is negative, W15m16's the largest ($-10.0 \pm 4.3$,
+$z = -2.34$, $K = 23$), and by the pre-registered rules none of them selects an arm. Read on all four scored runs of
+the W20 composite and its insurance build, the composite guard of rule (b) gave $-0.7 \pm 2.9$ against plain W20 on
+the selection set ($K = 25$) with no composite run ending without scores, which keeps the composite in the final build
+(Section 10).
+
+**Composite guard and insurance builds, in full (Section 10).** A readiness amendment (2026-10-16) made precise when composite runs trip
+final-selection rule (b), which then ships the plain level-block build, because platform failures alone would trip its
+literal reading with probability about 0.5; it moved composite platform checks forward and added
+`tools/composite_guard.py` to read the rule (Pre-registered rules above). As the summative draw size is unknown, the W20 and W15m16
+composites also have insurance builds that only add `prediction_config.json` with `{"concurrency": 1}` (one worker
+instead of up to four) and predict identically; the winner's ships in its place if it has a Finished run. W20's insurance
+build `v6_combo_w20_c1.zip` has three and is the final build. Rule (a) names the most recent of them, 1020301, as the
+selected submission. The script `swarm/round5/release/final_check.py` confirmed its status, upload time, SHA-256 and bit-exact
+predictions.
 
 **Composite builds and platform checks.** Composite builds exist for the REF, W20 and L15 blocks (2026-10-06), for W20
 at $m_0 = -1.5$, W15d6 and MXs (2026-10-07) and for W15m16 (2026-10-15), with their SHA-256 in
@@ -1363,6 +1415,7 @@ with `{"concurrency": 1}`, which per the kit's README makes prediction sequentia
 checks, items 2 and 24 of the 2026-10-21 plan, both finished (1006743 and 1006768), and the plan of 2026-10-30 added
 three guard runs of each, of which two finished and one was still in flight at the final look (for W20's build, 1020286
 and 1020301 finished and 1020313 counts as dead).
+In short (Section 10): composites Finished on the W20 (2026-10-07), REF and W20 at $m_0 = -1.5$ blocks (2026-10-19); the W15m16 composite's check and its rerun died before scoring and its insurance build Finished three times.
 
 **Platform operations.** From 2026-10-07 to 10-16 the platform ended 77 of our 355 uploads without a Finished status
 (27 Failed-with-scores, whose complete scores we use, 7 Failed without scores and 43 dead or stuck in Submitting,
@@ -1384,6 +1437,30 @@ last upload day, 10 runs each of REF, W20 and W15m16 and three guard runs of eac
 uploads.
 
 # Appendix E. Regime test details
+
+**The regime test, in full (Section 7.2).** For a pair alone on its benchmark with success rate $r$, random acquisition makes revealed labels exchangeable with
+evaluation items, so
+$$\mathbb{E}[B_n \mid r] = \sum_{k=0}^{n} \binom{n}{k} r^k (1 - r)^{n-k}\left[(q(k, n) - r)^2 + r(1 - r)\right],$$
+where $q(k, n)$ is an arm's prediction after $k$ successes in $n$ own labels, tabulated with the real model classes and
+validated replicas of the connector teams' predictors. A hypothesis about the hidden pool transforms the 220 public pair
+rates (logit shift, spread factor, share moved to a low-success component), and averaging over pairs gives its predicted
+contrasts, which we compare with 13 observed arm contrasts at B0, B1, B3 and B7 (52 numbers, with connectors, joint
+bootstrap covariance) plus one global constraint, the benchmark-balanced mean of B31 (below).
+
+Against the best point of a 315-point grid of transformations, $\Delta\chi^2$ is 63 for a narrow core (R1: spread
+$\times 0.8$, shift $-0.5$), 78 for a zero-inflated pool (R2: 35% of pairs near 1.5%), 13 for a wide pool (R3: spread
+$\times 1.3$) and 34 for the unchanged public pool (Table E1 adds six variants and the pre-registered-set rerun: 73,
+90, 9.9 and 30). A parametric bootstrap that refits the
+whole grid in every replicate (Table E2) puts the 99% point of $\Delta\chi^2$ at 9 to 13: R1, R2 and the unchanged
+public pool are rejected ($p < 0.001$; $p \le 0.003$ after scaling the covariance by the best point's misfit factor of
+1.68), while R3 is inconsistent with the data at $p = 0.005$ but not after that scaling ($p = 0.07$). The best grid
+point itself misfits ($p = 0.0035$) unless the subject-calibration nuisance of Section 7.3 is added, which lowers its
+$\chi^2$ from 83.8 to 55.1 ($p = 0.35$; below). The cleanest experiment is another team's trial of three arms that
+differ only in how fast the level moves: the faster arm did better than the base arm at B1 ($-7.5 \pm 5.0$, SE$_h$)
+and the slower arm lost at B7 ($+2.5 \pm 1.3$), against R1 predictions of $+16.1$ and $-1.0$. R1 is inconsistent with
+the data in every variant except one restricted to our sparse arms, and R2 fits the spread trial but not budget 0 or
+the B31 constraint (below). The best transformations are as dispersed as the B31 constraint allows and include a
+low-success component, which favours faster level adaptation over narrow pair priors and zero-inflated mixtures.
 
 Predictions use validated tables $q(k, n)$ for every arm: our arms through the real model classes, and the two other
 teams' predictors through replicas of their public code. Hypotheses transform the 220 public pair rates by a logit shift
@@ -1464,7 +1541,7 @@ public calibration of our subject prior and the best cell overall). Script: `swa
 R1, R2 and the unchanged public pool are rejected under every reference, as is R3's neighbour with shift $-0.5$; R3
 itself is inconsistent with the data at $p = 0.005$ but not once the overall misfit is allowed for. Within this model
 family the exact public calibration of our subject prior (offset 0, slope 1) is rejected against the offset family;
-Section 7.4's H_pub is the wider set $d \le 0.85$ in a model with a discrepancy term, and Section 7.4 shows how much
+Section 7.4's H_pub is the wider set $d \le 0.85$ in a model with a discrepancy term, and Appendix D shows how much
 the rejection rests on the B31 constraint and the connector arms. On the pre-registered connector set, leaving out any
 one of the 13 arms keeps R1 at $\Delta\chi^2$ 40 to 84 (lowest without the faster spread-trial arm, then 52 without
 $m_0 = -1.5$), R2 at 70 to 99 and R3 at 7.2 to 11.8; the unchanged public pool stays at 26 to 38 except without the
@@ -1474,6 +1551,26 @@ grid point (`pred_vs_obs_best_prereg.csv` and `.png` beside it) have $|z| \le 2.
 faster spread-trial arm, REF and the 35% mixture.
 
 # Appendix F. Cavity pooling details
+
+**Cross-system pooling, in full (Section 8).** On shared pairs the best-covered public arm scored better than each of our arms at B3 to B31 by about 3 to 9 (each about
+one SE). Both connector teams give each item its own effect with SD 2 to 3 logits, against our $\sigma_i = 0.6$, but a
+larger $\sigma_i$ loses on every pair, because in the joint Laplace fit the same variance also lets a pair's own labels
+explain away its evidence and moderates every unlabelled item, while it pays only on rows a partner labelled (below). So pooling runs at a fifth of item-level strength: after a partner's success our prediction moves by $+0.20$
+logit at $n = 31$, against $+1.03$ for an exact item-level model (Table F1), while $\sigma_i = 2$ loses $+2.0$ to
+$+3.5$ per budget from B3.
+
+`CavityPoolModel` changes a prediction only if another system labelled the target's item text: it removes those labels
+from the Laplace posterior by a Woodbury downdate (which also removes the double counting of a partner's label in its
+level), integrates a shared item effect $u \sim N(0, \sigma_x^2)$ over the labellers' cavity levels and adds the
+resulting logit shift to the base prediction (below). In its pre-registered benchmark-keyed replay ($k = 2$, 20
+draws per benchmark; Table C4) it gains $-0.52 \pm 0.13$, $-0.58 \pm 0.16$ and $-0.60 \pm 0.18$ at $\sigma_x = 2.0$,
+2.5 and 3.0, with every benchmark negative, and its rule selects 3.0. Simpler designs tie in ALC (two-scale pooling
+$-0.47 \pm 0.12$, plug-in MAP offsets $-0.54 \pm 0.24$), so the case for the cavity version is its calibration after a
+partner's label (Table F1). The projected live gain is at most about $-0.5$ at formative density and grows with pairs
+per benchmark: in denser benchmark-keyed draws (`results/combo_dense.csv`) C alone gains $-2.64 \pm 0.48$ and
+$-5.44 \pm 0.54$ on ResearchCodeBench at $k = 4$ and 8, with no cell from B1 to B31 worse than $+0.07$ (Appendix C
+gives the composite's cells and the B0 failure of that replay's rule, which belongs to S, since C is exactly zero at
+B0).
 
 **Why one item variance under-pools (Section 8).** In the joint Laplace fit $\sigma_i$ plays three roles. It is the
 prior of an item effect for each of the target's own labels (a large value lets them explain away the pair's
@@ -1524,13 +1621,31 @@ cavity 36.1%), but 21.9% on REAL (base 21.5%, cavity 18.0%), where a partner's f
 Multi-SWE-bench and MathArena, which overstate per-row gains, gave $-0.80 \pm 0.24$ (ResearchCodeBench), $-0.85 \pm
 0.26$ (Multi-SWE-bench), $-1.23 \pm 0.30$ (MathArena) and $+0.03 \pm 0.24$ (REAL) per pair at $\sigma_x = 2.0$, and
 $-0.93 \pm 0.32$, $-1.04 \pm 0.35$, $-1.42 \pm 0.39$ and $+0.19 \pm 0.33$ at $\sigma_x = 3.0$. With four pairs per
-benchmark the ResearchCodeBench effect is $-1.9 \pm 1.1$ (two draws, $\sigma_x = 2.5$), and in the dense-draw replay of
-Section 8, with random partners, C alone gives $-2.64 \pm 0.48$ there ($\sigma_x = 3.0$, ten draws; $-5.44 \pm 0.54$
+benchmark the ResearchCodeBench effect is $-1.9 \pm 1.1$ (two draws, $\sigma_x = 2.5$), and in the dense-draw replay
+above, with random partners, C alone gives $-2.64 \pm 0.48$ there ($\sigma_x = 3.0$, ten draws; $-5.44 \pm 0.54$
 with eight pairs). With complete overlap a partner holding 31 labels has labelled about $31/N$ of a pair's evaluation
 items (28% for the median $N = 112$), the coverage behind the projection of Section 8, which makes that projection an
 upper bound.
 
 # Appendix G. Negative results in full
+
+Table G1 lists the ideas with replay or live evidence that are not in the final model. Section 4.6 and Appendix C cover $\sigma_g$,
+$\lambda$, SY1.0 and NP, and the list below gives all twenty.
+
+**Table G1.** Negative and neutral results with replay or live evidence (live values: Table D1).
+
+| Idea | Grade | Key result | Decision |
+|-------------------------|------|------------------------------------------------------------|-------------------|
+| Shared level ($\tau_M$) | A | replay at most +0.6 (no SE); live +3.1 to +24.8 (connectors), -5.0 to +11.8 (ours) | dropped |
+| Student-t(3) level prior | A, B | replay -0.41 ± 0.07, B0 only; live +5.9 ± 5.6 (connectors), +1.0 ± 7.1 (ours) | dropped |
+| Zero-inflated mixture | A, B | replay -1.79 ± 0.60, MathArena; live +5.6 ± 4.4 (connectors), -4.6 ± 5.6 (ours) | dropped |
+| Narrow pair priors | A, B | d06 -0.33 ± 0.30, taus × 0.8 -0.28 ± 0.26; worse from B3 | dropped |
+| Per-budget recalibration | A | cross-fitted Brier B0 +16.3, B1 +17.1, B3 +8.6 (no SE) | not used |
+| Exact inference | A, B | +1.3 to +2.5 per alone pair per benchmark; -0.6 to +0.7 by calculation | not used |
+| $\sigma_i = 2$; plug-in offsets | A | +1.15 ± 0.70; offsets tie the cavity in ALC but overshoot | cavity pooling |
+| Likelihood tempering [15] | B, A | synthetic regret lower at $\alpha$ 1.25 to 1.5; replay at 1.3 +0.47 (n.s.) | superseded by W20 |
+| Acquisition policies [19] | B | synthetic -0.65 ± 0.16 with informative item features, +0.03 without; about -0.1 expected here | default kept |
+| Late-budget de-moderation | A | bias confirmed (+0.05 at B31 on near-zero pairs); plug-in -0.09 ± 0.04 against a pre-registered -0.15 | not adopted |
 
 The twenty negative or neutral results, by grade (A: paired replay or live contrast with an SE; B: exact calculation
 or simulation; C: reasoning only).
@@ -1627,13 +1742,13 @@ Yes, No or NA with a short justification; the guideline text of the official tem
 1. **Claims.** Do the main claims made in the abstract and introduction accurately reflect the paper's contributions
 and scope? **Yes.** The abstract and Section 1 state the model, the composite's local gain with its SE, the live
 methodology, the replay-subsampling bias and the negative results; the final configuration and score are
-reported from the final look (abstract, Section 7.4, Table 6), and the limits of the live evidence are stated in Section 11.
+reported from the final look (abstract, Section 7.4, Table 4), and the limits of the live evidence are stated in Section 11.
 2. **Limitations.** Does the paper discuss the limitations of the work performed by the authors? **Yes.** Section 11:
 the level is not identified by public data, live power is weak, the summative subset's density is unknown, one
 robustness rule was overridden, and most code was written by an LLM assistant.
 3. **Theory assumptions and proofs.** For each theoretical result, does the paper provide the full set of assumptions
 and a complete (and correct) proof? **NA.** The paper has no theorems. The exact calculations of Sections 7.2 and 8 and
-Appendix F state their assumptions (random acquisition, exchangeable revealed labels, the model classes) and are
+Appendices E and F state their assumptions (random acquisition, exchangeable revealed labels, the model classes) and are
 checked numerically against brute-force computations.
 4. **Experimental result reproducibility.** Does the paper fully disclose all the information needed to reproduce the
 main experimental results? **Yes.** Every arm's parameters (Appendix A), the replay design (Section 5), the estimators
@@ -1682,5 +1797,91 @@ describe potential risks incurred by study participants and whether such risks w
 approved? **NA.** No research with human subjects.
 16. **Declaration of LLM usage.** Does the paper describe the usage of LLMs if it is an important, original, or
 non-standard component of the core methods in this research? **Yes.** An LLM coding assistant wrote most of the code
-and analysis and drafted the text under the author's direction (Sections 5 and 13); no LLM is part of the predictor,
+and analysis and drafted the text under the author's direction (Section 13 and Appendix I); no LLM is part of the predictor,
 which is numpy code without models, embeddings or inference APIs.
+
+# Appendix I. Reproducibility and disclosures in full
+
+**Use of AI assistance (Section 5).** An LLM coding assistant (Claude Code) wrote most of the model, replica and analysis code and
+drafted this text under the author's direction; the paragraph on LLM assistance below gives the disclosure and the checks behind every number.
+
+**Release contents (Section 12).** The repository (https://github.com/rishabhsinha17/brier-rabbit-paiec, MIT license) contains the predictor, the protocol replica, the replay and analysis
+scripts with their saved outputs, the build and verification tools, and 26 unit tests (`../.venv/bin/python -m pytest -q
+tests`). The environment is Python 3.11 with numpy, scipy, pandas, pyarrow, scikit-learn and matplotlib; the submission
+needs only numpy. The data fetcher pins revision `bc8204d8` (Hugging Face access to the gated dataset is required); it
+and the synthetic-study scripts are in the repository (`scripts/`, `synthetic/`). Every
+queued replay used `experiments/paired.py` with the arguments recorded in its log, and quick checks used the scripts in
+Appendix B. The release is built from an allow-list: `paiec/`, `experiments/`, `tools/` without feedback dumps,
+`tests/`, `report/`, analysis scripts whose outputs use public data, and the arm-level live tables of this report. It
+excludes our per-pair formative logs and every file derived from them. Other teams' logs are referenced by repository
+and commit and are not redistributed. We do not release our own formative logs, which list
+the hidden pool's anonymous IDs.
+
+**LLM assistance (Section 13).** The author used Claude Code (Anthropic), an LLM coding
+assistant, throughout the project: to write the model, the protocol replica and the analysis tools, to run and summarize
+experiments, to search the literature, and to draft this report. Several assistant sessions worked in parallel as
+specialized reviewers, including one that re-derived, fuzz-tested and checked the purity of every model variant. Every
+number in the main text is traceable to a script or saved output listed in Appendix B, each citation was checked against
+arXiv, Semantic Scholar, Crossref or the publisher's page, and the submitted model is verified to reproduce the research
+code bit for bit. The author reviewed the code and the text and takes full responsibility for both.
+
+**Formative feedback.** Used as described in Section 6: global settings only, through arm-level comparisons and global
+summaries, with anonymous IDs used only as opaque keys. This report publishes neither per-pair results nor per-benchmark
+summaries, and we did not attempt to identify hidden benchmarks or subjects. Number of uploads: 575 of the
+1,000 allowed per person (467 by 2026-10-20), not counting the 529 submissions the platform created in our account on
+2026-10-17 (Appendix D).
+
+**Training data and models.** The submitted model uses public measurement-db revision `bc8204d8` only (the
+six-benchmark release of 2026-09-18). The expanded collection published on 2026-10-06 (revision `54074453`, public
+benchmarks only) was used only for the late test of Appendix J, after the competition page stated that every source in
+the benchmark inventory is permitted, and no shipped result depends on it. The submission is self-contained numpy
+code without pretrained models, embeddings, external data or inference APIs. Compute was one laptop CPU, without a GPU.
+
+**Other teams' public material.** We thank the GitHub users aghasalim (`github.com/aghasalim/predictive-eval`) and
+doctawho42 (`github.com/doctawho42/PAIEC`) for publishing their code and formative logs under the MIT license. We used
+their logs only as connector arms in arm-level contrasts, and their code to build validated replicas of their predictors
+for the regime test and to check their acquisition setting. We also thank lucaluo925 for MIT-licensed public results we
+cite in Appendices D and G.
+
+**Community and data contributions.** We release the code, the protocol replica with its unit tests, the replay
+outputs on public data and the data-quality checks of Appendix C under the MIT license (https://github.com/rishabhsinha17/brier-rabbit-paiec).
+
+
+# Appendix J. Late test of the full public database
+
+**Why and what.** In late October the organizers extended the deadline to 2026-11-06, and the competition page stated
+that every data source in the benchmark inventory is permitted for training and that verified training data are
+released through measurement-db. Before any fit we pre-registered (hashed snapshots from 2026-10-31) a test of subject
+priors fitted on all public benchmarks of revision `54074453` (278 of 281; three are withheld), with the model, the W20
+level block and S + C + P unchanged, and with 1020301 kept unless a candidate passed two local checks and then beat the
+final build on Codabench. L1 replays the four original folds against the final model on identical draws (pass: macro ALC
+difference $\le 0$ and no benchmark worse than $+5$); L2 holds out 24 further public benchmarks chosen by a fixed hash
+(pass: mean $< 0$ with $z \le -2$, SE over benchmarks), with fresh benchmarks in every round. Usable data: 154 benchmarks
+with binary outcomes, 81 of them with at least three named subjects, covering 598 named models against 122 in the
+shipped prior.
+
+**Table J1.** Candidates against the final model, ALC $\times 10^{-3}$ $\pm$ SE (negative favours the candidate).
+
+| Round | Candidate | L1 (four original folds) | L2 (fresh folds) | Verdict |
+|---|---|---|---|---|
+| 1 | F0: the shipped estimator on all public benchmarks | $+2.07 \pm 0.70$ | $-0.86 \pm 1.23$ (23) | fails both |
+| 1 | F2: the same ridge objective solved exactly | $+1.14 \pm 0.55$ | $-2.32 \pm 1.08$ (23) | fails L1 |
+| 2 | E: shipped prior plus the names only the full data cover | $+0.71 \pm 0.28$ | $-3.71 \pm 1.43$ (24) | fails L1 |
+| 2 | E2: E with F2 abilities for the shipped names | $+0.56 \pm 0.37$ | $-5.40 \pm 1.65$ (24) | fails L1 |
+| 3 | E3: E2 with abilities $\times 1.56$ | $-0.19 \pm 1.04$ | $-2.73 \pm 1.26$ (23 of 24) | incomplete |
+
+**What we learned.** Abilities measured on many benchmarks predict the original folds better than the shipped prior
+(correlation 0.55 against 0.40 with the held-out benchmark's centred pair logits, 32 names covered per fold against 18.5)
+but on a compressed scale (slope 1.69 against 0.82), which is why the first two rounds lost on L1; rescaling them by the
+constant S already applies to attribute abilities (1.56, nothing newly tuned) removed that loss. On new benchmarks the
+gain comes from coverage: pairs whose name the shipped prior lacks improve by about $-11.7$ in ALC and $-50$ at B0, while
+a refit attribute ridge hurt unnamed subjects. The live pool resembles the original folds (Brier at B0, B1 and ALC: 227,
+195 and 180 live, against 232, 208 and 190 on L1 and 355, 251 and 220 on the second round's wide folds), so L1 is the
+more relevant check.
+
+**Outcome.** E3 passed L1 and, on 23 of its 24 wide folds, L2. The 24th (28.8 million response rows) was never
+replayed, because loading it exhausted the laptop's memory, and no E3 run could reach Codabench before the
+pre-registered last upload time, so under the rule E3 was not adopted and the submission is unchanged. Each round was
+added by a hashed amendment after the previous round's results and before its own candidate's first replay (three
+rounds), so these results are exploratory, not a confirmed gain. Scripts and outputs: `swarm/round12/` (`pair_rates.py`,
+`full_prior.py`, `replay.py`, `diag1.py` to `diag4.py`, `guard_reading.txt`).
