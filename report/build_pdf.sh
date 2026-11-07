@@ -13,6 +13,9 @@ pandoc $OUT/paper_final_pre.md -f markdown -t latex -s --resource-path=. -V docu
 # command-line flags such as --reps inside the \texttt{} paths of Appendix B would print as en dashes (the "--"
 # ligature); break the ligature there so the PDF shows two hyphens
 perl -pi -e 's/--/-{}-/g if /\\texttt\{/' $OUT/paper_final.tex
+# make the code URL in the author block a link; pandoc_pre.py builds that block from the bare URL, which pandoc leaves
+# as text, while the markdown marks the URL's other occurrences as <https://...>
+perl -0pi -e 's{(\\author\{.*?)(https://github\.com/rishabhsinha17/brier-rabbit-paiec)}{$1\\url{$2}}s' $OUT/paper_final.tex
 for pass in 1 2; do
   pdflatex -interaction=nonstopmode -halt-on-error -output-directory=$OUT $OUT/paper_final.tex \
     > $OUT/pdflatex_pass$pass.out 2>&1 || { echo "pdflatex pass $pass failed; see $OUT/pdflatex_pass$pass.out"; exit 1; }
