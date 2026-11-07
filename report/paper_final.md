@@ -6,7 +6,7 @@ rsinha17@terpmail.umd.edu. Code: https://github.com/rishabhsinha17/brier-rabbit-
 *Keywords: predictive evaluation; item response theory; hierarchical Bayesian models; Laplace approximation; Brier
 score; cold start; matched-pair experiments; pre-registration.*
 
-*PAIEC technical report, final version, 2026-10-30. Effects are in $10^{-3}$ Brier ALC, arm minus reference (negative
+*PAIEC technical report, final version, 2026-11-05. Effects are in $10^{-3}$ Brier ALC, arm minus reference (negative
 favours the arm), unless a unit is given (dates: head of the appendices).*
 
 # Abstract
