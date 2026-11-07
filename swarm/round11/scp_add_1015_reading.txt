@@ -1,0 +1,12 @@
+results/scp_add_1015.csv: 2880 rows, models ['base', 'const_0.5', 'empirical_mean', 'm150_mu16_d14', 'm150_mu16_d14_scp', 'pooled_kb8_kp4', 'smoothed_k2', 'v1_default', 'v1_subjects', 'v1_tuned', 'w20_m20', 'w20_scp']
+chain base               macro 0.19214 (expected 0.1921) ok
+chain w20_m20            macro 0.19091 (expected 0.1909) ok
+chain m150_mu16_d14      macro 0.18992 (expected 0.1899) ok
+chain w20_scp            macro 0.18997 (expected 0.1900) ok
+
+reference (w20_scp - w20_m20): -0.941e-3 (se 0.157)
+  same contrast in results/scp_add_1008.csv: -0.941e-3 (identical)
+
+m150_mu16_d14_scp - m150_mu16_d14: -1.013e-3 (se 0.154); minus reference -0.071e-3 -> PASS (|gap| <= 0.3e-3)
+  per benchmark x1e-3: matharena -1.40, multi_swebench -0.43, real_webagents -1.28, researchcodebench -0.94
+    b0 -2.873 (se 0.571)    b1 -1.388 (se 0.259)    b3 -0.769 (se 0.165)    b7 -0.526 (se 0.134)   b15 -0.493 (se 0.156)   b31 -0.899 (se 0.272)

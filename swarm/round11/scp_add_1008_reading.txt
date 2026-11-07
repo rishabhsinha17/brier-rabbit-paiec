@@ -1,0 +1,17 @@
+results/scp_add_1008.csv: 3360 rows, models ['base', 'const_0.5', 'empirical_mean', 'm150_mu20_d06', 'm150_mu20_d06_scp', 'm150_mu20_d10', 'm150_mu20_d10_scp', 'pooled_kb8_kp4', 'smoothed_k2', 'v1_default', 'v1_subjects', 'v1_tuned', 'w20_m20', 'w20_scp']
+chain base               macro 0.19214 (expected 0.1921) ok
+chain w20_m20            macro 0.19091 (expected 0.1909) ok
+chain m150_mu20_d10      macro 0.19015 (expected 0.1902) ok
+chain m150_mu20_d06      macro 0.19025 (expected 0.1902) ok
+chain w20_scp            macro 0.18997 (expected 0.1900) ok
+
+reference (w20_scp - w20_m20): -0.941e-3 (se 0.157)
+  same contrast in results/hr_mix_guard.csv: -0.941e-3 (identical)
+
+m150_mu20_d10_scp - m150_mu20_d10: -1.000e-3 (se 0.154); minus reference -0.059e-3 -> PASS (|gap| <= 0.3e-3)
+  per benchmark x1e-3: matharena -1.31, multi_swebench -0.41, real_webagents -1.33, researchcodebench -0.96
+    b0 -2.866 (se 0.556)    b1 -1.362 (se 0.254)    b3 -0.750 (se 0.163)    b7 -0.523 (se 0.142)   b15 -0.486 (se 0.160)   b31 -0.893 (se 0.274)
+
+m150_mu20_d06_scp - m150_mu20_d06: -1.030e-3 (se 0.171); minus reference -0.089e-3 -> PASS (|gap| <= 0.3e-3)
+  per benchmark x1e-3: matharena -1.34, multi_swebench -0.35, real_webagents -1.48, researchcodebench -0.95
+    b0 -2.875 (se 0.576)    b1 -1.455 (se 0.275)    b3 -0.785 (se 0.182)    b7 -0.547 (se 0.153)   b15 -0.490 (se 0.170)   b31 -0.876 (se 0.278)
