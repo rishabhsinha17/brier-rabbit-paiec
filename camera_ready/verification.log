@@ -1,0 +1,89 @@
+{
+  "hashes": {
+    "original_model_sha256": "07e9a3594910d34ef4150826d539c0c34fa1ab447b87228619411a1b0abd4741",
+    "corrected_model_sha256": "a593cd3957c0b87f6b306544f7704977003e8450c7032b71d9e8cc537a5d7fa3"
+  },
+  "cache": {
+    "original": {
+      "cached": 0.5596570546993599,
+      "fresh": 0.4976014159834953,
+      "absolute_error": 0.062055638715864614
+    },
+    "corrected": {
+      "cached": 0.4976014159834953,
+      "fresh": 0.4976014159834953,
+      "absolute_error": 0.0
+    },
+    "corrected_fresh_instance_checks": 19,
+    "corrected_max_error": 0.0
+  },
+  "collisions": [
+    {
+      "bench": "matharena",
+      "item_rows": 1755,
+      "distinct_full_texts": 898,
+      "collision_groups": 0,
+      "distinct_texts_in_collision_groups": 0,
+      "excess_texts_merged": 0
+    },
+    {
+      "bench": "multi_swebench",
+      "item_rows": 2126,
+      "distinct_full_texts": 2078,
+      "collision_groups": 0,
+      "distinct_texts_in_collision_groups": 0,
+      "excess_texts_merged": 0
+    },
+    {
+      "bench": "real_webagents",
+      "item_rows": 233,
+      "distinct_full_texts": 233,
+      "collision_groups": 0,
+      "distinct_texts_in_collision_groups": 0,
+      "excess_texts_merged": 0
+    },
+    {
+      "bench": "researchcodebench",
+      "item_rows": 212,
+      "distinct_full_texts": 212,
+      "collision_groups": 3,
+      "distinct_texts_in_collision_groups": 6,
+      "excess_texts_merged": 3
+    },
+    {
+      "bench": "swe_rebench",
+      "item_rows": 6306,
+      "distinct_full_texts": 6271,
+      "collision_groups": 0,
+      "distinct_texts_in_collision_groups": 0,
+      "excess_texts_merged": 0
+    }
+  ],
+  "finite_population": {
+    "enumerated_populations": 5,
+    "enumeration_max_error": 5.551115123125783e-17,
+    "grid_cells": 3348,
+    "max_arm_risk_difference": 0.003220370879565171,
+    "max_contrast_difference": 0.000655963516285829,
+    "max_contrast_case": {
+      "N": 80.0,
+      "S": 40.0,
+      "n": 1.0,
+      "REF_iid": 0.30641220859589946,
+      "REF_finite": 0.3079288305238228,
+      "W20_iid": 0.2990811945854863,
+      "W20_finite": 0.3012537800296955,
+      "iid_contrast": -0.007331014010413139,
+      "finite_contrast": -0.00667505049412731
+    },
+    "contrast_sign_changes": 11
+  }
+}
+completed matharena k=1; elapsed 1.5s
+completed matharena k=2; elapsed 4.3s
+completed multi_swebench k=1; elapsed 6.0s
+completed multi_swebench k=2; elapsed 9.5s
+completed real_webagents k=1; elapsed 10.7s
+completed real_webagents k=2; elapsed 12.7s
+completed researchcodebench k=1; elapsed 20.8s
+completed researchcodebench k=2; elapsed 47.2s

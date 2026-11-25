@@ -1,0 +1,29 @@
+{
+  "source_url": "https://docs.google.com/spreadsheets/d/1T69QyIZJRWX3d-Tmuh_lcFwtpqv9ytcLxfLWKn6gopI/export?format=xlsx",
+  "retrieved_date": "2026-11-24",
+  "sha256": "20d622a5bbc69142374217ab0568af2450f94bf34d5eb270b680fa166913a76f",
+  "worksheets": [
+    {
+      "name": "Sheet1",
+      "nonempty_cells": 9245
+    },
+    {
+      "name": "Sheet2",
+      "nonempty_cells": 0
+    }
+  ],
+  "first_column_nonempty_data_cells": 1261,
+  "explicit_aliases": {
+    "real_webagents": "real"
+  },
+  "original_source_matches": {
+    "matharena": true,
+    "multi_swebench": true,
+    "real_webagents": true,
+    "researchcodebench": true,
+    "swe_rebench": true
+  },
+  "financebench_or_legalbench_matches_any_cell": [],
+  "historical_retained_rows": 158,
+  "limitation": "Current snapshot, not proof of historical inventory contents; aliases and source-family coverage require organizer interpretation. Retained table entries do not establish which survived every later fitting filter."
+}

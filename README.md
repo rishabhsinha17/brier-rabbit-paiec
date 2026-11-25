@@ -1,12 +1,22 @@
 # Brier Rabbit: code for the NeurIPS 2026 Predictive AI Evaluation Competition (PAIEC)
 
+Camera-ready revision (24 November 2026): see `camera_ready/README.md` for review responses, a separately named
+corrected predictor, and reproducible verification results. The selected submission is unchanged. The revised
+Appendix J discloses an unresolved inventory mismatch in the historical expanded-data study and withdraws its results
+from the paper's supporting evidence. The descriptions of historical experiments below refer to the original release.
+
+Download the [camera-ready package](https://github.com/rishabhsinha17/brier-rabbit-paiec/releases/tag/paper51-camera-ready-2026-11-24),
+including the PDF and complete source archive. The [response to reviews](camera_ready/RESPONSE_TO_REVIEWS.md) summarizes
+the corrections and the unresolved data-inventory question.
+
+
 This repository contains the predictor we submitted to PAIEC 2026, our local replica of the platform's evaluation
 protocol, the replays and analysis scripts behind every local number in our technical report, and the tools that build a
 submission zip and check it against the research code. Technical report: `report/paper_final.pdf` (source
-`report/paper_final.md`), also submitted on OpenReview. Selected Codabench submission: 1020301, the zip
+`report/paper_final.md`). The submission and revision history are on [OpenReview](https://openreview.net/forum?id=5P6t3ancaQ). Selected Codabench submission: 1020301, the zip
 `v6_combo_w20_c1.zip` (see "The submitted model"). License: MIT (see `LICENSE`).
 
-Our predictor is a hierarchical logistic model that refits from the revealed labels at every call, with a benchmark
+Our predictor is a hierarchical logistic model intended to refit when the revealed evidence changes, with a benchmark
 level, a subject offset whose prior mean comes from public abilities and an attribute ridge, a pair deviation,
 item-feature group effects and item effects. A Laplace posterior gives a posterior-predictive output. Our final
 composite adds three parts: a recalibrated attribute ridge for unseen subjects (S), cavity-corrected pooling of other
@@ -165,8 +175,8 @@ and 4 workers, scans the files for credentials and appends a row to `submissions
 
 We timed `v6_combo_w20` on synthetic draws shaped like formative draws, in one laptop process limited to efficiency
 cores. A call takes about 19 ms at 279 revealed labels, and the first call of each checkpoint refits the posterior in
-about 0.2 s. All six checkpoints of a draw need about 33 s of compute, and a worker stays under 100 MB. Predictions do
-not depend on call order or on the split of calls across workers, and numpy 1.26 and 2.4 agree to 5e-16. Malformed
+about 0.2 s. All six checkpoints of a draw need about 33 s of compute, and a worker stays under 100 MB. The fixed-attribute checks found agreement across call orders and worker splits; they did not cover the
+evidence-feature edits now tested in `camera_ready/`. Numpy 1.26 and 2.4 agree to 5e-16 on the original checks. Malformed
 inputs return a valid probability instead of raising. The scripts and their outputs are in `audit/`.
 
 ## Rerun the local tables
@@ -192,7 +202,7 @@ and Appendix B of the report maps each table to its script. The report's live ta
 
 ## Data and licenses
 
-Code license: MIT (see `LICENSE`). We trained only on public measurement-db data (`aims-foundations/measurement-db`,
+Code license: MIT (see `LICENSE`). The selected model was trained only on public measurement-db data (`aims-foundations/measurement-db`,
 revision `bc8204d8`): the five of its six benchmarks with binary responses. Its curation layer is CC BY-SA 4.0, and
 some benchmarks have their own upstream terms (MathArena CC BY-NC-SA; MMDocRAG, which we do not use, CC BY-NC). `results/` holds per-draw scores of our replays,
 keyed by measurement-db's public subject hashes. It contains no responses or item texts.
@@ -205,4 +215,5 @@ formative logs under the MIT license, which the report uses as connector arms, a
 results it cites.
 
 The author used Claude Code (Anthropic), an LLM coding assistant, to write most of the code and analysis and to draft the
-report. The author reviewed both and takes full responsibility for them. Section 13 of the report gives the details.
+report. The author reviewed both and takes full responsibility for them. Codex (OpenAI) assisted with the camera-ready
+corrections and verification. Section 13 and Appendix I of the report give the details.

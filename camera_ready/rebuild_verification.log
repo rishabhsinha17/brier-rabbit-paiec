@@ -1,0 +1,11 @@
+python 3.11.2, zlib 1.2.12, repo /Users/a12345/Desktop/starting_kit/brier-rabbit-camera-ready
+  v6_combo_w20_c1: model.py generated as v6_combo_w20 (parent build)
+  same  model.py             07e9a3594910d34e  (shipped source 07e9a3594910d34e)
+  same  params.json          8f0d32b9b1601d34  (shipped source 8f0d32b9b1601d34)
+  same  subject_prior.json   b038d27a1fae2145  (shipped source b038d27a1fae2145)
+  copy  prediction_config.json ae6469697516814a  (hand-written, copied from the shipped source)
+  zip  rebuilt e15a4e3f63148c63  builds.csv e15a4e3f63148c63  shipped e15a4e3f63148c63
+  members identical; zip bytes identical
+[ok] v6_combo_w20_c1 (subjects prior, 5.4s)
+
+1/1 reproduced

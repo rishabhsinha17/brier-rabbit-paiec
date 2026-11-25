@@ -52,12 +52,63 @@ for i, line in enumerate(body_lines):
         in_b = False
     if in_b and line.startswith("|"):
         body_lines[i] = re.sub(r"`([^`]+)`", lambda m: tt(m.group(1)), line)
-body = "\n".join(body_lines)
+
+# Wide tables are split into column panels at the normal document font size.
+# Every original data cell is preserved; only the row-label column repeats.
+layout_lines = []
+idx = 0
+table_id = ''
+while idx < len(body_lines):
+    line = body_lines[idx]
+    caption = re.match(r'\*\*Table ([A-Z]?\d+)\.', line)
+    if caption:
+        table_id = caption.group(1)
+    if not line.startswith('|'):
+        layout_lines.append(line)
+        idx += 1
+        continue
+    block = []
+    while idx < len(body_lines) and body_lines[idx].startswith('|'):
+        block.append([v.strip() for v in body_lines[idx].strip().strip('|').split('|')])
+        idx += 1
+    ncols = len(block[0])
+    assert all(len(row) == ncols for row in block), (table_id, 'inconsistent columns')
+    panels = [list(range(ncols))] if ncols <= 7 else [[0] + list(range(j,min(j+5,ncols))) for j in range(1,ncols,5)]
+    for pi,cols in enumerate(panels):
+        if len(panels)>1:
+            layout_lines += ['', '**Table '+table_id+' ('+chr(97+pi)+').** Column panel of the same table.', '']
+        cells = [[row[c] for c in cols] for row in block]
+        # Separator lengths control Pandoc column proportions. Long prose gets more width;
+        # numeric columns retain enough space for their intact entries.
+        weights=[]
+        for c in range(len(cols)):
+            lengths=[]
+            for row in cells[:1]+cells[2:]:
+                text=re.sub(r'\\[A-Za-z]+(?:\{\})?', '', row[c])
+                text=re.sub(r'[{}$*`_]', '', text)
+                lengths.append(len(text))
+            weights.append(max(8,min(70, int(max(lengths)**0.65*2.7))))
+        if table_id == '1':
+            weights=[25,15,23,14,14,18,15]
+        if table_id == 'A1' and pi==1:
+            weights=[33,8,8,46,17]
+        if table_id == 'E2':
+            weights=[42,17,36,15,17,17]
+        cells[1]=['-'*w for w in weights]
+        for row in cells[:1]+cells[2:]:
+            for ci,value in enumerate(row):
+                value=value.replace('ResearchCodeBench', r'Research\-Code\-Bench')
+                if table_id == 'D2':
+                    value=value.replace('_', r'\_\allowbreak{}')
+                row[ci]=value
+        layout_lines += ['| '+' | '.join(row)+' |' for row in cells]+['']
+body = "\n".join(layout_lines)
+
 
 # the Code clause (URL, license, release commit) comes from the markdown's author paragraph
 mc = re.search(r"Code: (https://\S+ \([^)]*\))", "\n".join(lines[1:ia]).replace("\n", " "))
 code = mc.group(1) if mc else "https://github.com/rishabhsinha17/brier-rabbit-paiec (MIT license)"
-author = ("Rishabh Sinha (Team Brier Rabbit) `\\\\`{=latex} "
+author = ("**Rishabh Sinha** (Team Brier Rabbit) `\\\\`{=latex} "
           "Independent researcher, personal capacity; rsinha17@terpmail.umd.edu `\\\\`{=latex} "
           "Code: " + code.replace(" (", " `\\\\`{=latex} (", 1))  # license and commit on their own line
 yaml = ["---",

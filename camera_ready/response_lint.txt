@@ -1,0 +1,37 @@
+profile=technical formal=False   words=921 sentences=57
+sentence lengths: [37, 6, 21, 15, 32, 15, 15, 26, 5, 12, 27, 13, 14, 14, 16, 21, 20, 23, 14, 19, 14, 9, 6, 13, 5, 21, 18, 9, 24, 8, 21, 11, 20, 13, 12, 14, 15, 14, 18, 6, 8, 22, 12, 20, 12, 11, 17, 26, 10, 23, 5, 19, 15, 22, 13, 24, 13]
+
+  [error    ] ai-tells.FigurativeSettles                   'settles them'
+    AI settlement metaphor: 'settles them'. State the conclusion and the evidence, or name the stable state. Disable this rule for legal or geology prose.
+
+  [house    ] house.abstract-noun-triad                    'reordered, replaced and mutated'
+    Rule-of-three cadence. Cut to two items or split the sentence.
+
+  [house    ] house.abstract-noun-triad                    'A, F and K'
+    Rule-of-three cadence. Cut to two items or split the sentence.
+
+  [house    ] house.abstract-noun-triad                    '24, 2026, and found'
+    Rule-of-three cadence. Cut to two items or split the sentence.
+
+  [house    ] house.abstract-noun-triad                    '11, 13 and Appendix'
+    Rule-of-three cadence. Cut to two items or split the sentence.
+
+  [house    ] house.markdown-flourish                      '#'
+    Bullets and bold read as templated to engineers. Use prose.
+
+  [house    ] house.markdown-flourish                      '##'
+    Bullets and bold read as templated to engineers. Use prose.
+
+  [warning  ] Deslop.Substitutions                         'robustness'
+    Use 'robustness' instead of 'robustness'.
+
+  [suggestion] AiTells.Passive                              'are unchanged'
+    Passive voice 'are unchanged': name who does the verb.
+
+  [suggestion] AiTells.Passive                              'are preserved'
+    Passive voice 'are preserved': name who does the verb.
+
+  [rhythm   ] Repeated sentence openers: ##, the, we. Vary how sentences start.
+
+TOTAL: 11 flag(s)
+Rewrite the flagged spans. Do not suppress a rule to make it pass.

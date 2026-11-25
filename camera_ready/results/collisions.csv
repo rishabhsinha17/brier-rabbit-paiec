@@ -1,0 +1,6 @@
+bench,item_rows,distinct_full_texts,collision_groups,distinct_texts_in_collision_groups,excess_texts_merged
+matharena,1755,898,0,0,0
+multi_swebench,2126,2078,0,0,0
+real_webagents,233,233,0,0,0
+researchcodebench,212,212,3,6,3
+swe_rebench,6306,6271,0,0,0
